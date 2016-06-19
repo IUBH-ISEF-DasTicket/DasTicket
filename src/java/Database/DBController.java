@@ -26,8 +26,7 @@ public class DBController
     // Klassenvariablen
     static Connection connection = null;
     static Statement statement = null;
-    
-    
+
     public static Connection InitConnection()
     {
         // Variablen für Verbindungsaufbau
