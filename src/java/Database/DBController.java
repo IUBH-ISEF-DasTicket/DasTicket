@@ -48,7 +48,6 @@ public class DBController
         }
 
         // Initialisiere Verbindung zur Datenbank
-
         try 
         {
             connection = DriverManager.getConnection("jdbc:mysql://" + DBServer + "/" + DBInstance +
@@ -56,6 +55,7 @@ public class DBController
 
             System.out.println("DB verbunden");
         } 
+        // Fehlerbehandlung
         catch (SQLException ex) 
         {
             System.out.println("SQLException: " + ex.getMessage());
@@ -71,11 +71,12 @@ public class DBController
     {
          try 
          {
-            
+        // Verbindung schließeb
             connection.close();
             System.out.println("DB Verbindung geschlossen");
 
          } 
+         // Fehlerbehandlung
          catch (SQLException ex) 
          {
                 System.out.println("SQLException: " + ex.getMessage());
@@ -84,26 +85,30 @@ public class DBController
          }
     }
     
-    public static void InsertData(Connection connection)
+    public static void InsertData(Connection connection, String TableName, String Values)
     {
+        // Vatriable für SQL Statement
+        String SQLStatement;
         
-         try 
+        try 
          {
-            
+            // Statement vorbereiten
             statement = connection.createStatement();
-
-            // Data insert
-            statement.executeUpdate("INSERT INTO usergroup " + "VALUES (1, 'Admins')");
+            SQLStatement = "INSERT INTO " + TableName + " VALUES (" + Values + ")";
+            
+            // Statement ausführen
+            statement.executeUpdate(SQLStatement);
             System.out.println("Insert Data");
             
-         } 
+         }
+        // Fehlerbehandlung
          catch (SQLException ex) 
          {
                 System.out.println("SQLException: " + ex.getMessage());
                 System.out.println("SQLState: " + ex.getSQLState());
                 System.out.println("VendorError: " + ex.getErrorCode());
          }
-         // Close Statement
+         // Statement schließen
          finally
          {
              CloseStatement(statement);
@@ -113,97 +118,107 @@ public class DBController
          
     }
     
-    public static void UpdateData(Connection connection)
+    public static void UpdateData(Connection connection, String TableName, String Column, String Value, String Clause)
     {
-        
-         // Update Statement
-
+         // Vatriable für SQL Statement
+        String SQLStatement;
 
          try 
          {
-            
+            // SQL Statement vorbereiten
+            SQLStatement = "Update " + TableName + " Set " + Column + "=" + "'" +  Value + "' " + Clause;
             statement = connection.createStatement();
 
-            // Data insert
-            statement.executeUpdate("Update usergroup " + "set name='Test'");
-
+            //  SQL Statement ausführen
+            statement.executeUpdate(SQLStatement);
             System.out.println("Update Data");
-
+            
          } 
+         // Fehlerbehandlung
          catch (SQLException ex) 
          {
                 System.out.println("SQLException: " + ex.getMessage());
                 System.out.println("SQLState: " + ex.getSQLState());
                 System.out.println("VendorError: " + ex.getErrorCode());
          }
+         // Statement schließen
          finally
          {
              CloseStatement(statement);
          }
     }
     
-    public static void DeleteData(Connection connection)
+    public static void DeleteData(Connection connection, String TableName, String Clause)
     {
-        // Data delete
+         // Vatriable für SQL Statement
+        String SQLStatement;
         
          try 
          {
+             // SQL Statement vorbereiten
+            SQLStatement = "delete from " + TableName + " " + Clause;
+            statement = connection.createStatement();           
             
-            statement = connection.createStatement();
-
-           
-            statement.executeUpdate("delete from usergroup " + "where name='Test'");
-
+            // Statement ausführen
+            statement.executeUpdate(SQLStatement);
             System.out.println("Delete Data");
 
          } 
+         // Fehlerbehandlung
          catch (SQLException ex) 
          {
                 System.out.println("SQLException: " + ex.getMessage());
                 System.out.println("SQLState: " + ex.getSQLState());
                 System.out.println("VendorError: " + ex.getErrorCode());
          }
-         // Close Statement
+         // Statement schließen
          finally
          {
              CloseStatement(statement);
          }
     }
     
-    public static String GetData(Connection connection)
+    public static String GetData(Connection connection, String TableName, String Column, String Clause)
     {
+        // Variablen für Statement
         String Result = null;
-        // Data select
-         try 
+        String SQLStatement;
+        
+        try 
          {
-            
+            // SQL Statement vorbereiten
+            SQLStatement = "select " + Column + " from " + TableName + " " + Clause;
             statement = connection.createStatement();
-            //
-
-            ResultSet rs = statement.executeQuery("select * from usergroup");
+            
+            // SQL Statement ausführen und in ResultSet schreiben
+            ResultSet rs = statement.executeQuery(SQLStatement);
+            
+            // ResultSet auswerten
             while (rs.next())
                 {
-                    Result = rs.getString(2);
-                    System.out.println("Selected Data: " + rs.getString(2));
+                    Result = rs.getString(1);
+                    System.out.println("Selected Data: " + Result);
                 }
-            
-
          } 
+         // Fehlerbehandlung
          catch (SQLException ex) 
          {
                 System.out.println("SQLException: " + ex.getMessage());
                 System.out.println("SQLState: " + ex.getSQLState());
                 System.out.println("VendorError: " + ex.getErrorCode());
          }
+         // Statement schließen
          finally
          {
              CloseStatement(statement);
          }
+        // Ergebnis ausgeben
         return Result;
     }
     
     public static void CloseStatement(Statement statement)
     {
+        // Statement schließen wenn nicht leer
         try 
             {
                 if (statement != null) 
@@ -211,6 +226,7 @@ public class DBController
                   statement.close();
                 }
             }
+            // Fehlerbehandlung 
              catch(SQLException ex)
             {
                 System.out.println("SQLException: " + ex.getMessage());
@@ -225,13 +241,13 @@ public class DBController
         // Init Connection
         connection = InitConnection();
         // Data Insert
-        InsertData(connection);
+        InsertData(connection, "usergroup", "'1','Admins'");
         // Data Update
-        UpdateData(connection);
+        UpdateData(connection, "usergroup", "name", "User", "WHERE name = 'Admins'");
         // Data Select
-        GetData (connection);
+        GetData (connection, "Usergroup", "name", "WHERE id=1");
         // Data delete
-        DeleteData (connection);
+        DeleteData (connection, "usergroup", "");
         // Close Connection
         CloseConnection (connection);
         
