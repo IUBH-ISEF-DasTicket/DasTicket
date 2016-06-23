@@ -1,3 +1,5 @@
+package Database;
+
 /*
 * User
 * Klasse, die die einzelnen User repräsentiert 
