@@ -1,0 +1,17 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 20.06.2016, 13:16:11
+    Author     : lvtdej0
+*/
+
+h2{margin:10px; padding:15px; width:30em; border-width:5px; border-color:black; border-style:solid}
+    
+#Rahmen_Tabelle {margin:10px; padding:15px; width:30em; border-width:5px; border-color:black; border-style:solid}
+
+#mittig {color:red}
+
+#Rand_unten {border-collapse: collapse; border-bottom: 1px solid #000000;}
