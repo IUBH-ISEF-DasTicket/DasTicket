@@ -31,14 +31,14 @@ public class Course {
 	}
 	// Setter Methoden
 	
-	public setId(int newId){
+	public void setId(int newId){
 		id = newId;
 	}
 	
-	public setName(char newName){
+	public void setName(char newName){
 		name = newName;
 	}
-	public setId_USER(int newUser){
+	public void setId_USER(int newUser){
 		Id_USER = newUser;
 	}
 	
