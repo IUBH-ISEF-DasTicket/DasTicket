@@ -1,3 +1,5 @@
+package Database;
+
 /*
 * Course
 * Klasse, die die einzelnen Kurse repräsentiert, 
@@ -39,7 +41,7 @@ public class Course {
 		name = newName;
 	}
 	public void setId_USER(int newUser){
-		Id_USER = newUser;
+		id_USER = newUser;
 	}
 	
 	
