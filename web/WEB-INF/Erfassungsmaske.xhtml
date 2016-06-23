@@ -13,10 +13,14 @@ and open the template in the editor.
         <link rel="stylesheet" type="text/css" href="style.css"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </head>
-    <body>
+    
+   
+    <body id="Rahmen_duenn2">
+        
+      <h3>
       
-        <table>
-            <tr>
+        <table cellspacing="20">
+            <tr>              
                 <td>Prioritaet</td>
                 <td>    
                     <form action="select.htm" >      
@@ -29,8 +33,7 @@ and open the template in the editor.
                     </form>
                 </td>             
             </tr>
-            
-            
+                        
             <tr>
                 <td>Kategorie</td>
                 <td> <form action="select.htm" >      
@@ -43,11 +46,10 @@ and open the template in the editor.
                     </form>      
                 </td>
             </tr> 
-            
-            
-             <tr>
-                <td id="Rand_unten">Kurs</td>
-                <td id="Rand_unten">  <form action="select.htm" >      
+                
+            <tr> 
+                <td>Kurs</td> 
+                <td>  <form action="select.htm" >   
                         <select name="Kurs" size="1">
                             <option>IMT1</option>
                             <option>BWIR</option>
@@ -72,27 +74,23 @@ and open the template in the editor.
                             <option>ISSE</option>
                             <option>BURG</option>
                             <option>BUFG</option>     
-                        </select>
-                        
-                    </form>
+                        </select>     
+                    </form>                    
                 </td>  
             </tr> 
+     </table>      
             
             
-            
-            
+          <table id="Rand_unten" cellspacing="20">      
             <tr>
                 <td>Titel</td>
                 <td> <input type="text"></input>  </td>  
             </tr> 
             
-            
             <tr>
                 <td>Kommentare</td>
-                <td>  <textarea rows="5" cols="15">    </textarea>   
-                </td>  
+                <td>  <textarea rows="5" cols="15">    </textarea>   </td>              
             </tr> 
-            
             
             <tr>
                 <td> <input type="submit" value="Speichern"  ></input> </td>           
@@ -103,7 +101,9 @@ and open the template in the editor.
                 <td> <input type="submit" value="Abbrechen"  ></input> </td>           
             </tr> 
             
-        </table>
+        </table> 
+          
+       </h3>  
         
     </body>
 </html>
