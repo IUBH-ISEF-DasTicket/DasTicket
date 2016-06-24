@@ -4,7 +4,7 @@ import java.util.Date;
 /*
 * Worknotes
 * Klasse, die die einzelnen Notizen die zu einer Anfrage
-* Hinterlegt werden können repräsentiert.
+* Hinterlegt werden kï¿½nnen reprï¿½sentiert.
 *
 *
 * <Sichtbarkeit>
@@ -35,8 +35,8 @@ public class Worknotes {
 		return notes;
 	}
 	
-	public Date Date() {
-		return Date;
+	public Date date() {
+		return date;
 	}
 	
 	public int getId_USER() {
@@ -56,7 +56,7 @@ public class Worknotes {
 	}
 	
 	public void setInternal(boolean newInternal) {
-		internal = newInteral;
+		internal = newInternal;
 	}
 	
 	public void setInternal(char newNotes) {
