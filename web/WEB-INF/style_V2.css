@@ -11,12 +11,10 @@ and open the template in the editor.
 	Author:    : Diane Emmrich
 */
 
-h2 {margin:10px; padding:15px; width:30em; border-width:5px; border-color:black; border-style:solid}
-
 table {border-width:1px; border-color:white; border-style:solid; border-spacing: 5px;padding:5px;}
 #Rahmen_Tabelle {border-color:black;}
-body, select  {font-family:Arial; font-size: 15px;}
-
+body, select, input  {font-family:Arial; font-size: 15px;}
+#Header {border-color:black; text-align: right; font-size: 12px}
 textarea, input, select {background: #E0F2F7;}
 
 textarea.WorknoteRO  {background: #E6E6E6;}
