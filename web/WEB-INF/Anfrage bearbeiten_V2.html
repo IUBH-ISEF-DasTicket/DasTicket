@@ -1,9 +1,5 @@
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
+
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:rich="http://richfaces.org/rich">
@@ -15,19 +11,44 @@ and open the template in the editor.
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </head>
     
-	<body id="Rahmen_duenn">
+	<script>
+	function startTime() 
+	{
+		var today = new Date();
+		var h = today.getHours();
+		var m = today.getMinutes();
+		var s = today.getSeconds();
+		m = checkTime(m);
+		s = checkTime(s);
+		document.getElementById('Zeit').innerHTML = h + ":" + m + ":" + s;
+		var t = setTimeout(startTime, 500);
+	}
+	function checkTime(i) // add zero in front of numbers < 10
+	{
+		if (i < 10) 
+		{
+			i = "0" + i;
+		} 
+		return i;
+	}
+	</script>
+	
+	<body onload="startTime()">
 		<table style="max-width:1000px;" id="Table_Wrap" width=100%> 
 			<tr>
 				<td>
 					<table id = "Header" width=100%>
 						<tr>
-							<td> Eingeloggt als: [USER.name]
+							<td id="Zeit">	 					
+							</td>
+							<td> Eingeloggt als: [USER.name] 
+								<input type="submit" value="Ausloggen" id="Logout" ></input> 
 							</td>
 						</tr>
 					</table>
 					<table id="Title"  width=100% >						
 						<tr>
-							<td>
+							<td width=50%>
 							<img src="logoiubh.png" alt="IUBH" style="width:150px";>
 							</td>
 							<td>
@@ -36,12 +57,12 @@ and open the template in the editor.
 						</tr>					
 					</table>
 					
-					<table id="Rand_neu"  width=100% >
+					<table id="Rand_neu"  width=100%>
 						<tr>
 							<td width=15%>Priorität</td>   
 							<td> 
 								<form action="select.htm" >      
-									<select name="Prioritaet" size="1">
+									<select name="Prioritaet" size="1" >
 										<option>gering</option>
 										<option>mittel</option>
 										<option>hoch</option>
@@ -104,8 +125,8 @@ and open the template in the editor.
 						<tr>
 							<td> </td>   
 							<td> </td>
-							<td>berechnete Zeit</td>
-							<td> <input type="int"/>
+							<td>gebuchte Zeit</td>
+							<td> <input type="int" id = "repTime"/>
 						</tr>
 					</table>					
 					
@@ -126,7 +147,7 @@ and open the template in the editor.
 				
 					<table id = "Rahmen_Tabelle"  width=100% >
 						<tr>
-							<td> <b>Kommentare</b> </td>					 
+							<td colspan="2"> <b>Kommentar-Historie</b> </td>					 
 						</tr>					
 						<tr>
 							<td width=15%>[WORKNOTE.date]</td>
