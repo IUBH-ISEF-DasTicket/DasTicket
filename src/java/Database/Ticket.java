@@ -19,6 +19,7 @@ public class Ticket {
 	private int priority;
 	private Date creationDate;
 	private char title;
+	private char description
 	private int id_CATEGORY;
 	private int id_COURSE;
 	private int id_USER_assignedTo;
@@ -41,6 +42,9 @@ public class Ticket {
 	
 	public char getTitle() {
 		return title;
+	}
+	public char getDescription() {
+		return description;
 	}
 	
 	public int getId_CATEGORY() {
@@ -79,6 +83,9 @@ public class Ticket {
 	
 	public void setTitle(char newTitle) {
 		title = newTitle;
+	}
+	public void setDescription(char newDescription) {
+		description = newDescription;
 	}
 	
 	public void setId_CATEGORY(int newCategory) {
