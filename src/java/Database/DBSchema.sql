@@ -181,6 +181,7 @@ CREATE TABLE TICKET
 	id INT(32) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 	priority INT(32),
 	title CHAR(50) not null,
+    description CHAR(1000) not null,
     id_category INT(32) UNSIGNED,
     id_courses INT(32) UNSIGNED,
     id_user INT(32) UNSIGNED,
