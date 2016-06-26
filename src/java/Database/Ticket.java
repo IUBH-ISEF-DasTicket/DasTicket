@@ -43,6 +43,7 @@ public class Ticket {
 	public char getTitle() {
 		return title;
 	}
+	
 	public char getDescription() {
 		return description;
 	}
@@ -84,6 +85,7 @@ public class Ticket {
 	public void setTitle(char newTitle) {
 		title = newTitle;
 	}
+	
 	public void setDescription(char newDescription) {
 		description = newDescription;
 	}
