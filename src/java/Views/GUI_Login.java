@@ -4,29 +4,49 @@
  * and open the template in the editor.
  */
 package Views;
-
 import Database.DBController;
 
 
 public class GUI_Login 
 
 {
-    public void CheckLogin (char Username, char UserPassword)
+    
+     public static void main(String[] args) 
+    {
+        DBController.InsertData("user", "'1','Admin','Admin123','admin@admin.de','1'");
+        CheckLogin("admin","Admin123");
+    }
+     
+    public static String CheckLogin (String Username, String UserPassword)
     {
         // Variablen
-         char typedUsername;
-         char typedUserPassword;
-         char storedUserPassword;
-         char storedUsername;
+         String typedUsername;
+         String typedUserPassword;
+         String storedUserPassword;
+         String storedUsername;
+         String result;
         
         // Eingegebene Werte abfragen
         typedUsername = Username;
         typedUserPassword = UserPassword;
         
         // Benutzerdaten aus Datenbankabfragen
+        storedUsername = DBController.GetData("user", "username", "where username= '" + typedUsername + "'");
+        storedUserPassword = DBController.GetData("user", "Password", "where username= '" + typedUsername + "'");
         
-        // storedUsername = DBController.GetData(connection, TableName, Column, Clause)GetData();
-        
+        // Daten prüfen
+        if (storedUsername.equalsIgnoreCase(typedUsername) && storedUserPassword.equals(typedUserPassword) )
+        {
+            result = "Passt!";
+            System.out.println(result);
+            
+        } 
+        else
+        {
+            result = "Benutzername oder Kennwort falsch!";
+            System.out.println();
+        }
+       return (result);
     }
     
     public void NewLogin ()
