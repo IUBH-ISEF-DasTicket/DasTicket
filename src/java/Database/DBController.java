@@ -254,6 +254,7 @@ public class DBController
     }
     
     // Testlauf
+    
     public static void main(String[] args) 
     {
 
@@ -264,7 +265,7 @@ public class DBController
         // Data Select
         GetData ("Usergroup", "name", "WHERE id=1");
         // Data delete
-        DeleteData ("usergroup", "");
+        //DeleteData ("usergroup", "");
 
     }
 
