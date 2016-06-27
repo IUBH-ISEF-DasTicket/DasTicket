@@ -85,9 +85,12 @@ public class DBController
          }
     }
     
-    public static void InsertData(Connection connection, String TableName, String Values)
+    public static void InsertData(String TableName, String Values)
     {
-        // Vatriable für SQL Statement
+        // Connection aufbauen
+        connection = InitConnection();
+        
+        // Variable für SQL Statement
         String SQLStatement;
         
         try 
@@ -108,19 +111,23 @@ public class DBController
                 System.out.println("SQLState: " + ex.getSQLState());
                 System.out.println("VendorError: " + ex.getErrorCode());
          }
-         // Statement schließen
+         // Statement & Connection schließen
          finally
          {
              CloseStatement(statement);
+             CloseConnection(connection);
          }
         
          
          
     }
     
-    public static void UpdateData(Connection connection, String TableName, String Column, String Value, String Clause)
+    public static void UpdateData(String TableName, String Column, String Value, String Clause)
     {
-         // Vatriable für SQL Statement
+        // Connection aufbauen
+        connection = InitConnection(); 
+        
+        // Vatriable für SQL Statement
         String SQLStatement;
 
          try 
@@ -141,16 +148,21 @@ public class DBController
                 System.out.println("SQLState: " + ex.getSQLState());
                 System.out.println("VendorError: " + ex.getErrorCode());
          }
-         // Statement schließen
+         // Statement & Connection schließen
          finally
          {
              CloseStatement(statement);
+             CloseConnection(connection);
          }
+        
     }
     
-    public static void DeleteData(Connection connection, String TableName, String Clause)
+    public static void DeleteData(String TableName, String Clause)
     {
-         // Vatriable für SQL Statement
+        // Connection aufbauen
+        connection = InitConnection();
+        
+        // Vatriable für SQL Statement
         String SQLStatement;
         
          try 
@@ -171,15 +183,19 @@ public class DBController
                 System.out.println("SQLState: " + ex.getSQLState());
                 System.out.println("VendorError: " + ex.getErrorCode());
          }
-         // Statement schließen
+         // Statement & Verbindung schließen
          finally
          {
              CloseStatement(statement);
+             CloseConnection(connection);
          }
     }
     
-    public static String GetData(Connection connection, String TableName, String Column, String Clause)
+    public static String GetData(String TableName, String Column, String Clause)
     {
+        // Connection aufbauen
+        connection = InitConnection();
+        
         // Variablen für Statement
         String Result = null;
         String SQLStatement;
@@ -207,11 +223,13 @@ public class DBController
                 System.out.println("SQLState: " + ex.getSQLState());
                 System.out.println("VendorError: " + ex.getErrorCode());
          }
-         // Statement schließen
+         // Statement & Connection schließen
          finally
          {
              CloseStatement(statement);
+             CloseConnection(connection);
          }
+        
         // Ergebnis ausgeben
         return Result;
     }
@@ -238,19 +256,16 @@ public class DBController
     // Testlauf
     public static void main(String[] args) 
     {
-        // Init Connection
-        connection = InitConnection();
+
         // Data Insert
-        InsertData(connection, "usergroup", "'1','Admins'");
+        InsertData("usergroup", "'1','Admins'");
         // Data Update
-        UpdateData(connection, "usergroup", "name", "User", "WHERE name = 'Admins'");
+        UpdateData("usergroup", "name", "User", "WHERE name = 'Admins'");
         // Data Select
-        GetData (connection, "Usergroup", "name", "WHERE id=1");
+        GetData ("Usergroup", "name", "WHERE id=1");
         // Data delete
-        DeleteData (connection, "usergroup", "");
-        // Close Connection
-        CloseConnection (connection);
-        
+        DeleteData ("usergroup", "");
+
     }
 
    }
