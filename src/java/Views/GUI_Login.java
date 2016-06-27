@@ -5,10 +5,35 @@
  */
 package Views;
 
-/**
- *
- * @author Administrator
- */
-public class GUI_Login {
+import Database.DBController;
+
+
+public class GUI_Login 
+
+{
+    public void CheckLogin (char Username, char UserPassword)
+    {
+        // Variablen
+         char typedUsername;
+         char typedUserPassword;
+         char storedUserPassword;
+         char storedUsername;
+        
+        // Eingegebene Werte abfragen
+        typedUsername = Username;
+        typedUserPassword = UserPassword;
+        
+        // Benutzerdaten aus Datenbankabfragen
+        
+        // storedUsername = DBController.GetData(connection, TableName, Column, Clause)GetData();
+        
+    }
+    
+    public void NewLogin ()
+    {
+        
+    }
+    
+    
     
 }
