@@ -16,14 +16,15 @@
             <h:panelGrid columns="2">
             
                 <h:outputLabel value="Emailadresse" for="emailadresse"/>
-                <h:inputText id="emailadresse" size="40" value="#{DBController.GUI_Login.typedUsername}"/>
+                <h:inputText id="emailadresse" size="40" value="#{GUI_Login.typedUsername}"/>
                 
                 <h:outputLabel value="Passwort" for="passwort"/>
-                <h:inputText id="passwort" size="40" value="#{DBController.GUI_Login.typedUserpasswort}"/>
+                <h:inputSecret id="passwort" size="40" value="#{GUI_Login.typedUserpasswort}"/>
                 
-                <h:commandLink value="Anmelden" action="xxx" />
-                <h:commandLink value="Passwort vergessen" action="xxx" />
+                <h:commandButton value="Anmelden" action="#{GUI_Login.NewLogin()}" />
+                <h:commandButton value="Passwort vergessen" action="xxx" />
                 
+                <h:commandLink value="Neu hier? Hier geht´s zur Registrierung!"/>
                 
             </h:panelGrid>
             
