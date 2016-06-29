@@ -1,7 +1,8 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:rich="http://richfaces.org/rich">
     <h:head>
         <title>Facelet Title</title>
     </h:head>
@@ -10,10 +11,25 @@
         
         <img src="logoiubh.png" alt="IUBH" />
         <h1>Login</h1>
-        
-        <h:outputText value="Test-Text"></h:outputText>
-        
-        
+           
+        <h:form>
+            <h:panelGrid columns="2">
+            
+                <h:outputLabel value="Emailadresse" for="emailadresse"/>
+                <h:inputText id="emailadresse" size="40" value="#{DBController.GUI_Login.typedUsername}"/>
+                
+                <h:outputLabel value="Passwort" for="passwort"/>
+                <h:inputText id="passwort" size="40" value="#{DBController.GUI_Login.typedUserpasswort}"/>
+                
+                <h:commandLink value="Anmelden" action="xxx" />
+                <h:commandLink value="Passwort vergessen" action="xxx" />
+                
+                
+            </h:panelGrid>
+            
+            
+           
+        </h:form>
         
         
     </h:body>
