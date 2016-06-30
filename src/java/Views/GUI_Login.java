@@ -3,57 +3,94 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package Views;
+
+import java.io.Serializable;
 import Database.DBController;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
+import javax.faces.application.FacesMessage;
 
 
-public class GUI_Login 
+@ManagedBean
+@SessionScoped
+
+
+public class gUI_Login implements Serializable
+
 
 {
+    private static final long serialVersionUID = 1094801825228386363L;
+    String typedUsername;
+    String typedUserPassword;
     
-     public static void main(String[] args) 
+    /* public static void main(String[] args) 
     {
         DBController.InsertData("user", "'1','Admin','Admin123','admin@admin.de','1'");
-        CheckLogin("admin","Admin123");
+        // CheckLogin("admin","Admin123");
     }
-     
-    public static String CheckLogin (String Username, String UserPassword)
+     */
+    public String CheckLogin ()
     {
         // Variablen
-         String typedUsername;
-         String typedUserPassword;
          String storedUserPassword;
          String storedUsername;
-         String result;
+      
         
         // Eingegebene Werte abfragen
-        typedUsername = Username;
-        typedUserPassword = UserPassword;
+        // typedUsername = Username;
+        // typedUserPassword = UserPassword;
         
         // Benutzerdaten aus Datenbankabfragen
         storedUsername = DBController.GetData("user", "username", "where username= '" + typedUsername + "'");
         storedUserPassword = DBController.GetData("user", "Password", "where username= '" + typedUsername + "'");
         
+
         // Daten prüfen
         if (storedUsername.equalsIgnoreCase(typedUsername) && storedUserPassword.equals(typedUserPassword) )
         {
-            result = "Passt!";
-            System.out.println(result);
+            FacesContext.getCurrentInstance().addMessage(
+            null,new FacesMessage(FacesMessage.SEVERITY_WARN,
+			"Eingabe OK",
+			"Alles in Ordnung"));
+            
+            return "Erfassungsmaske_JSF";
+            
             
         } 
         else
         {
-            result = "Benutzername oder Kennwort falsch!";
-            System.out.println();
+            
+            FacesContext.getCurrentInstance().addMessage(
+            null,new FacesMessage(FacesMessage.SEVERITY_WARN,
+			"Falscher Benutzername oder Kennwort",
+			"Bitte Benutzername und Kennwort prüfen"));
+            
+            return "login";
         }
-       return (result);
-    }
-    
-    public void NewLogin ()
-    {
+       
         
     }
     
-    
+   
+    public String getTypedUsername() 
+    {
+	return typedUsername;
+    }
+    public String getTypedUserPassword() 
+    {
+	return typedUserPassword;
+    }
+    public void setTypedUsername(String typedUsername) 
+    {
+        this.typedUsername = typedUsername;
+    }
+    public void setTypedUserPassword(String typedUserPassword) 
+    {
+        this.typedUserPassword = typedUserPassword;
+    }  
     
 }

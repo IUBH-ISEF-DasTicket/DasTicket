@@ -20,7 +20,7 @@ import java.io.FileInputStream;
 * public
 */ 
 
-public class Attachments 
+public class Attachment
 
 {
     private int id;
