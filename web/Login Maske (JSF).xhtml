@@ -28,24 +28,21 @@
 							<td> Emailadresse* </td>
 							<td>  
 								<!-- <input type="text" ></input> -->
-                                                                <h:inputText id="Username" value="#{GUI_Login.typedUsername}" required="true"></h:inputText>
+                                                                <h:inputText id="Username" value="#{gui_Login.typedUsername}" required="true"></h:inputText>
                                                                 <h:message for="Username"></h:message>
 							</td> 
 						</tr>		
 						<tr>  
 							<td> Passwort* </td>
 							<td> 
-								<!--<input type="password"></input> -->
-                                                                 <h:inputSecret id="UserPassword" value="#{GUI_Login.typedUserPassword}" required="true"></h:inputSecret>
+                                                                 <h:inputSecret id="UserPassword" value="#{gui_Login.typedUserPassword}" required="true"></h:inputSecret>
                                                                  <h:message for="UserPassword"></h:message>
 							</td>    
 						</tr>  
 						<tr> 
 							<td> </td>
-							<td>    
-                                                           
-                                                            <!-- <input type="submit" value="Anmelden"> </input> -->
-                                                                <h:commandButton action="#{GUI_Login.CheckLogin}"
+							<td>                                                               
+                                                                <h:commandButton action="#{gui_Login.CheckLogin}"
                                                                 value="Login"></h:commandButton>
                                                            
 							</td> 
