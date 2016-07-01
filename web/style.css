@@ -1,0 +1,33 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 20.06.2016, 13:16:11
+    Author     : lvtdej0
+	---------------------------------
+	Changed:   : 24.06.2016 13:39
+	Author:    : Diane Emmrich
+	---------------------------------
+	Changed:   : 25.06.2016 13:30
+	Author:    : Diane Emmrich
+*/
+
+table {border-width:1px; border-color:white; border-style:solid; border-spacing: 5px;padding:5px;}
+body, select, input  {font-family:Arial; font-size: 15px;}
+textarea, input, select {background: #E0F2F7;}
+select {width:50%}
+
+textarea.WorknoteRO  {background: #E6E6E6;}
+#Rahmen_Tabelle {border-color:black;}
+#Header {border-color:black; text-align: right; font-size: 12px}
+#repTime {width:48%}
+#Zeit  {text-align: left;}
+#Logout[type=submit] {
+    background-color: white;
+    background-position: 10px 10px;
+    background-repeat: no-repeat;
+	margin-left: 10px;
+	font-size: 12px
+}

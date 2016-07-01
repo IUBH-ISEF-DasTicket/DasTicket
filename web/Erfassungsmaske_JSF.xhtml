@@ -4,33 +4,15 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html">
     <h:head>
         <title>Erfassungsmaske</title>
+        <link rel="stylesheet" media="screen,projection"
+        title="Standardstylesheet" href="style.css"
+        type="text/css" />
     </h:head>
-	  
-
-    <!--
-	<script>
-	function startTime() 
-	{
-		var today = new Date();
-		var h = today.getHours();
-		var m = today.getMinutes();
-		var s = today.getSeconds();
-		m = checkTime(m);
-		s = checkTime(s);
-		document.getElementById('Zeit').innerHTML =	h + ":" + m + ":" + s;
-		var t = setTimeout(startTime, 500);
-	}
-	function checkTime(i) // add zero in front of numbers < 10
-	{
-		if (i < 10) 
-		{
-			i = "0" + i;
-		}  
-		return i;
-	}
-	</script>
-	-->
-    <h:body>
+    
+	<script type="text/javascript" language="javascript" src="TimeFunctions.js"></script>
+	
+    <h:body onload="startTime()">
+        <h:form>
 		<table style="max-width:1000px;" id="Table_Wrap" width="100%">
 			<tr>
 				<td>				
@@ -38,8 +20,8 @@
 						<tr>
 							<td id="Zeit">				
 							</td>
-							<td> Eingeloggt als: [USER.name] 
-								<input type="submit" value="Ausloggen" id="Logout" ></input> 
+							<td> Eingeloggt als: [USER.name] 								 
+                                                                <h:commandButton value="Ausloggen"></h:commandButton>
 							</td>
 						</tr>
 					</table>
@@ -125,14 +107,20 @@
 							</td>          
 						</tr>						
 						<tr>
-							<td> <input type="submit" value="Speichern"  ></input> </td>           
+                                                    <td>                                                    
+                                                    <h:commandButton value="Speichern"></h:commandButton>
+                                                    </td>                                                         
 						</tr> 												
 						<tr>
-							<td> <input type="submit" value="Abbrechen"  ></input> </td>           
+                                                    <td>                                                         
+                                                        <h:commandButton value="Abbrechen"></h:commandButton>
+                                                    </td>   
+                                                        
 						</tr> 						
 					</table> 					  				
 				</td>
 			</tr>
 		</table>   
+            </h:form>	
     </h:body>
 </html>
