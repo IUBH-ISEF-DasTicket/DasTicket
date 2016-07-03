@@ -15,6 +15,10 @@
 * Editiert von: David
 * Editiert am: 25.06.16
 * Info/Notizen: Kurse eingeügt + Settings hinterlegt
+*
+* Editiert von: David
+* Editiert am: 03.07.16
+* Info/Notizen: Priority und Werte der Tabellen hinzugefügt
 */
 
 -- Variablendeklaration
@@ -40,6 +44,12 @@ CREATE TABLE CATEGORY
     name CHAR(20) not null
 );
 
+-- Category füllen
+INSERT INTO CATEGORY (name) VALUES
+	('Service Request'),
+    ('Incident'),
+    ('Question');
+
 -- Usergroup Tabelle
 CREATE TABLE USERGROUP
 (
@@ -47,6 +57,12 @@ CREATE TABLE USERGROUP
     name CHAR(20) not null
 );
 
+-- Usergroup füllen
+INSERT INTO CATEGORY (name) VALUES
+	('Tutor'),
+    ('Student'),
+    ('Admin');
+    
 -- State Tabelle
 CREATE TABLE STATE
 (
@@ -71,8 +87,6 @@ INSERT INTO SETTINGS (module, param, value) VALUES
     ('Database', 'Password' , @DBPassword),
     ('Internal', 'PendingCloseTime' , @PendingCloseTimeInDays)
 ;
-
-select * from settings;
 
 -- User Tabelle
 CREATE TABLE USER
@@ -238,4 +252,16 @@ CREATE TABLE REPORTEDTIME
 		ON DELETE CASCADE
 );
 
+-- Priority Tabelle
+CREATE TABLE PRIORITY
+(
+	id INT(32) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    name CHAR(20) not null
+);
+
+-- Priority füllen
+INSERT INTO PRIORITY (name) VALUES
+	('High'),
+    ('Medium'),
+    ('Low');
 
