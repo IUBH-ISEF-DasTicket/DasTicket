@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.ResultSet;
 
+
 /*
 * DBController
 * Controller für Datenbankaktionen
@@ -209,12 +210,15 @@ public class DBController
             // SQL Statement ausführen und in ResultSet schreiben
             ResultSet rs = statement.executeQuery(SQLStatement);
             
+           
             // ResultSet auswerten
             while (rs.next())
                 {
+                    
                     Result = rs.getString(1);
                     System.out.println("Selected Data: " + Result);
                 }
+            
          } 
          // Fehlerbehandlung
          catch (SQLException ex) 
@@ -231,6 +235,7 @@ public class DBController
          }
         
         // Ergebnis ausgeben
+        
         return Result;
     }
     

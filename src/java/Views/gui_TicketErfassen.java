@@ -1,12 +1,16 @@
 
 package Views;
 
+import java.util.List;
 import Database.DBController;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.application.FacesMessage;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import java.sql.ResultSetMetaData;
 
 /*
 * gui_TicketErfassen
@@ -45,10 +49,10 @@ public class gui_TicketErfassen
     }
     
     // Kategorie laden
-    public String GetCategoryList()        
+    public List<String> GetCategoryList()        
     {
-        String CategoryList;
-        CategoryList = "Foobar";
+        List<String> CategoryList = new ArrayList<>();
+        CategoryList.add("Foobar");
         return CategoryList;      
     }
     // Kurse laden
