@@ -21,7 +21,8 @@
 							<td id="Zeit">				
 							</td>
 							<td> Eingeloggt als: [USER.name] 								 
-                                                                <h:commandButton value="Ausloggen"></h:commandButton>
+                                                                <h:commandButton value="Ausloggen" action="#{gui_TicketErfassen.Logout}"></h:commandButton>
+                                                                
 							</td>
 						</tr>
 					</table>
@@ -113,7 +114,7 @@
 						</tr> 												
 						<tr>
                                                     <td>                                                         
-                                                        <h:commandButton value="Abbrechen"></h:commandButton>
+                                                        <h:commandButton value="Abbrechen" action="#{gui_TicketErfassen.Cancel}"></h:commandButton>
                                                     </td>   
                                                         
 						</tr> 						
