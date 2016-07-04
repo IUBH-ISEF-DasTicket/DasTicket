@@ -10,7 +10,7 @@ import javax.faces.application.FacesMessage;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.sql.ResultSetMetaData;
+import javax.faces.model.SelectItem;
 
 /*
 * gui_TicketErfassen
@@ -39,6 +39,8 @@ public class gui_TicketErfassen
     String Course;
     String Title;
     String Comment;
+    List<SelectItem> Courses;
+    List<SelectItem> CategoryList;
     
     // Prioritäten laden
     public String GetPriorities()        
@@ -49,10 +51,12 @@ public class gui_TicketErfassen
     }
     
     // Kategorie laden
-    public List<String> GetCategoryList()        
+    public List<SelectItem> GetCategoryList()        
     {
-        List<String> CategoryList = new ArrayList<>();
-        CategoryList.add("Foobar");
+        List<SelectItem> CategoryList = new ArrayList<>();
+        CategoryList.add(new SelectItem("Question", "Question"));
+        CategoryList.add(new SelectItem("Incident", "Incident"));
+        CategoryList.add(new SelectItem("Problem", "Problem"));
         return CategoryList;      
     }
     // Kurse laden
@@ -87,6 +91,14 @@ public class gui_TicketErfassen
     }
     
     // Getter Methoden
+    public List<SelectItem> getCourses()
+    {
+    return Courses;
+    }
+    public List<SelectItem> getCategorieList()
+    {
+    return CategoryList;
+    }
      public String getPriority() 
     {
 	return Priority;
@@ -109,6 +121,10 @@ public class gui_TicketErfassen
     }
     
     // Setter Methoden
+    public void setCourses()
+    {
+    this.Courses = Courses;
+    }
     public void setPriority(String Priority) 
     {
         this.Priority = Priority;

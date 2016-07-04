@@ -45,11 +45,16 @@
 							<td width="15%" >Priorität</td>
 							<td>    
 								<form style="width:266px" >      
-									<select name="Prioritaet" size="1">
+									<!-- <select name="Prioritaet" size="1">
 										<option>gering</option>
 										<option>mittel</option>
 										<option>hoch</option>
-         									</select>                    
+         									</select>                    -->
+                                                                        <h:selectOneMenu value="Prioritäten">
+                                                                               			<f:selectItem itemValue="Gering" itemLabel="Gering" />
+                                                                                                <f:selectItem itemValue="Mittel" itemLabel="Mittel" />
+                                                                                                <f:selectItem itemValue="Hoch" itemLabel="Hoch" />
+                                                                        </h:selectOneMenu>
 								</form>
 							</td>
 						</tr>								
@@ -57,12 +62,21 @@
 							<td>Kategorie</td>
 							<td> 
 								<form action="select.htm" style="width:266px">      
-									<select name="Prioritaet" size="1">
+									<select name="Kategorie" size="1">
 										<option>Anfrage</option>
 										<option>Stoerung</option>
 										<option>Frage</option>
-									</select>									
-								</form>      
+									</select> 
+                                                                    <!--
+                                                                        <h:selectOneMenu value="{gui_TicketErfassen.category}">
+                                                                    <f:selectItem itemValue="{null}" itemLabel="- select one -" />
+                                                                    <f:selectItems value="{gui_TicketErfassen.CategoryList}" />
+                                                                     </h:selectOneMenu>
+                                                                    -->
+								</form>
+                                                                
+                                         
+                                                                
 							</td>
 						</tr> 							
 						<tr> 

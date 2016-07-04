@@ -7,6 +7,7 @@ import java.sql.Statement;
 import java.sql.ResultSet;
 
 
+
 /*
 * DBController
 * Controller für Datenbankaktionen
@@ -198,9 +199,8 @@ public class DBController
         connection = InitConnection();
         
         // Variablen für Statement
-        String Result = null;
         String SQLStatement;
-        
+        String result = null;
         try 
          {
             // SQL Statement vorbereiten
@@ -209,16 +209,16 @@ public class DBController
             
             // SQL Statement ausführen und in ResultSet schreiben
             ResultSet rs = statement.executeQuery(SQLStatement);
-            
-           
+          
             // ResultSet auswerten
-            while (rs.next())
+           while (rs.next())
                 {
                     
-                    Result = rs.getString(1);
-                    System.out.println("Selected Data: " + Result);
+                    result = rs.getString(1);
+                    System.out.println("Selected Data: " + result);
                 }
             
+            return result;
          } 
          // Fehlerbehandlung
          catch (SQLException ex) 
@@ -226,17 +226,19 @@ public class DBController
                 System.out.println("SQLException: " + ex.getMessage());
                 System.out.println("SQLState: " + ex.getSQLState());
                 System.out.println("VendorError: " + ex.getErrorCode());
+                 
          }
          // Statement & Connection schließen
          finally
          {
              CloseStatement(statement);
              CloseConnection(connection);
+              
          }
         
         // Ergebnis ausgeben
+         return result;
         
-        return Result;
     }
     
     public static void CloseStatement(Statement statement)
