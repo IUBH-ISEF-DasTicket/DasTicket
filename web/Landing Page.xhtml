@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"> 
+
+    <h:head>
+        <title>Übersicht</title>
+        <link rel="stylesheet" media="screen,projection"
+        title="Standardstylesheet" href="style.css"
+        type="text/css" />
+    </h:head>
+    
+	<script type="text/javascript" language="javascript" src="TimeFunctions.js"></script>
+	
+    <h:body onload="startTime()">
+        <h:form>
+		<table style="max-width:1000px;" id="Table_Wrap" width="100%">
+			<tr>
+				<td>				
+					<table id = "Header" width="100%">
+						<tr>
+							<td id="Zeit">				
+							</td>
+							<td> Eingeloggt als: [USER.name] 								                                                             
+                                                            <br />
+                                                             Rolle: [USERGROUP.name]    
+							</td>
+                                                        <td width="10%">
+                                                                <h:commandButton value="Ausloggen" action="#{gui_TicketErfassen.Logout}"></h:commandButton> 
+                                                        </td>
+						</tr>                              
+					</table>					
+					<table id="Title"  width="100%">						
+						<tr>
+							<td width="50%">
+								<img src="logoiubh.png" alt="IUBH" style="width:150px"/>
+							</td>
+							<td>
+								<h2>Übersicht</h2>
+							</td>
+						</tr>					
+					</table>
+                                    <table width="100%" id="Menue">
+                                        <tr>
+                                            <td>
+                                                <h:commandButton value="Übersicht" action="Landing Page.xhtml"></h:commandButton>
+                                            </td>
+                                            <td>
+                                                <h:commandButton value="Benutzerverwaltung" ></h:commandButton>
+                                            </td>
+                                            <td>
+                                                <h:commandButton value="Ticketübersicht" ></h:commandButton>
+                                            </td>
+                                            <td>
+                                                <h:commandButton value="Ticketerfassung" action="Erfassungsmaske_JSF.xhtml"></h:commandButton>
+                                            </td>
+                                        </tr>
+                                        
+                                    </table>
+					
+										  				
+				</td>
+			</tr>
+		</table>   
+            </h:form>	
+    </h:body>
+</html>
