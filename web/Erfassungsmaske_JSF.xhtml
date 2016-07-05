@@ -42,32 +42,36 @@
 						<tr>              
 							<td width="15%" >Priorität</td>
 							<td>    
-								<form style="width:266px" >      
-									<select name="Prioritaet" size="1">
-										<option>gering</option>
-										<option>mittel</option>
-										<option>hoch</option>
-         									</select>                    
-								</form>
+
+								
+                                                            <form style="width:266px" >
+                                                                <h:selectOneMenu value="#{gui_TicketErfassen.priority}">
+-        
+                                                                                                 <f:selectItems value= "#{gui_TicketErfassen.priorityList}" />
+-                                                                        </h:selectOneMenu>
+                                                                   </form>
 							</td>
 						</tr>								
 						<tr>
 							<td>Kategorie</td>
 							<td> 
-								<form action="select.htm" style="width:266px">      
-									<select name="Prioritaet" size="1">
-										<option>Anfrage</option>
-										<option>Stoerung</option>
-										<option>Frage</option>
-									</select>									
+								<form style="width:266px">      
+									<h:selectOneMenu value="#{gui_TicketErfassen.category}">
+-        
+                                                                                                 <f:selectItems value= "#{gui_TicketErfassen.categoryList}" />
+-                                                                        </h:selectOneMenu>								
 								</form>      
 							</td>
 						</tr> 							
 						<tr> 
 							<td>Kurs</td> 
 							<td>  
-								<form action="select.htm" style="width:266px">   
-									<select name="Kurs" size="1">
+								<form style="width:266px">
+                                                                        <h:selectOneMenu value="#{gui_TicketErfassen.course}">
+-        
+                                                                            <f:selectItems value= "#{gui_TicketErfassen.courseList}" />
+-                                                                        </h:selectOneMenu>	
+									<!-- <select name="Kurs" size="1">
 										<option>IMT1</option>
 										<option>BWIR</option>
 										<option>BBWL</option>
@@ -91,7 +95,7 @@
 										<option>ISSE</option>
 										<option>BURG</option>
 										<option>BUFG</option>     
-									</select>     
+									</select>  -->   
 								</form>                    
 							</td>  
 						</tr> 

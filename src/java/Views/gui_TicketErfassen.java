@@ -11,6 +11,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.faces.model.SelectItem;
+import javax.annotation.PostConstruct;
 
 /*
 * gui_TicketErfassen
@@ -30,6 +31,7 @@ import javax.faces.model.SelectItem;
 @ManagedBean
 @SessionScoped
 
+
 public class gui_TicketErfassen 
 
 {
@@ -39,26 +41,31 @@ public class gui_TicketErfassen
     String Course;
     String Title;
     String Comment;
-    List<SelectItem> Courses;
+    List<SelectItem> CourseList;
     List<SelectItem> CategoryList;
+    List<SelectItem> PriorityList;
+
     
-    // Prioritäten laden
-    public String GetPriorities()        
+    @PostConstruct
+    public void Init()        
     {
-        String PriorityList;
-        PriorityList = "Foobar";
-        return PriorityList;      
-    }
-    
-    // Kategorie laden
-    public List<SelectItem> GetCategoryList()        
-    {
-        List<SelectItem> CategoryList = new ArrayList<>();
+        // Prioritäten laden
+        PriorityList = new ArrayList<SelectItem>();
+        PriorityList.add(new SelectItem("Gering", "Gering"));
+        PriorityList.add(new SelectItem("Mittel", "Mittel"));
+        PriorityList.add(new SelectItem("Hoch", "Hoch"));
+        // Kategorie laden
+        CategoryList = new ArrayList<SelectItem>();
         CategoryList.add(new SelectItem("Question", "Question"));
         CategoryList.add(new SelectItem("Incident", "Incident"));
         CategoryList.add(new SelectItem("Problem", "Problem"));
-        return CategoryList;      
+        // Kurse laden
+        CourseList = new ArrayList<SelectItem>();
+        CourseList.add(new SelectItem("BFIN01", "BFIN01"));
+        CourseList.add(new SelectItem("BFIN02", "BFIN02"));
+        CourseList.add(new SelectItem("ISEF", "ISEF"));
     }
+    
     // Kurse laden
         public String GetCourses()        
     {
@@ -91,11 +98,15 @@ public class gui_TicketErfassen
     }
     
     // Getter Methoden
-    public List<SelectItem> getCourses()
+    public List<SelectItem> getCourseList()
     {
-    return Courses;
+    return CourseList;
     }
-    public List<SelectItem> getCategorieList()
+    public List<SelectItem> getPriorityList()
+    {
+    return PriorityList;
+    }
+    public List<SelectItem> getCategoryList()
     {
     return CategoryList;
     }
@@ -121,9 +132,9 @@ public class gui_TicketErfassen
     }
     
     // Setter Methoden
-    public void setCourses()
+    public void setCourse()
     {
-    this.Courses = Courses;
+    this.Course = Course;
     }
     public void setPriority(String Priority) 
     {
