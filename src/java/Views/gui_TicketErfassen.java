@@ -11,6 +11,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.faces.model.SelectItem;
+import javax.annotation.PostConstruct;
 
 /*
 * gui_TicketErfassen
@@ -30,6 +31,7 @@ import javax.faces.model.SelectItem;
 @ManagedBean
 @SessionScoped
 
+
 public class gui_TicketErfassen 
 
 {
@@ -41,17 +43,13 @@ public class gui_TicketErfassen
     String Comment;
     List<SelectItem> Courses;
     List<SelectItem> CategoryList;
+    List<SelectItem> PriorityList;
     
     // Prioritäten laden
-    public String GetPriorities()        
-    {
-        String PriorityList;
-        PriorityList = "Foobar";
-        return PriorityList;      
-    }
+    
     
     // Kategorie laden
-    public List<SelectItem> GetCategoryList()        
+    public List<SelectItem> CategoryList()        
     {
         List<SelectItem> CategoryList = new ArrayList<>();
         CategoryList.add(new SelectItem("Question", "Question"));
@@ -59,6 +57,22 @@ public class gui_TicketErfassen
         CategoryList.add(new SelectItem("Problem", "Problem"));
         return CategoryList;      
     }
+    
+    @PostConstruct
+    public void Init()        
+    {
+        PriorityList = new ArrayList<SelectItem>();
+        PriorityList.add(new SelectItem("Gering", "Gering"));
+        PriorityList.add(new SelectItem("Mittel", "Mittel"));
+        PriorityList.add(new SelectItem("Hoch", "Hoch"));
+        
+        CategoryList = new ArrayList<SelectItem>();
+        CategoryList.add(new SelectItem("Question", "Question"));
+        CategoryList.add(new SelectItem("Incident", "Incident"));
+        CategoryList.add(new SelectItem("Problem", "Problem"));
+             
+    }
+    
     // Kurse laden
         public String GetCourses()        
     {
@@ -95,7 +109,11 @@ public class gui_TicketErfassen
     {
     return Courses;
     }
-    public List<SelectItem> getCategorieList()
+    public List<SelectItem> getPriorityList()
+    {
+    return PriorityList;
+    }
+    public List<SelectItem> getCategoryList()
     {
     return CategoryList;
     }

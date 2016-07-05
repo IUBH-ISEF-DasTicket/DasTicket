@@ -42,24 +42,24 @@
 						<tr>              
 							<td width="15%" >Priorität</td>
 							<td>    
-								<form style="width:266px" >      
-									<select name="Prioritaet" size="1">
-										<option>gering</option>
-										<option>mittel</option>
-										<option>hoch</option>
-         									</select>                    
-								</form>
+
+								
+                                                            <form style="width:266px" >
+                                                                <h:selectOneMenu value="#{gui_TicketErfassen.priority}">
+-        
+                                                                                                 <f:selectItems value= "#{gui_TicketErfassen.priorityList}" />
+-                                                                        </h:selectOneMenu>
+                                                                   </form>
 							</td>
 						</tr>								
 						<tr>
 							<td>Kategorie</td>
 							<td> 
-								<form action="select.htm" style="width:266px">      
-									<select name="Prioritaet" size="1">
-										<option>Anfrage</option>
-										<option>Stoerung</option>
-										<option>Frage</option>
-									</select>									
+								<form style="width:266px">      
+									<h:selectOneMenu value="#{gui_TicketErfassen.category}">
+-        
+                                                                                                 <f:selectItems value= "#{gui_TicketErfassen.categoryList}" />
+-                                                                        </h:selectOneMenu>								
 								</form>      
 							</td>
 						</tr> 							
