@@ -45,7 +45,7 @@ public class gui_TicketErfassen
     List<SelectItem> CategoryList;
     List<SelectItem> PriorityList;
 
-    
+
     @PostConstruct
     public void Init()        
     {
@@ -63,7 +63,7 @@ public class gui_TicketErfassen
         CourseList = new ArrayList<SelectItem>();
         CourseList.add(new SelectItem("BFIN01", "BFIN01"));
         CourseList.add(new SelectItem("BFIN02", "BFIN02"));
-        CourseList.add(new SelectItem("ISEF", "ISEF"));
+        CourseList.add(new SelectItem("ISEF", "ISEF"));     
     }
     
     // Kurse laden
