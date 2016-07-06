@@ -46,9 +46,9 @@
 								
                                                             <form style="width:266px" >
                                                                 <h:selectOneMenu value="#{gui_TicketErfassen.priority}">
--        
+      
                                                                                                  <f:selectItems value= "#{gui_TicketErfassen.priorityList}" />
--                                                                        </h:selectOneMenu>
+                                                                       </h:selectOneMenu>
                                                                    </form>
 							</td>
 						</tr>								
@@ -57,9 +57,9 @@
 							<td> 
 								<form style="width:266px">      
 									<h:selectOneMenu value="#{gui_TicketErfassen.category}">
--        
+        
                                                                                                  <f:selectItems value= "#{gui_TicketErfassen.categoryList}" />
--                                                                        </h:selectOneMenu>								
+                                                                        </h:selectOneMenu>								
 								</form>      
 							</td>
 						</tr> 							
@@ -68,52 +68,28 @@
 							<td>  
 								<form style="width:266px">
                                                                         <h:selectOneMenu value="#{gui_TicketErfassen.course}">
--        
+
                                                                             <f:selectItems value= "#{gui_TicketErfassen.courseList}" />
--                                                                        </h:selectOneMenu>	
-									<!-- <select name="Kurs" size="1">
-										<option>IMT1</option>
-										<option>BWIR</option>
-										<option>BBWL</option>
-										<option>IGIS</option>
-										<option>IOBP</option>
-										<option>IMT2</option>
-										<option>IPWA</option>
-										<option>IREN</option>
-										<option>BKLR</option>
-										<option>BFIN</option>
-										<option>BREC</option>
-										<option>IDBS</option>
-										<option>ISPE</option>
-										<option>IQSS</option>
-										<option>BDMG</option>
-										<option>BPUE</option>
-										<option>ISEFG</option>
-										<option>IPMG</option>
-										<option>IAMG</option>
-										<option>BBLO</option>
-										<option>ISSE</option>
-										<option>BURG</option>
-										<option>BUFG</option>     
-									</select>  -->   
+                                                                        </h:selectOneMenu>	
+									
 								</form>                    
 							</td>  
 						</tr> 
 						<tr>
 							<td>Titel</td>
 							<td> 
-								<input style="width:100%;height:100%" type="text" size="80" required="true" label="Titel"></input> 
+                                                            <h:inputText style="width:100%;height:100%" value="#{gui_TicketErfassen.title}" size="80" required="true" label="Titel"></h:inputText> 
 							</td>  
 						</tr> 						
 						<tr>
 							<td>Kommentare</td>
 							<td>  
-								<textarea style="width:100%;height:100%" rows="5" cols="80" required="true" label="Kommentare"></textarea>   
+                                                            <h:inputTextarea value="#{gui_TicketErfassen.comment}" style="width:100%;height:100%" rows="5" cols="80" required="true" label="Kommentare"></h:inputTextarea>   
 							</td>          
 						</tr>						
 						<tr>
                                                     <td>                                                    
-                                                    <h:commandButton value="Speichern"></h:commandButton>
+                                                    <h:commandButton value="Speichern" action="#{gui_TicketErfassen.Save}"></h:commandButton>
                                                     </td>                                                         
 						</tr> 												
 						<tr>

@@ -49,30 +49,45 @@ public class gui_TicketErfassen
     @PostConstruct
     public void Init()        
     {
+        
+        String Result;
+        Integer i;
+           
         // Prioritäten laden
         PriorityList = new ArrayList<SelectItem>();
-        PriorityList.add(new SelectItem("Gering", "Gering"));
-        PriorityList.add(new SelectItem("Mittel", "Mittel"));
-        PriorityList.add(new SelectItem("Hoch", "Hoch"));
+        i = 1;
+        Result = "Start";
+        while (Result != null ) 
+        {   
+          Result = DBController.GetData("priority", "name", "where id= '" + i + "'");
+          PriorityList.add(new SelectItem(Result, Result));
+          i++;
+        }
+      
         // Kategorie laden
         CategoryList = new ArrayList<SelectItem>();
-        CategoryList.add(new SelectItem("Question", "Question"));
-        CategoryList.add(new SelectItem("Incident", "Incident"));
-        CategoryList.add(new SelectItem("Problem", "Problem"));
+        i = 1;
+        Result = "Start";
+        while (Result != null ) 
+        {   
+          Result = DBController.GetData("category", "name", "where id= '" + i + "'");
+          CategoryList.add(new SelectItem(Result, Result));
+          i++;
+        }
+        
         // Kurse laden
         CourseList = new ArrayList<SelectItem>();
-        CourseList.add(new SelectItem("BFIN01", "BFIN01"));
-        CourseList.add(new SelectItem("BFIN02", "BFIN02"));
-        CourseList.add(new SelectItem("ISEF", "ISEF"));     
+        i = 1;
+        Result = "Start";
+        while (Result != null ) 
+        {   
+          Result = DBController.GetData("courses", "name", "where id= '" + i + "'");
+          CourseList.add(new SelectItem(Result, Result));
+        i++;
+        }
+   
     }
-    
-    // Kurse laden
-        public String GetCourses()        
-    {
-        String CoursesList;
-        CoursesList = "Foobar";
-        return CoursesList;      
-    }
+   
         
     // Logout
         public String Logout()        
@@ -86,8 +101,14 @@ public class gui_TicketErfassen
     public String Save()        
     {
         String Result;
-        Result = "Foobar";
-        return Result;      
+
+        FacesContext.getCurrentInstance().addMessage(
+            null,new FacesMessage(FacesMessage.SEVERITY_WARN,
+			"DEBUG",
+			""));
+                
+        Result = "Erfassungsmaske_JSF";
+        return Result;    
     }
     // Abbrechen
         public String Cancel()        
@@ -132,10 +153,6 @@ public class gui_TicketErfassen
     }
     
     // Setter Methoden
-    public void setCourse()
-    {
-    this.Course = Course;
-    }
     public void setPriority(String Priority) 
     {
         this.Priority = Priority;
