@@ -58,7 +58,7 @@ CREATE TABLE USERGROUP
 );
 
 -- Usergroup füllen
-INSERT INTO CATEGORY (name) VALUES
+INSERT INTO USERGROUP (name) VALUES
 	('Tutor'),
     ('Student'),
     ('Admin');
