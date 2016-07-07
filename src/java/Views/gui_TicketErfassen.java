@@ -1,13 +1,13 @@
 
 package Views;
 
-import java.util.List;
 import Database.DBController;
+import static Database.DBController.GetData;
+import static Database.DBController.InsertData;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.application.FacesMessage;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.faces.model.SelectItem;
@@ -101,10 +101,29 @@ public class gui_TicketErfassen
     public String Save()        
     {
         String Result;
-
+        Integer ID_Cat;
+        Integer ID_Cou;
+        Integer ID_Pri;
+        Integer ID_Use1;
+        Integer ID_Use2;
+        Integer ID_Sta;
+        
+        // Auslesen der ID's
+       // ID_Cat = Integer.parseInt(DBController.GetData ("CATEGORY", "id", "WHERE name='" + Category + "'"));
+       // ID_Cou = Integer.parseInt(DBController.GetData ("COURSES", "id", "WHERE name='" + Course + "'"));
+       // ID_Sta = Integer.parseInt(DBController.GetData ("STATE", "id", "WHERE name='New'"));
+       // ID_Pri = Integer.parseInt(DBController.GetData ("PRIORITY", "id", "WHERE name='" + Priority + "'"));
+        // TODO: Userverwaltung
+        ID_Use1 = 1;
+        ID_Use2 = 2;
+        
+        // Speichern der Werte
+        //DBController.InsertData("Ticket ('priority', 'title', 'id_category', 'id_courses', 'id_user', 'id_user2', 'id_state')", 
+          //                               "'" + ID_Pri + "','" + Title + "','" + ID_Cat + "','" + ID_Cou + "','" + ID_Use1 + "','" + ID_Use2 + "','" + ID_Sta + "'");
+        
         FacesContext.getCurrentInstance().addMessage(
             null,new FacesMessage(FacesMessage.SEVERITY_WARN,
-			"DEBUG",
+			"DEBUG:" + Course + " " + Title + " " + Comment + " " + Priority + " " + Category ,
 			""));
                 
         Result = "Erfassungsmaske_JSF";
