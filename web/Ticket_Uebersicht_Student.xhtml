@@ -23,7 +23,7 @@
 							<td id="Zeit">				
 							</td>
 							<td> Eingeloggt als: [USER.name] 								 
-                                                                <h:commandButton value="Ausloggen" action="#{gui_TicketErfassen.Logout}"></h:commandButton>
+									<h:commandButton value="Ausloggen" action="#{gui_TicketErfassen.Logout}"></h:commandButton>
                                                                 
 							</td>
 						</tr>
@@ -110,11 +110,21 @@
 								</form>
 							</td>
 							<td>
-								Kunde
+								Zuordnung
 							</td>
 							<td>
 								<input style="width:60%;height:100%" type="text" size="80"></input> 
 							</td>
+						</tr>
+						<tr>
+						<td>
+						</td>
+						<td>
+						</td>
+						<td colspan = "2">
+						<h:commandButton value="Suchen" ></h:commandButton>
+						<h:commandButton value="Filter zurücksetzen"></h:commandButton>
+						</td>
 						</tr>
 					</table>
 					<table width="100%">
@@ -145,47 +155,71 @@
 						</tr>
 					</table>
 					
-					<table width="100%">
-						<tr>
-							<td>
-							<b>ID</b>
-							</td>
-							<td>
-							<b>Priorität</b>
-							</td>
-							<td>
-							<b>Kategorie</b>
-							</td>
-							<td>
-							<b>Status</b>
-							</td>
-							<td>
-							
-							</td>
-							<td>
-							
-							</td>
-						</tr>
-						<tr>
-							<td>
-							[TICKET.id]
-							</td>
-							<td>
-							[TICKET.priority]
-							</td>
-							<td>
-							[TICKET.category]
-							</td>
-							<td>
-							[TICKET.status]
-							</td>
-							<td>
-							<img src="delete_icon.png" alt="delete"/>
-							</td>
-							<td>
-							<img src="edit_icon.png" alt="edit"/>
-							</td>
-						</tr>
+					<table width="100%" class = "result">
+						<thead>
+							<tr>
+								<td>
+								<b>ID</b>
+								</td>
+								<td>
+								<b>Kurs</b>
+								</td>
+								<td>
+								<b>Titel</b>
+								</td>
+								<td>
+								<b>Status</b>
+								</td>
+								<td>
+								
+								</td>
+								<td>
+								
+								</td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>
+								[TICKET.id]
+								</td>
+								<td>
+								[TICKET.priority]
+								</td>
+								<td>
+								[TICKET.category]
+								</td>
+								<td>
+								[TICKET.status]
+								</td>
+								<td>
+								<img src="delete_icon.png" alt="delete"/>
+								</td>
+								<td>
+								<img src="edit_icon.png" alt="edit"/>
+								</td>
+							</tr>
+							<tr>
+								<td>
+								[TICKET.id]
+								</td>
+								<td>
+								[TICKET.priority]
+								</td>
+								<td>
+								[TICKET.category]
+								</td>
+								<td>
+								[TICKET.status]
+								</td>
+								<td>
+								<img src="delete_icon.png" alt="delete"/>
+								</td>
+								<td>
+								<img src="edit_icon.png" alt="edit"/>
+								</td>
+							</tr>
+						</tbody>
 					</table>
 					
 				</td>

@@ -16,7 +16,7 @@ and open the template in the editor.
 
 table {border-width:1px; border-color:white; border-style:solid; border-spacing: 5px;padding:5px;}
 body, select, input  {font-family:Arial; font-size: 15px;}
-textarea, input, select {background: #E0F2F7;}
+textarea, input, select {background: #D7ECEB;}
 select {width:50%}
 
 textarea.WorknoteRO  {background: #E6E6E6;}
@@ -35,3 +35,8 @@ textarea.WorknoteRO  {background: #E6E6E6;}
 	margin-left: 10px;
 	font-size: 12px
 }
+
+table.result {border-collapse: collapse;}
+table.result td {border: 1px solid black;padding: 5px;} 
+table.result thead {border: 1px solid black;padding: 5px; background-color: #E6E6E6}
+
