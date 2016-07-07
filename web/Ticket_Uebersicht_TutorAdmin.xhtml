@@ -1,0 +1,230 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"> 
+
+    <h:head>
+        <title>Erfassungsmaske</title>
+        <link rel="stylesheet" media="screen,projection"
+        title="Standardstylesheet" href="style.css"
+        type="text/css" />
+    </h:head>
+    
+	<script type="text/javascript" language="javascript" src="TimeFunctions.js"></script>
+	
+    <h:body onload="startTime()">
+        <h:form>
+		<table style="max-width:1000px;" id="Table_Wrap" width="100%">
+			<tr>
+				<td>				
+					<table id = "Header" width="100%">
+						<tr>
+							<td id="Zeit">				
+							</td>
+							<td> Eingeloggt als: [USER.name] 								 
+                                <h:commandButton value="Ausloggen" action="#{gui_TicketErfassen.Logout}"></h:commandButton>
+                                                                
+							</td>
+						</tr>
+					</table>					
+					<table id="Title"  width="100%">						
+						<tr>
+							<td width="50%">
+								<img src="logoiubh.png" alt="IUBH" style="width:150px"/>
+							</td>
+							<td>
+								<h2>Ticket erfassen</h2>
+							</td>
+						</tr>					
+					</table>					
+					
+					<table width="100%" border="1">
+						<tr>
+							<td width="20%">
+								ID
+							</td>
+							<td width="30%">
+								<input style="width:60%;height:100%" type="text"></input> 
+							</td>
+							<td width="20%"></td>
+							<td width="30%"></td>
+						</tr>
+						<tr>
+							<td>
+								Priorität
+							</td>
+							<td>
+								<form action="select.htm" style="width:100%">      
+									<select name="Prioritaet" size="1">
+										<option>...</option>
+										<option>...</option>
+										<option>...</option>
+									</select>									
+								</form>
+							</td>
+							<td>
+								Erstellungsdatum
+							</td>
+							<td>
+								<input style="width:60%;height:100%" type="text"></input> 
+							</td>
+						</tr>
+						<tr>
+							<td>
+								Kategorie
+							</td>
+							<td>
+								<form action="select.htm" style="width:100%">      
+									<select name="Prioritaet" size="1">
+										<option>...</option>
+										<option>...</option>
+										<option>...</option>
+									</select>									
+								</form> 
+							</td>
+							<td>
+								Status
+							</td>
+							<td>
+								<form action="select.htm" style="width:100%">      
+									<select name="Prioritaet" size="1">
+										<option>...</option>
+										<option>...</option>
+										<option>...</option>
+									</select>									
+								</form>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								Kurs
+							</td>
+							<td>
+								<form action="select.htm" style="width:100%">      
+									<select name="Prioritaet" size="1">
+										<option>...</option>
+										<option>...</option>
+										<option>...</option>
+									</select>									
+								</form>
+							</td>
+							<td>
+								Kunde
+							</td>
+							<td>
+								<input style="width:60%;height:100%" type="text" size="80"></input> 
+							</td>
+						</tr>
+						<tr>
+						<td>
+						</td>
+						<td>
+						</td>
+						<td colspan = "2">
+						<h:commandButton value="Suchen" ></h:commandButton>
+						<h:commandButton value="Filter zurücksetzen"></h:commandButton>
+						</td>
+						</tr>
+					</table>
+					<table width="100%">
+						<tr>
+							<td>
+								<h2>Ergebnisse</h2>
+							</td>
+							<td>
+								Sortieren nach 
+								<form action="select.htm" style="width:100%">      
+									<select name="Prioritaet" size="1">
+										<option>...</option>
+										<option>...</option>
+										<option>...</option>
+									</select>									
+								</form>
+							</td>
+							<td>
+								Anzahl Ergebnisse
+								<form action="select.htm" style="width:100%">      
+									<select name="Prioritaet" size="1">
+										<option>50</option>
+										<option>100</option>
+										<option>200</option>
+									</select>									
+								</form>
+							</td>
+						</tr>
+					</table>
+					
+					<table width="100%" class = "result">
+						<thead>
+							<tr>
+								<td>
+								<b>ID</b>
+								</td>
+								<td>
+								<b>Priorität</b>
+								</td>
+								<td>
+								<b>Kategorie</b>
+								</td>
+								<td>
+								<b>Status</b>
+								</td>
+								<td>
+								
+								</td>
+								<td>
+								
+								</td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>
+								[TICKET.id]
+								</td>
+								<td>
+								[TICKET.priority]
+								</td>
+								<td>
+								[TICKET.category]
+								</td>
+								<td>
+								[TICKET.status]
+								</td>
+								<td>
+								<img src="delete_icon.png" alt="delete"/>
+								</td>
+								<td>
+								<img src="edit_icon.png" alt="edit"/>
+								</td>
+							</tr>
+							<tr>
+								<td>
+								[TICKET.id]
+								</td>
+								<td>
+								[TICKET.priority]
+								</td>
+								<td>
+								[TICKET.category]
+								</td>
+								<td>
+								[TICKET.status]
+								</td>
+								<td>
+								<img src="delete_icon.png" alt="delete"/>
+								</td>
+								<td>
+								<img src="edit_icon.png" alt="edit"/>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					
+				</td>
+			</tr>
+		</table>   
+            </h:form>	
+    </h:body>
+</html>
