@@ -23,7 +23,7 @@
 							<td id="Zeit">				
 							</td>
 							<td> Eingeloggt als: [USER.name] 								 
-                                                                <h:commandButton value="Ausloggen" action="#{gui_TicketErfassen.Logout}"></h:commandButton>
+                                                             <h:commandButton value="Ausloggen" action="#{gui_TicketErfassen.Logout}"></h:commandButton>
                                                                 
 							</td>
 						</tr>
@@ -44,57 +44,66 @@
 							<td>    
 
 								
-                                                            <form style="width:266px" >
-                                                                <h:selectOneMenu value="#{gui_TicketErfassen.priority}">
+                                                            <!--<form style="width:266px" >-->
+                                                                <h:selectOneMenu id="Priority" value="#{gui_TicketErfassen.priority}">
       
                                                                                                  <f:selectItems value= "#{gui_TicketErfassen.priorityList}" />
                                                                        </h:selectOneMenu>
-                                                                   </form>
+                                                                   <!--</form>-->
 							</td>
 						</tr>								
 						<tr>
 							<td>Kategorie</td>
 							<td> 
-								<form style="width:266px">      
-									<h:selectOneMenu value="#{gui_TicketErfassen.category}">
-        
+								<!--<form style="width:266px" >-->
+                                                                <h:selectOneMenu id="Category" value="#{gui_TicketErfassen.category}">
+      
                                                                                                  <f:selectItems value= "#{gui_TicketErfassen.categoryList}" />
-                                                                        </h:selectOneMenu>								
-								</form>      
+                                                                </h:selectOneMenu>
+                                                                   <!--</form>-->
 							</td>
 						</tr> 							
 						<tr> 
 							<td>Kurs</td> 
 							<td>  
-								<form style="width:266px">
-                                                                        <h:selectOneMenu value="#{gui_TicketErfassen.course}">
+								<!--<form style="width:266px">-->
+                                                                    
+                                                                        <h:selectOneMenu id="Course" value="#{gui_TicketErfassen.course}">
 
                                                                             <f:selectItems value= "#{gui_TicketErfassen.courseList}" />
                                                                         </h:selectOneMenu>	
-									
-								</form>                    
+                                                                    
+								<!--</form>     -->               
 							</td>  
 						</tr> 
 						<tr>
 							<td>Titel</td>
-							<td> 
+							<td>
+                                                        
                                                             <h:inputText style="width:100%;height:100%" value="#{gui_TicketErfassen.title}" size="80" required="true" label="Titel"></h:inputText> 
-							</td>  
+                                                           
+                                                        </td>  
 						</tr> 						
 						<tr>
 							<td>Kommentare</td>
 							<td>  
+                                                            
                                                             <h:inputTextarea value="#{gui_TicketErfassen.comment}" style="width:100%;height:100%" rows="5" cols="80" required="true" label="Kommentare"></h:inputTextarea>   
+                                                           
 							</td>          
 						</tr>						
 						<tr>
-                                                    <td>                                                    
+                                                    <td>
+                                                       
                                                     <h:commandButton value="Speichern" action="#{gui_TicketErfassen.Save}"></h:commandButton>
+                                                    
                                                     </td>                                                         
 						</tr> 												
 						<tr>
-                                                    <td>                                                         
+                                                    <td>    
+                                                        
                                                         <h:commandButton value="Abbrechen" action="#{gui_TicketErfassen.Cancel}"></h:commandButton>
+                                                        
                                                     </td>   
                                                         
 						</tr> 						

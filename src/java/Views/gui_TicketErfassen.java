@@ -108,22 +108,23 @@ public class gui_TicketErfassen
         Integer ID_Use2;
         Integer ID_Sta;
         
-        // Auslesen der ID's
-       // ID_Cat = Integer.parseInt(DBController.GetData ("CATEGORY", "id", "WHERE name='" + Category + "'"));
-       // ID_Cou = Integer.parseInt(DBController.GetData ("COURSES", "id", "WHERE name='" + Course + "'"));
-       // ID_Sta = Integer.parseInt(DBController.GetData ("STATE", "id", "WHERE name='New'"));
-       // ID_Pri = Integer.parseInt(DBController.GetData ("PRIORITY", "id", "WHERE name='" + Priority + "'"));
+        //Auslesen der ID's
+        ID_Cat = Integer.parseInt(DBController.GetData ("CATEGORY", "id", "WHERE name='" + Category + "'"));
+        ID_Cou = Integer.parseInt(DBController.GetData ("COURSES", "id", "WHERE name='" + Course + "'"));
+        ID_Sta = Integer.parseInt(DBController.GetData ("STATE", "id", "WHERE name='New'"));
+        ID_Pri = Integer.parseInt(DBController.GetData ("PRIORITY", "id", "WHERE name='" + Priority + "'"));
         // TODO: Userverwaltung
         ID_Use1 = 1;
         ID_Use2 = 2;
         
         // Speichern der Werte
-        //DBController.InsertData("Ticket ('priority', 'title', 'id_category', 'id_courses', 'id_user', 'id_user2', 'id_state')", 
-          //                               "'" + ID_Pri + "','" + Title + "','" + ID_Cat + "','" + ID_Cou + "','" + ID_Use1 + "','" + ID_Use2 + "','" + ID_Sta + "'");
+        DBController.InsertData("Ticket (priority, title, id_category, id_courses, id_user, id_user2, id_state)", 
+                                         "'" + ID_Pri + "','" + Title + "','" + ID_Cat + "','" + ID_Cou + "','" + ID_Use1 + "','" + ID_Use2 + "','" + ID_Sta + "'");
         
         FacesContext.getCurrentInstance().addMessage(
             null,new FacesMessage(FacesMessage.SEVERITY_WARN,
-			"DEBUG:" + Course + " " + Title + " " + Comment + " " + Priority + " " + Category ,
+			"DEBUG:" + Course + " " + Title + " " + Comment + " " + Priority + " " + Category + "      " + "DEBUG 2: " + "Ticket ('priority', 'title', 'id_category', 'id_courses', 'id_user', 'id_user2', 'id_state')" + 
+                                         "'" + ID_Pri + "','" + Title + "','" + ID_Cat + "','" + ID_Cou + "','" + ID_Use1 + "','" + ID_Use2 + "','" + ID_Sta + "'",
 			""));
                 
         Result = "Erfassungsmaske_JSF";
