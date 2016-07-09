@@ -2,7 +2,7 @@
 * CreateSchema.sql
 * Erstellung des Datenbankschema
 *
-* Version 1.2
+* Version 1.3
 *
 * Ersteller: David Sterz
 * Erstellungsdatum: 18.06.2016
@@ -19,6 +19,10 @@
 * Editiert von: David
 * Editiert am: 03.07.16
 * Info/Notizen: Priority und Werte der Tabellen hinzugefügt
+*
+* Editiert von: David
+* Editiert am: 09.07.16
+* Info/Notizen: Foreign Key Priority + Ticket Description
 */
 
 -- Variablendeklaration
@@ -70,6 +74,13 @@ CREATE TABLE STATE
     name CHAR(20) not null
 );
 
+-- State füllen
+INSERT INTO State (name) VALUES
+	('New'),
+    ('In Progess'),
+    ('Pending Close'),
+	('Closed');
+    
 -- Settings Tabelle
 CREATE TABLE SETTINGS
 (
@@ -190,32 +201,49 @@ INSERT INTO COURSES (name) VALUES
 	('BBAK02-Kolloquium')
 ;
 
+-- Priority Tabelle
+CREATE TABLE PRIORITY
+(
+	id INT(32) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    name CHAR(20) not null
+);
+
+-- Priority füllen
+INSERT INTO PRIORITY (name) VALUES
+	('High'),
+    ('Medium'),
+    ('Low');
+
 -- Ticket Tabelle
 CREATE TABLE TICKET 
 (
-	id INT(32) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-	priority INT(32),
-	title CHAR(50) not null,
+    id INT(32) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    title CHAR(50) not null,
+    description TEXT not null,
+    id_priority INT(32) UNSIGNED,
     id_category INT(32) UNSIGNED,
     id_courses INT(32) UNSIGNED,
     id_user INT(32) UNSIGNED,
     id_user2 INT(32) UNSIGNED,
     id_state INT(32) UNSIGNED,
 	FOREIGN KEY (id_category) 
-		REFERENCES CATEGORY(id)
-		ON DELETE CASCADE,
+				REFERENCES CATEGORY(id)
+				ON DELETE CASCADE,
 	FOREIGN KEY (id_courses) 
-		REFERENCES COURSES(id)
-		ON DELETE CASCADE,
+				REFERENCES COURSES(id)
+				ON DELETE CASCADE,
 	FOREIGN KEY (id_user) 
-        REFERENCES USER(id)
-		ON DELETE CASCADE,
+                REFERENCES USER(id)
+				ON DELETE CASCADE,
 	FOREIGN KEY (id_user2)
-        REFERENCES USER(id)
-		ON DELETE CASCADE,
+                REFERENCES USER(id)
+				ON DELETE CASCADE,
 	FOREIGN KEY (id_state) 
-        REFERENCES STATE(id)
-        ON DELETE CASCADE
+				REFERENCES STATE(id)
+				ON DELETE CASCADE,
+	FOREIGN KEY (id_priority) 
+                REFERENCES PRIORITY(id)
+                ON DELETE CASCADE
 );
 
 -- Worknotes Tabelle
@@ -252,16 +280,4 @@ CREATE TABLE REPORTEDTIME
 		ON DELETE CASCADE
 );
 
--- Priority Tabelle
-CREATE TABLE PRIORITY
-(
-	id INT(32) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    name CHAR(20) not null
-);
-
--- Priority füllen
-INSERT INTO PRIORITY (name) VALUES
-	('High'),
-    ('Medium'),
-    ('Low');
 
