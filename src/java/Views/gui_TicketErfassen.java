@@ -2,8 +2,6 @@
 package Views;
 
 import Database.DBController;
-import static Database.DBController.GetData;
-import static Database.DBController.InsertData;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
@@ -101,6 +99,7 @@ public class gui_TicketErfassen
     public String Save()        
     {
         String Result;
+        String Status;
         Integer ID_Cat;
         Integer ID_Cou;
         Integer ID_Pri;
@@ -114,17 +113,16 @@ public class gui_TicketErfassen
         ID_Sta = Integer.parseInt(DBController.GetData ("STATE", "id", "WHERE name='New'"));
         ID_Pri = Integer.parseInt(DBController.GetData ("PRIORITY", "id", "WHERE name='" + Priority + "'"));
         // TODO: Userverwaltung
-        ID_Use1 = 1;
-        ID_Use2 = 2;
+        ID_Use1 = 4;
+        ID_Use2 = 5;
         
         // Speichern der Werte
-        DBController.InsertData("Ticket (priority, title, id_category, id_courses, id_user, id_user2, id_state)", 
-                                         "'" + ID_Pri + "','" + Title + "','" + ID_Cat + "','" + ID_Cou + "','" + ID_Use1 + "','" + ID_Use2 + "','" + ID_Sta + "'");
+        Status = DBController.InsertData("Ticket (id_priority, title, description, id_category, id_courses, id_user, id_user2, id_state)", 
+                                         "'" + ID_Pri + "','" + Title + "','" + Comment + "','" + ID_Cat + "','" + ID_Cou + "','" + ID_Use1 + "','" + ID_Use2 + "','" + ID_Sta + "'");
         
         FacesContext.getCurrentInstance().addMessage(
             null,new FacesMessage(FacesMessage.SEVERITY_WARN,
-			"DEBUG:" + Course + " " + Title + " " + Comment + " " + Priority + " " + Category + "      " + "DEBUG 2: " + "Ticket ('priority', 'title', 'id_category', 'id_courses', 'id_user', 'id_user2', 'id_state')" + 
-                                         "'" + ID_Pri + "','" + Title + "','" + ID_Cat + "','" + ID_Cou + "','" + ID_Use1 + "','" + ID_Use2 + "','" + ID_Sta + "'",
+			"STATUS: " + Status,
 			""));
                 
         Result = "Erfassungsmaske_JSF";
