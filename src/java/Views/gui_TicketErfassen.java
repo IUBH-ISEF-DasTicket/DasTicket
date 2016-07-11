@@ -113,8 +113,8 @@ public class gui_TicketErfassen
         ID_Sta = Integer.parseInt(DBController.GetData ("STATE", "id", "WHERE name='New'"));
         ID_Pri = Integer.parseInt(DBController.GetData ("PRIORITY", "id", "WHERE name='" + Priority + "'"));
         // TODO: Userverwaltung
-        ID_Use1 = 4;
-        ID_Use2 = 5;
+        ID_Use1 = 1;
+        ID_Use2 = 2;
         
         // Speichern der Werte
         Status = DBController.InsertData("Ticket (id_priority, title, description, id_category, id_courses, id_user, id_user2, id_state)", 
