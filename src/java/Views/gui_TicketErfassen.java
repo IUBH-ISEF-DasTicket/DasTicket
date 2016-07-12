@@ -103,8 +103,8 @@ public class gui_TicketErfassen
         Integer ID_Cat;
         Integer ID_Cou;
         Integer ID_Pri;
-        Integer ID_Use1;
-        Integer ID_Use2;
+        Integer ID_User;
+        Integer ID_Admin;
         Integer ID_Sta;
         
         //Auslesen der ID's
@@ -112,13 +112,24 @@ public class gui_TicketErfassen
         ID_Cou = Integer.parseInt(DBController.GetData ("COURSES", "id", "WHERE name='" + Course + "'"));
         ID_Sta = Integer.parseInt(DBController.GetData ("STATE", "id", "WHERE name='New'"));
         ID_Pri = Integer.parseInt(DBController.GetData ("PRIORITY", "id", "WHERE name='" + Priority + "'"));
-        // TODO: Userverwaltung
-        ID_Use1 = 1;
-        ID_Use2 = 2;
+        ID_Admin = Integer.parseInt(DBController.GetData ("Courses", "id_user", "WHERE id = " + ID_Cou));
         
+        // Wartung wenn kein zugewiesener Tutor am Kurs 
+        if (ID_Admin == 1 && Course.equalsIgnoreCase("#Allgemein") == false)
+        {
+            FacesContext.getCurrentInstance().addMessage(
+            null,new FacesMessage(FacesMessage.SEVERITY_WARN,
+			"ACHTUNG: Kein zugewiesener Tutor am Kurs " + Course,
+			""));
+            
+        }
+        
+        // TODO: Userverwaltung
+        ID_User = 1;
+     
         // Speichern der Werte
         Status = DBController.InsertData("Ticket (id_priority, title, description, id_category, id_courses, id_user, id_user2, id_state)", 
-                                         "'" + ID_Pri + "','" + Title + "','" + Comment + "','" + ID_Cat + "','" + ID_Cou + "','" + ID_Use1 + "','" + ID_Use2 + "','" + ID_Sta + "'");
+                                         "'" + ID_Pri + "','" + Title + "','" + Comment + "','" + ID_Cat + "','" + ID_Cou + "','" + ID_User + "','" + ID_Admin + "','" + ID_Sta + "'");
         
         FacesContext.getCurrentInstance().addMessage(
             null,new FacesMessage(FacesMessage.SEVERITY_WARN,

@@ -2,7 +2,7 @@
 * CreateSchema.sql
 * Erstellung des Datenbankschema
 *
-* Version 1.3
+* Version 1.5
 *
 * Ersteller: David Sterz
 * Erstellungsdatum: 18.06.2016
@@ -23,6 +23,10 @@
 * Editiert von: David
 * Editiert am: 09.07.16
 * Info/Notizen: Foreign Key Priority + Ticket Description
+*
+* Editiert von: David
+* Editiert am: 12.07.16
+* Info/Notizen: Kursnamen angepasst und #Allgemein Benutzer eingefügt
 */
 
 -- Variablendeklaration
@@ -112,8 +116,8 @@ CREATE TABLE USER
         ON DELETE CASCADE
 );
 
--- Default User für "#Allgemein" Anfragen
-insert into USER (username,password,email,id_usergroup) values ('#Allgemein','#Allgemein2016#','Allgemein@iubh.de',3);
+-- Default User
+insert into USER values (1,'#Allgemein','#Allgemein2016#','Allgemein@iubh.de',3);
 
 -- Courses Tabelle
 CREATE TABLE COURSES
@@ -126,84 +130,86 @@ CREATE TABLE COURSES
 		ON DELETE CASCADE
 );
 -- Kurse einfügen
-INSERT INTO COURSES (name) VALUES
-INSERT INTO COURSES (name) VALUES
-        ('#Allgemein'),
-	('IMT101'),
-	('BWIR01'),
-	('BWIR02'),
-	('BBWL01'),
-	('BBWL02'),
-	('IGIS01'),
-	('IOBP01'),
-	('IOBP02'),
-	('IMT102'),
-	('IPWA01'),
-	('IPWA02'),
-	('IREN01'),
-	('BKLR01'),
-	('BKLR02'),
-	('BFIN01'),
-	('BFIN02'),
-	('BREC01'),
-	('BREC02'),
-	('BMAR01'),
-	('BMAR02'),
-	('IDBS01'),
-	('ISPE01'),
-	('IQSS01'),
-	('BDMG01'),
-	('BPUE01'),
-	('BANW01'),
-	('BURE01'),
-	('ISEF01'),
-	('IPMG01'),
-	('IAMG01'),
-	('BBLO01'),
-	('ISSE01'),
-	('IWNF01'),
-	('IWNF02'),
-	('IWMB01'),
-	('IWMB02'),
-	('IWSM01'),
-	('IWSM02'),
-	('IWBI01'),
-	('IWBI02'),
-	('BWMI01'),
-	('BWMI02'),
-	('BWAV01'),
-	('BWAV02'),
-	('BWAF01'),
-	('BWAF02'),
-	('BWEC01'),
-	('BWEC02'),
-	('BWCN01'),
-	('BWCN02'),
-	('BWBC01'),
-	('BWBC02'),
-	('BWTO01'),
-	('BWTO02'),
-	('BWHO01'),
-	('BWHO02'),
-	('BWSM01'),
-	('BWSM02'),
-	('BWFS01'),
-	('BWFS02'),
-	('BWLM01'),
-	('BWLM02'),
-	('BWGM01'),
-	('BWGM02'),
-	('BWSC01'),
-	('BWSC02'),
-	('BWIM01'),
-	('BWIM02'),
-	('BWEM01'),
-	('BWEM02'),
-	('BUFG01'),
-	('BUGR01'),
-	('BBAK01'),
-	('BBAK02')
+INSERT INTO COURSES (name,id_user) VALUES
+        ('#Allgemein',1),
+	('IMT101',1),
+	('BWIR01',1),
+	('BWIR02',1),
+	('BBWL01',1),
+	('BBWL02',1),
+	('IGIS01',1),
+	('IOBP01',1),
+	('IOBP02',1),
+	('IMT102',1),
+	('IPWA01',1),
+	('IPWA02',1),
+	('IREN01',1),
+	('BKLR01',1),
+	('BKLR02',1),
+	('BFIN01',1),
+	('BFIN02',1),
+	('BREC01',1),
+	('BREC02',1),
+	('BMAR01',1),
+	('BMAR02',1),
+	('IDBS01',1),
+	('ISPE01',1),
+	('IQSS01',1),
+	('BDMG01',1),
+	('BPUE01',1),
+	('BANW01',1),
+	('BURE01',1),
+	('ISEF01',1),
+	('IPMG01',1),
+	('IAMG01',1),
+	('BBLO01',1),
+	('ISSE01',1),
+	('IWNF01',1),
+	('IWNF02',1),
+	('IWMB01',1),
+	('IWMB02',1),
+	('IWSM01',1),
+	('IWSM02',1),
+	('IWBI01',1),
+	('IWBI02',1),
+	('BWMI01',1),
+	('BWMI02',1),
+	('BWAV01',1),
+	('BWAV02',1),
+	('BWAF01',1),
+	('BWAF02',1),
+	('BWEC01',1),
+	('BWEC02',1),
+	('BWCN01',1),
+	('BWCN02',1),
+	('BWBC01',1),
+	('BWBC02',1),
+	('BWTO01',1),
+	('BWTO02',1),
+	('BWHO01',1),
+	('BWHO02',1),
+	('BWSM01',1),
+	('BWSM02',1),
+	('BWFS01',1),
+	('BWFS02',1),
+	('BWLM01',1),
+	('BWLM02',1),
+	('BWGM01',1),
+	('BWGM02',1),
+	('BWSC01',1),
+	('BWSC02',1),
+	('BWIM01',1),
+	('BWIM02',1),
+	('BWEM01',1),
+	('BWEM02',1),
+	('BUFG01',1),
+	('BUGR01',1),
+	('BBAK01',1),
+	('BBAK02',1)
 ;
+
+-- Default User für "#Allgemein" Anfragen
+update courses set id_user = 1 where name = '#Allgemein' and id = 1;
 
 -- Priority Tabelle
 CREATE TABLE PRIORITY
