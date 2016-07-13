@@ -39,6 +39,7 @@ public class gui_TicketErfassen
     String Course;
     String Title;
     String Comment;
+    String Username;
     List<SelectItem> CourseList;
     List<SelectItem> CategoryList;
     List<SelectItem> PriorityList;
@@ -180,6 +181,10 @@ public class gui_TicketErfassen
     {
 	return Comment;
     }
+    public String getUsername() 
+    {
+	return Username;
+    }
     
     // Setter Methoden
     public void setPriority(String Priority) 
@@ -201,6 +206,10 @@ public class gui_TicketErfassen
     public void setComment(String Comment) 
     {
         this.Comment = Comment;
+    }
+        public void setUsername(String Username) 
+    {
+        this.Username = Username;
     }
   
 }

@@ -63,7 +63,7 @@ public class gui_Login implements Serializable
 			"Eingabe OK",
 			""));
             
-            return "Erfassungsmaske_JSF";
+            return "Erfassungsmaske_JSF?faces-redirect=true&includeViewParams=true";
             
             
         } 

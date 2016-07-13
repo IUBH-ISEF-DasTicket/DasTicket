@@ -12,7 +12,11 @@
     </h:head>
     
 	<script type="text/javascript" language="javascript" src="TimeFunctions.js"></script>
-	
+        
+        <f:metadata>
+            <f:viewParam name="Username" value="#{gui_TicketErfassen.username}" />
+    </f:metadata>
+        
     <h:body onload="startTime()">
         <h:form>
 		<table style="max-width:1000px;" id="Table_Wrap" width="100%">
@@ -22,7 +26,7 @@
 						<tr>
 							<td id="Zeit">				
 							</td>
-							<td> Eingeloggt als: [USER.name] 								 
+                                                    <td> Eingeloggt als: #{gui_TicketErfassen.username} 								 
                                                              <h:commandButton value="Ausloggen" action="#{gui_TicketErfassen.Logout}"></h:commandButton>
                                                                 
 							</td>
