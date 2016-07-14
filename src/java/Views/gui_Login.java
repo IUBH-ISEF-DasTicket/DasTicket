@@ -15,13 +15,13 @@ package Views;
 import java.io.Serializable;
 import Database.DBController;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.application.FacesMessage;
 
 // Managed Bean 
 @ManagedBean
-@SessionScoped
+@RequestScoped
 
 
 public class gui_Login implements Serializable
