@@ -21,6 +21,10 @@ import javax.annotation.PostConstruct;
     String Course = Ausgewählter Kurs
     String Title = Titel des Ticket
     String Comment = Notizen
+    String Comment = Aktueller Benutzername
+    List CourseList = Kursliste aus DB
+    List CategoryList = Kategorielist aus DB
+    List PriorityList = Prioritätenliste aus DB
 * <Sichtbarkeit>
 * public
 */ 
@@ -28,7 +32,6 @@ import javax.annotation.PostConstruct;
 // Managed Bean 
 @ManagedBean
 @SessionScoped
-
 
 public class gui_TicketErfassen 
 
@@ -44,11 +47,10 @@ public class gui_TicketErfassen
     List<SelectItem> CategoryList;
     List<SelectItem> PriorityList;
 
-
+    // Initialisieren und laden der Select Einträge
     @PostConstruct
     public void Init()        
     {
-        
         String Result;
         Integer i;
            
@@ -100,8 +102,8 @@ public class gui_TicketErfassen
     // Speichern
     public String Save()        
     {
-        String Result;
         String Status;
+        Boolean Error;
         Integer ID_Cat;
         Integer ID_Cou;
         Integer ID_Pri;
@@ -109,47 +111,73 @@ public class gui_TicketErfassen
         Integer ID_Admin;
         Integer ID_Sta;
         
+        Error = false;
+                
         // Username überprüfen
         if (Username.isEmpty())
         {
+            Error = true;
             FacesContext.getCurrentInstance().addMessage(
             null,new FacesMessage(FacesMessage.SEVERITY_WARN,
 			"ACHTUNG: Nicht eingeloggt --> Bitte neu anmelden!",
 			""));
-        Result = "Erfassungsmaske_JSF";
-        return Result;    
+        return null;    
         }
         
         // Priorität überprüfen
         if (Priority.isEmpty())
         {
+            Error = true;
             FacesContext.getCurrentInstance().addMessage(
             null,new FacesMessage(FacesMessage.SEVERITY_WARN,
 			"ACHTUNG: Keine Priorität ausgewählt!",
-			""));
-        Result = "Erfassungsmaske_JSF";
-        return Result;    
+			""));    
         }
+        
         // Kurs überprüfen
         if (Course.isEmpty())
         {
+            Error = true;
             FacesContext.getCurrentInstance().addMessage(
             null,new FacesMessage(FacesMessage.SEVERITY_WARN,
 			"ACHTUNG: Kein Kurs ausgewählt!",
 			""));
-        Result = "Erfassungsmaske_JSF";
-        return Result;    
         }
         
         // Kategorie überprüfen
         if (Category.isEmpty())
         {
+            Error = true;
             FacesContext.getCurrentInstance().addMessage(
             null,new FacesMessage(FacesMessage.SEVERITY_WARN,
 			"ACHTUNG: Keine Kategorie ausgewählt!",
 			""));
-        Result = "Erfassungsmaske_JSF";
-        return Result;    
+        }
+        
+        // Titel überprüfen
+        if (Title.isEmpty())
+        {
+            Error = true;
+            FacesContext.getCurrentInstance().addMessage(
+            null,new FacesMessage(FacesMessage.SEVERITY_WARN,
+			"ACHTUNG: Kein Titel definiert!",
+			""));
+        }
+        
+        // Beschreibung überprüfen
+        if (Comment.isEmpty())
+        {
+            Error = true;
+            FacesContext.getCurrentInstance().addMessage(
+            null,new FacesMessage(FacesMessage.SEVERITY_WARN,
+			"ACHTUNG: Keine Beschreibung definiert!",
+			""));
+        }
+        
+        // Im Fehlerfall Meldungen anzeigen und Seite aktualisieren
+        if (Error)
+        {
+            return null;   
         }
         
         //Auslesen der ID's
@@ -167,28 +195,24 @@ public class gui_TicketErfassen
             null,new FacesMessage(FacesMessage.SEVERITY_WARN,
 			"ACHTUNG: Kein zugewiesener Tutor am Kurs " + Course,
 			""));
-            
         }
         
         // Speichern der Werte
         Status = DBController.InsertData("Ticket (id_priority, title, description, id_category, id_courses, id_user, id_user2, id_state)", 
                                          "'" + ID_Pri + "','" + Title + "','" + Comment + "','" + ID_Cat + "','" + ID_Cou + "','" + ID_User + "','" + ID_Admin + "','" + ID_Sta + "'");
         
+        // Status ausgeben
         FacesContext.getCurrentInstance().addMessage(
             null,new FacesMessage(FacesMessage.SEVERITY_WARN,
 			"STATUS: " + Status,
 			""));
-                
-        Result = "Erfassungsmaske_JSF";
-        return Result;    
+        return null;    
     }
     
     // Abbrechen
         public String Cancel()        
     {      
-        String Result;
-        Result = "Erfassungsmaske_JSF";
-        return Result;
+        return null;
     }
     
     // Getter Methoden
