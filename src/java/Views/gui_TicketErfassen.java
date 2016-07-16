@@ -47,6 +47,7 @@ public class gui_TicketErfassen
     List<SelectItem> CategoryList;
     List<SelectItem> PriorityList;
 
+
     // Initialisieren und laden der Select Einträge
     @PostConstruct
     public void Init()        
@@ -86,7 +87,7 @@ public class gui_TicketErfassen
           CourseList.add(new SelectItem(Result, Result));
         i++;
         }
-           
+                   
     }
         
     // Logout
@@ -121,6 +122,7 @@ public class gui_TicketErfassen
             null,new FacesMessage(FacesMessage.SEVERITY_WARN,
 			"ACHTUNG: Nicht eingeloggt --> Bitte neu anmelden!",
 			""));
+        Reset();     
         return null;    
         }
         
@@ -211,10 +213,21 @@ public class gui_TicketErfassen
     
     // Abbrechen
         public String Cancel()        
-    {      
+    {   
+        Reset();
         return null;
     }
     
+    // Standardwerte wiederherstellen
+        public void Reset()
+        {
+            Course = null;
+            Priority = null;
+            Category = null;
+            Title = null;
+            Comment = null;
+        }
+        
     // Getter Methoden
     public List<SelectItem> getCourseList()
     {
