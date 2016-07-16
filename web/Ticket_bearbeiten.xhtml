@@ -1,14 +1,17 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"> 
     <h:head>
         <title>Ticket bearbeiten</title>
         <link rel="stylesheet" media="screen,projection"
         title="Standardstylesheet" href="style.css"
         type="text/css" />
     </h:head>
-    
+            <f:metadata>
+            <f:viewParam name="Username" value="#{gui_Ticketbearbeiten.username}" />
+            </f:metadata>
 	<script type="text/javascript" language="javascript" src="TimeFunctions.js"></script>
 	
     <h:body onload="startTime()">
@@ -41,65 +44,33 @@
 						<tr>
 							<td width="15%">Priorität</td>   
 							<td> 
-								<form action="select.htm" >      
-									<select name="Prioritaet" size="1" >
-										<option>gering</option>
-										<option>mittel</option>
-										<option>hoch</option>
-									</select> 
-								</form>
+                                                            <h:selectOneMenu id="Priority" value="#{gui_Ticketbearbeiten.priority}">
+      
+                                                                                                 <f:selectItems value= "#{gui_Ticketbearbeiten.priorityList}" />
+                                                                       </h:selectOneMenu>
 							</td>             
 							<td width="15%" >Kategorie</td> 
 							<td> 
-								<form action="select.htm" >      
-									<select name="Prioritaet" size="1">
-										<option>Anfrage</option>
-										<option>Störung</option>
-										<option>Frage</option>
-									</select>
-									
-								</form>     
+								 <h:selectOneMenu id="Category" value="#{gui_Ticketbearbeiten.category}">
+      
+                                                                                                 <f:selectItems value= "#{gui_Ticketbearbeiten.categoryList}" />
+                                                                </h:selectOneMenu>
 							</td>
 						</tr>								  
 						<tr>
 							<td>Status</td>   
 							<td> 
-								<form action="select.htm" >      
-									<select name="Prioritaet" size="1">
-										<option>new</option>
-										<option>in progress</option>
-										<option>pending close</option>
-										<option>closed</option>
-									</select> 
-								</form>
+                                                               <h:selectOneMenu id="Status" value="#{gui_Ticketbearbeiten.status}">
+
+                                                                    <f:selectItems value= "#{gui_Ticketbearbeiten.statusList}" />
+                                                               </h:selectOneMenu>	
 							</td>             
 							<td>Kurs</td> 
 							<td> 
-								<select name="Kurs" size="1">
-									<option>IMT1</option>
-									<option>BWIR</option>
-									<option>BBWL</option>
-									<option>IGIS</option>
-									<option>IOBP</option>
-									<option>IMT2</option>
-									<option>IPWA</option>
-									<option>IREN</option>
-									<option>BKLR</option>
-									<option>BFIN</option>
-									<option>BREC</option>
-									<option>IDBS</option>
-									<option>ISPE</option>
-									<option>IQSS</option>
-									<option>BDMG</option>
-									<option>BPUE</option>
-									<option>ISEFG</option>
-									<option>IPMG</option>
-									<option>IAMG</option>
-									<option>BBLO</option>
-									<option>ISSE</option>
-									<option>BURG</option>
-									<option>BUFG</option>     
-								</select>                   
+								<h:selectOneMenu id="Course" value="#{gui_Ticketbearbeiten.course}">
+
+                                                                            <f:selectItems value= "#{gui_Ticketbearbeiten.courseList}" />
+                                                                        </h:selectOneMenu>	 
 							</td>
 						</tr>									
 						<tr>
