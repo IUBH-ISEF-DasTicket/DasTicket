@@ -44,6 +44,7 @@ public class gui_Ticketbearbeiten
     String Comment;
     String Username;
     String Status;
+    Integer ReportedTime;
     List<SelectItem> CourseList;
     List<SelectItem> CategoryList;
     List<SelectItem> PriorityList;
@@ -147,6 +148,10 @@ public class gui_Ticketbearbeiten
     {
 	return Status;
     }
+    public Integer getReportedTime() 
+    {
+	return ReportedTime;
+    }
     
     // Setter Methoden
     public void setPriority(String Priority) 
@@ -176,5 +181,9 @@ public class gui_Ticketbearbeiten
     public void setStatus(String Status) 
     {
         this.Status = Status;
+    }
+    public void setReportedTime(Integer ReportedTime) 
+    {
+        this.ReportedTime = ReportedTime;
     }
 }
