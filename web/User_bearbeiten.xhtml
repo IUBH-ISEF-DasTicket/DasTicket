@@ -4,7 +4,7 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"> 
     <h:head>
-        <title>Ticket bearbeiten</title>
+        <title>Benutzer bearbeiten</title>
         <link rel="stylesheet" media="screen,projection"
         title="Standardstylesheet" href="style.css"
         type="text/css" />
@@ -35,103 +35,79 @@
 								<img src="logoiubh.png" alt="IUBH" style="width:150px"/>
 							</td>
 							<td>
-								<h2>Ticket bearbeiten</h2>
+								<h2>Benutzer bearbeiten</h2>
 							</td>
 						</tr>					
 					</table>
 					
-                                        <table id="Rand_neu"  width="100%">
+                                        <table id="Rand_neu"  width="30%">
 						<tr>
 							<td width="15%">Priorität</td>   
-							<td> 
-                                                            <h:selectOneMenu id="Priority" value="#{gui_Ticketbearbeiten.priority}">
-      
-                                                                                                 <f:selectItems value= "#{gui_Ticketbearbeiten.priorityList}" />
-                                                                       </h:selectOneMenu>
-							</td>             
-							<td width="15%" >Kategorie</td> 
-							<td> 
-								 <h:selectOneMenu id="Category" value="#{gui_Ticketbearbeiten.category}">
-      
-                                                                                                 <f:selectItems value= "#{gui_Ticketbearbeiten.categoryList}" />
-                                                                </h:selectOneMenu>
+							<td>                                                             
+                                                            <h:inputText style="width:100%;height:100%" value="#{gui_TicketErfassen.title}" size="80" label="Name"></h:inputText>                                  
+							</td>    
+                                                </tr>								  
+						<tr>
+							<td width="15%" >Email</td> 
+							<td>                                                             
+                                                            <h:inputText style="width:100%;height:100%" value="#{gui_TicketErfassen.title}" size="80" label="Email"></h:inputText>                                                      	 
 							</td>
 						</tr>								  
 						<tr>
-							<td>Status</td>   
+							<td>Rolle</td>   
 							<td> 
-                                                               <h:selectOneMenu id="Status" value="#{gui_Ticketbearbeiten.status}">
+                                                               <h:selectOneMenu id="Rolle" value="#{gui_Ticketbearbeiten.status}">
 
                                                                     <f:selectItems value= "#{gui_Ticketbearbeiten.statusList}" />
                                                                </h:selectOneMenu>	
-							</td>             
-							<td>Kurs</td> 
+							</td>  
+                                                </tr>								  
+						<tr>
+							<td>Status</td> 
 							<td> 
-								<h:selectOneMenu id="Course" value="#{gui_Ticketbearbeiten.course}">
+								<h:selectOneMenu id="Status" value="#{gui_Ticketbearbeiten.course}">
 
                                                                             <f:selectItems value= "#{gui_Ticketbearbeiten.courseList}" />
                                                                         </h:selectOneMenu>	 
 							</td>
 						</tr>									
-						<tr>
-							<td> </td>   
-							<td> </td>
-							<td>gebuchte Zeit</td>
-							<td> <h:inputText id="ReportedTime" value="#{gui_Ticketbearbeiten.reportedTime}" label="Gebuchte Zeit"></h:inputText>
-                                                        </td>
-						</tr>
-					</table>					
-					
-					<table id = "Title"  width="100%" >   				
-						<tr>
-							<td width="15%">Titel</td>
-							<td>								
-                                                                <h:inputText id="titel" value="#{ticket.titel}" style="width:100%;height:100%"/>
-                                                                
-							</td>  													  
-						</tr>							
-						<tr> 
-							<td >Kommentare</td>
-							<td valign="top" >
-								<textarea style="width:100%;height:100%" rows="5" cols="80"></textarea>                                                                
-							</td>					  
-						</tr>				
-					</table> 
-                                         <!-- DE: für später
-                                        <p><b>Kommentar-Historie</b></p>
-                                        <h:dataTable value="#{worknnote.worknotes}" var="worknote">
-                                        <h:column>
-                                          <h:outputText value="#{worknote.date}"/>
-                                        </h:column>
-                                        <h:column>
-                                          <h:outputText value="#{worknote.notes}"/>
-                                        </h:column>
-                                      </h:dataTable>
-                                      -->
-					<table id = "Rahmen_Tabelle"  width="100%" >
-						<tr>
-							<td colspan="2"> <b>Kommentar-Historie</b> </td>					 
-						</tr>					
-						<tr>
-							<td width="15%">[WORKNOTE.date]</td>
-							<td> 
-								<textarea class="WorknoteRO" style="width:100%;height:100%" rows="2" cols="10" readonly="true"></textarea> 
-							</td>
-						</tr> 					
-						 <tr>
-							<td>[WORKNOTE.date]</td>
-							<td> 
-								<textarea class="WorknoteRO" style="width:100%;height:100%" rows="2" cols="10" readonly="true"></textarea> 
-							</td>
-						</tr> 					
-						 <tr>
-							<td>[WORKNOTE.date]</td>
-							<td> 
-								<textarea class="WorknoteRO" style="width:100%;height:100%" rows="2" cols="10" readonly="true"></textarea> 
-							</td>
-						</tr> 					
-					</table> 
+						
+					</table>															                                       
 				
+                                    <table>
+                                        <tr>
+                                            <td colspan="2">
+                                                Kurszuordnung:
+                                            </td>
+                                            
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <h:dataTable value="#{GUI_User.allCourses}" var="courses">
+                                                    <h:column>
+                                                        <h:link value="#{course.name}" outcome="course">
+                                                            <f:param name="id" value="#{course.id}" />
+                                                        </h:link>
+                                                    </h:column>
+                                                </h:dataTable>
+                                            </td>
+                                            <td>
+                                                <p><a href="User_bearbeiten.xhtml"><img src="edit_icon.png" alt="edit" /></a></p>
+                                                <p><a href="User_bearbeiten.xhtml"><img src="edit_icon_3.png" alt="edit" /></a></p>
+                                            </td>
+                                            <td>
+                                                <h:dataTable value="#{GUI_User.selectedCourses}" var="courses">
+                                                    <h:column>
+                                                        <h:link value="#{course.name}" outcome="course">
+                                                            <f:param name="id" value="#{course.id}" />
+                                                        </h:link>
+                                                    </h:column>
+                                                </h:dataTable>
+                                            </td>
+                                        </tr>
+                                        
+                                    </table>
+                                    
 					<table id="Buttons" >
 						<tr>
 						   <td> 
