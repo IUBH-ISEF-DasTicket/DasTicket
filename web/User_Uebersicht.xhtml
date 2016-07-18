@@ -5,7 +5,7 @@
       xmlns:f="http://java.sun.com/jsf/core"> 
 
     <h:head>
-        <title>Ticket Übersicht</title>
+        <title>Benutzerverwaltung</title>
         <link rel="stylesheet" media="screen,projection"
         title="Standardstylesheet" href="style.css"
         type="text/css" />
@@ -34,7 +34,7 @@
 								<img src="logoiubh.png" alt="IUBH" style="width:150px"/>
 							</td>
 							<td>
-								<h2>Ticket erfassen</h2>
+								<h2>Benutzerverwaltung</h2>
 							</td>
 						</tr>					
 					</table>					
@@ -42,79 +42,49 @@
 					<table width="100%">
 						<tr>
 							<td width="20%">
-								ID
+								Username
 							</td>
 							<td width="30%">
 								<input style="width:60%;height:100%" type="text"></input> 
 							</td>
-							<td width="20%"></td>
-							<td width="30%"></td>
-						</tr>
-						<tr>
-							<td>
-								Priorität
+							<td width="20%">
+							Status
 							</td>
-							<td>
-								<form action="select.htm" style="width:100%">      
+							
+							<td width="30%">
+							<form action="select.htm" style="width:100%">      
 									<select name="Prioritaet" size="1">
-										<option>...</option>
-										<option>...</option>
-										<option>...</option>
+										<option>aktiv</option>
+										<option>inaktiv</option>										
 									</select>									
 								</form>
-							</td>
-							<td>
-								Erstellungsdatum
-							</td>
-							<td>
-								<input style="width:60%;height:100%" type="text"></input> 
-							</td>
+							</td>													
 						</tr>
 						<tr>
 							<td>
-								Kategorie
+								Rolle
 							</td>
 							<td>
 								<form action="select.htm" style="width:100%">      
-									<select name="Prioritaet" size="1">
-										<option>...</option>
-										<option>...</option>
-										<option>...</option>
+									<select name="Rolle" size="1">
+										<option>Student</option>
+										<option>Tutor</option>
+										<option>Admin</option>
 									</select>									
 								</form> 
-							</td>
-							<td>
-								Status
-							</td>
-							<td>
-								<form action="select.htm" style="width:100%">      
-									<select name="Prioritaet" size="1">
-										<option>...</option>
-										<option>...</option>
-										<option>...</option>
-									</select>									
-								</form>
-							</td>
-						</tr>
-						<tr>
+							</td>						
 							<td>
 								Kurs
 							</td>
 							<td>
 								<form action="select.htm" style="width:100%">      
-									<select name="Prioritaet" size="1">
+									<select name="Kurs" size="1">
 										<option>...</option>
 										<option>...</option>
 										<option>...</option>
 									</select>									
-								</form>
-							</td>
-							<td>
-								Kunde
-							</td>
-							<td>
-								<input style="width:60%;height:100%" type="text" size="80"></input> 
-							</td>
+								</form> 
+							</td>							
 						</tr>
 						<tr>
 						<td>
@@ -159,17 +129,14 @@
 						<thead>
 							<tr>
 								<td>
-								<b>ID</b>
+								<b>Username</b>
 								</td>
 								<td>
-								<b>Priorität</b>
-								</td>
-								<td>
-								<b>Kategorie</b>
+								<b>Rolle</b>
 								</td>
 								<td>
 								<b>Status</b>
-								</td>
+								</td>								
 								<td>
 								
 								</td>
@@ -181,17 +148,14 @@
 						<tbody>
 							<tr>
 								<td>
-								[TICKET.id]
+								[USER.username]
 								</td>
 								<td>
-								[TICKET.priority]
+								[USER.id_usergroup]
 								</td>
 								<td>
-								[TICKET.category]
-								</td>
-								<td>
-								[TICKET.status]
-								</td>
+								[USER.state]
+								</td>								
 								<td>
 								<img src="delete_icon.png" alt="delete"/>
 								</td>
@@ -201,17 +165,14 @@
 							</tr>
 							<tr>
 								<td>
-								[TICKET.id]
+								[USER.username]
 								</td>
 								<td>
-								[TICKET.priority]
+								[USER.id_usergroup]
 								</td>
 								<td>
-								[TICKET.category]
-								</td>
-								<td>
-								[TICKET.status]
-								</td>
+								[USER.state]
+								</td>								
 								<td>
 								<img src="delete_icon.png" alt="delete"/>
 								</td>
