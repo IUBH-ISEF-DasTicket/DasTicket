@@ -48,7 +48,10 @@ public class gui_Ticketbearbeiten
     List<SelectItem> CourseList;
     List<SelectItem> CategoryList;
     List<SelectItem> PriorityList;
-    List<SelectItem> StatusList;     
+    List<SelectItem> StatusList;
+    List<SelectItem> WorknoteDateList;
+    List<SelectItem> WorknoteNoteList;
+    
     
      // Initialisieren und laden der Select Einträge
     @PostConstruct
@@ -99,8 +102,30 @@ public class gui_Ticketbearbeiten
           Result = DBController.GetData("state", "name", "where id= '" + i + "'");
           StatusList.add(new SelectItem(Result, Result));
         i++;
+        
         }
-           
+        
+        // Worknotes Date laden
+        WorknoteDateList = new ArrayList<SelectItem>();
+        i = 1;
+        Result = "Start";
+        while (Result != null ) 
+        {   
+          Result = DBController.GetData("worknotes", "name", "where id= '" + i + "'");
+          StatusList.add(new SelectItem(Result, Result));
+        i++;
+        }
+        
+        // Worknotes Note laden
+        WorknoteNoteList = new ArrayList<SelectItem>();
+        i = 1;
+        Result = "Start";
+        while (Result != null ) 
+        {   
+          Result = DBController.GetData("worknotes", "name", "where id= '" + i + "'");
+          StatusList.add(new SelectItem(Result, Result));
+        i++;
+        }
     }
     
     // Getter Methoden
@@ -119,6 +144,14 @@ public class gui_Ticketbearbeiten
     public List<SelectItem> getStatusList()
     {
     return StatusList;
+    }
+    public List<SelectItem> getWorknoteDateList()
+    {
+    return WorknoteDateList;
+    }
+    public List<SelectItem> getWorknoteNoteList()
+    {
+    return WorknoteNoteList;
     }
      public String getPriority() 
     {
