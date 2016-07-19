@@ -23,7 +23,7 @@
 						<tr>
 							<td id="Zeit">				
 							</td>
-                                                    <td> Eingeloggt als: #{gui_Ticketbearbeiten.username} 								 
+                                                    <td> Eingeloggt als: #{gui_Ticketbearbeiten.username} 	#{gui_Ticketbearbeiten.priority} 							 
                                                                 <h:commandButton value="Ausloggen"></h:commandButton>
 							</td>
 						</tr>
@@ -46,7 +46,7 @@
 							<td> 
                                                             <h:selectOneMenu id="Priority" value="#{gui_Ticketbearbeiten.priority}">
       
-                                                                                                 <f:selectItems value= "#{gui_Ticketbearbeiten.priorityList}" />
+                                                                                                 <f:selectItems value= "#{gui_Ticketbearbeiten.priorityList}" itemValue="#{gui_Ticketbearbeiten.priority}" />
                                                                        </h:selectOneMenu>
 							</td>             
 							<td width="15%" >Kategorie</td> 
@@ -93,11 +93,11 @@
 						<tr> 
 							<td >Kommentare</td>
 							<td valign="top" >
-								<textarea style="width:100%;height:100%" rows="5" cols="80"></textarea>                                                                
+								<h:inputTextarea id="Comment" value="#{gui_Ticketbearbeiten.comment}" style="width:100%;height:100%" rows="5" cols="80" label="Kommentare" />                                                         
 							</td>					  
 						</tr>				
 					</table> 
-                                         <!-- DE: für später
+                                         <!-- DE: für später -->
                                         <p><b>Kommentar-Historie</b></p>
                                         <h:dataTable value="#{worknnote.worknotes}" var="worknote">
                                         <h:column>
@@ -107,7 +107,7 @@
                                           <h:outputText value="#{worknote.notes}"/>
                                         </h:column>
                                       </h:dataTable>
-                                      -->
+                                   
 					<table id = "Rahmen_Tabelle"  width="100%" >
 						<tr>
 							<td colspan="2"> <b>Kommentar-Historie</b> </td>					 

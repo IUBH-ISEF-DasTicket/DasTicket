@@ -44,7 +44,7 @@ public class gui_Ticketbearbeiten
     String Comment;
     String Username;
     String Status;
-    Integer ReportedTime;
+    String ReportedTime;
     List<SelectItem> CourseList;
     List<SelectItem> CategoryList;
     List<SelectItem> PriorityList;
@@ -57,6 +57,10 @@ public class gui_Ticketbearbeiten
     @PostConstruct
     public void Init()        
     {
+        // Test!!!
+        Integer ID = 31;
+        Username = "Admin";
+        
         String Result;
         Integer i;
            
@@ -70,7 +74,7 @@ public class gui_Ticketbearbeiten
           PriorityList.add(new SelectItem(Result, Result));
           i++;
         }
-      
+        
         // Kategorie laden
         CategoryList = new ArrayList<SelectItem>();
         i = 1;
@@ -81,7 +85,7 @@ public class gui_Ticketbearbeiten
           CategoryList.add(new SelectItem(Result, Result));
           i++;
         }
-        
+                
         // Kurse laden
         CourseList = new ArrayList<SelectItem>();
         i = 1;
@@ -102,7 +106,6 @@ public class gui_Ticketbearbeiten
           Result = DBController.GetData("state", "name", "where id= '" + i + "'");
           StatusList.add(new SelectItem(Result, Result));
         i++;
-        
         }
         
         // Worknotes Date laden
@@ -126,6 +129,23 @@ public class gui_Ticketbearbeiten
           StatusList.add(new SelectItem(Result, Result));
         i++;
         }
+        
+        // Werte setzen
+        // Kurs setzen
+        Course = DBController.GetData("courses", "name", "where id =(select id_courses from ticket where ID=" + ID +")");
+         // Status setzen
+        Status = DBController.GetData("state", "name", "where id =(select id_state from ticket where ID=" + ID +")");
+         // Kategorie setzen
+        Category = DBController.GetData("category", "name", "where id =(select id_category from ticket where ID=" + ID +")");
+         // Priorität setzen
+        Priority = DBController.GetData("priority", "name", "where id =(select id_priority from ticket where ID=" + ID +")");
+         // Beschreibung setzen
+        Comment = DBController.GetData("ticket", "description", "where id =" + ID);
+        // Titel setzen
+        Title = DBController.GetData("ticket", "title", "where id =" + ID);
+        // Gebuchte Zeit setzen
+        ReportedTime = DBController.GetData("ReportedTime", "ReportedTime", "where id_ticket =" + ID);
+        
     }
     
     // Getter Methoden
@@ -181,7 +201,7 @@ public class gui_Ticketbearbeiten
     {
 	return Status;
     }
-    public Integer getReportedTime() 
+    public String getReportedTime() 
     {
 	return ReportedTime;
     }
@@ -215,7 +235,7 @@ public class gui_Ticketbearbeiten
     {
         this.Status = Status;
     }
-    public void setReportedTime(Integer ReportedTime) 
+    public void setReportedTime(String ReportedTime) 
     {
         this.ReportedTime = ReportedTime;
     }
