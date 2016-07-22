@@ -42,7 +42,7 @@ public class gui_Ticketbearbeiten
     String Course;
     String Title;
     String Comment;
-    String Username;
+    //String Username = "Admin";
     String Status;
     String ReportedTime;
     List<SelectItem> CourseList;
@@ -52,14 +52,14 @@ public class gui_Ticketbearbeiten
     List<SelectItem> WorknoteDateList;
     List<SelectItem> WorknoteNoteList;
     
+    // Test!!!
+    Integer ID = 18;
+    String Username = "Admin";
     
      // Initialisieren und laden der Select Einträge
     @PostConstruct
     public void Init()        
     {
-        // Test!!!
-        Integer ID = 31;
-        Username = "Admin";
         
         String Result;
         Integer i;
@@ -115,7 +115,7 @@ public class gui_Ticketbearbeiten
         while (Result != null ) 
         {   
           Result = DBController.GetData("worknotes", "name", "where id= '" + i + "'");
-          StatusList.add(new SelectItem(Result, Result));
+          WorknoteDateList.add(new SelectItem(Result, Result));
         i++;
         }
         
@@ -126,7 +126,7 @@ public class gui_Ticketbearbeiten
         while (Result != null ) 
         {   
           Result = DBController.GetData("worknotes", "name", "where id= '" + i + "'");
-          StatusList.add(new SelectItem(Result, Result));
+          WorknoteNoteList.add(new SelectItem(Result, Result));
         i++;
         }
         
@@ -146,6 +146,129 @@ public class gui_Ticketbearbeiten
         // Gebuchte Zeit setzen
         ReportedTime = DBController.GetData("ReportedTime", "ReportedTime", "where id_ticket =" + ID);
         
+    }
+    
+        // Speichern
+    public String Save()        
+    {
+        String Result;
+        Boolean Error;
+        Integer ID_Cat;
+        Integer ID_Cou;
+        Integer ID_Pri;
+        Integer ID_Admin;
+        Integer ID_Sta;
+        
+        Error = false;
+                
+        // Username überprüfen
+        if (Username.isEmpty())
+        {
+            Error = true;
+            FacesContext.getCurrentInstance().addMessage(
+            null,new FacesMessage(FacesMessage.SEVERITY_WARN,
+			"ACHTUNG: Nicht eingeloggt --> Bitte neu anmelden!",
+			""));
+       // Reset();     
+        return null;    
+        }
+        
+        // Priorität überprüfen
+        if (Priority.isEmpty())
+        {
+            Error = true;
+            FacesContext.getCurrentInstance().addMessage(
+            null,new FacesMessage(FacesMessage.SEVERITY_WARN,
+			"ACHTUNG: Keine Priorität ausgewählt!",
+			""));    
+        }
+        
+        // Kurs überprüfen
+        if (Course.isEmpty())
+        {
+            Error = true;
+            FacesContext.getCurrentInstance().addMessage(
+            null,new FacesMessage(FacesMessage.SEVERITY_WARN,
+			"ACHTUNG: Kein Kurs ausgewählt!",
+			""));
+        }
+        
+        // Kategorie überprüfen
+        if (Category.isEmpty())
+        {
+            Error = true;
+            FacesContext.getCurrentInstance().addMessage(
+            null,new FacesMessage(FacesMessage.SEVERITY_WARN,
+			"ACHTUNG: Keine Kategorie ausgewählt!",
+			""));
+        }
+        
+        // Titel überprüfen
+        if (Title.isEmpty())
+        {
+            Error = true;
+            FacesContext.getCurrentInstance().addMessage(
+            null,new FacesMessage(FacesMessage.SEVERITY_WARN,
+			"ACHTUNG: Kein Titel definiert!",
+			""));
+        }
+        
+        // Beschreibung überprüfen
+        if (Comment.isEmpty())
+        {
+            Error = true;
+            FacesContext.getCurrentInstance().addMessage(
+            null,new FacesMessage(FacesMessage.SEVERITY_WARN,
+			"ACHTUNG: Keine Beschreibung definiert!",
+			""));
+        }
+        
+        // Im Fehlerfall Meldungen anzeigen und Seite aktualisieren
+        if (Error)
+        {
+            return null;   
+        }
+        
+        //Auslesen der ID's
+        ID_Cat = Integer.parseInt(DBController.GetData ("CATEGORY", "id", "WHERE name='" + Category + "'"));
+        ID_Cou = Integer.parseInt(DBController.GetData ("COURSES", "id", "WHERE name='" + Course + "'"));
+        ID_Sta = Integer.parseInt(DBController.GetData ("STATE", "id", "WHERE name='" + Status + "'"));
+        ID_Pri = Integer.parseInt(DBController.GetData ("PRIORITY", "id", "WHERE name='" + Priority + "'"));
+        ID_Admin = Integer.parseInt(DBController.GetData ("COURSES", "id_user", "WHERE id ='" + ID_Cou + "'"));
+        
+        // Warnung wenn kein zugewiesener Tutor am Kurs 
+        if (ID_Admin == 1 && Course.equalsIgnoreCase("#Allgemein") == false)
+        {
+            FacesContext.getCurrentInstance().addMessage(
+            null,new FacesMessage(FacesMessage.SEVERITY_WARN,
+			"ACHTUNG: Kein zugewiesener Tutor am Kurs " + Course,
+			""));
+        }
+        
+        // Speichern der Werte
+        // Kategorie
+        Result = DBController.UpdateData("Ticket","ID_Category", String.valueOf(ID_Cat),"where ID='" + ID + "'");
+        // Priorität
+        String Result2 = DBController.UpdateData("Ticket","ID_Priority", String.valueOf(ID_Pri),"where ID='" + ID + "'");
+         // Kurs
+        Result = DBController.UpdateData("Ticket","ID_Courses", String.valueOf(ID_Cou),"where ID='" + ID + "'");
+         // Status
+        Result = DBController.UpdateData("Ticket","ID_State", String.valueOf(ID_Sta),"where ID='" + ID + "'");
+        // Titel
+        Result = DBController.UpdateData("Ticket","Title", Title,"where ID='" + ID + "'");
+        // Kommentar 
+       Result = DBController.UpdateData("Ticket","description", Comment ,"where ID='" + ID + "'");
+       // ReportedTime
+       Result = DBController.UpdateData("ReportedTime","ReportedTime", ReportedTime ,"where ID_ticket='" + ID + "'"); 
+       
+        // Status ausgeben
+        FacesContext.getCurrentInstance().addMessage(
+            null,new FacesMessage(FacesMessage.SEVERITY_WARN,
+			"STATUS: " + Result2,
+			""));
+        return null;
+    
+    
     }
     
     // Getter Methoden
@@ -205,7 +328,7 @@ public class gui_Ticketbearbeiten
     {
 	return ReportedTime;
     }
-    
+
     // Setter Methoden
     public void setPriority(String Priority) 
     {

@@ -128,8 +128,10 @@ public class DBController
          
     }
     
-    public static void UpdateData(String TableName, String Column, String Value, String Clause)
+    public static String UpdateData(String TableName, String Column, String Value, String Clause)
     {
+        String Result;
+        
         // Connection aufbauen
         connection = InitConnection(); 
         
@@ -150,6 +152,7 @@ public class DBController
          // Fehlerbehandlung
          catch (SQLException ex) 
          {
+                Result = "SQLException: " + ex.getMessage();
                 System.out.println("SQLException: " + ex.getMessage());
                 System.out.println("SQLState: " + ex.getSQLState());
                 System.out.println("VendorError: " + ex.getErrorCode());
@@ -160,6 +163,8 @@ public class DBController
              CloseStatement(statement);
              CloseConnection(connection);
          }
+         Result = "Daten erfolgreich eingefügt";
+         return Result;
         
     }
     
