@@ -10,7 +10,7 @@
         type="text/css" />
     </h:head>
             <f:metadata>
-            <f:viewParam name="Username" value="#{gui_Ticketbearbeiten.username}" />
+            <f:viewParam name="Username" value="#{gui_Ticketbearbeiten.username}" />          
             </f:metadata>
 	<script type="text/javascript" language="javascript" src="TimeFunctions.js"></script>
 	
@@ -140,7 +140,7 @@
 						</tr> 
 						<tr>
 							<td> 
-                                                                <h:commandButton value="Abbrechen"></h:commandButton>
+                                                                <h:commandButton value="Abbrechen" action="#{gui_Ticketbearbeiten.Cancel}"></h:commandButton>
 							</td>           
 						</tr> 				   
 					</table> 

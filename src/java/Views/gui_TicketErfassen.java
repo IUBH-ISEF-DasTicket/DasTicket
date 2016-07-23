@@ -111,6 +111,7 @@ public class gui_TicketErfassen
         Integer ID_User;
         Integer ID_Admin;
         Integer ID_Sta;
+        Integer ID_Tic;
         
         Error = false;
                 
@@ -202,12 +203,18 @@ public class gui_TicketErfassen
         // Speichern der Werte
         Status = DBController.InsertData("Ticket (id_priority, title, description, id_category, id_courses, id_user, id_user2, id_state)", 
                                          "'" + ID_Pri + "','" + Title + "','" + Comment + "','" + ID_Cat + "','" + ID_Cou + "','" + ID_User + "','" + ID_Admin + "','" + ID_Sta + "'");
-        
-        // Status ausgeben
+         // Status ausgeben
         FacesContext.getCurrentInstance().addMessage(
             null,new FacesMessage(FacesMessage.SEVERITY_WARN,
 			"STATUS: " + Status,
 			""));
+        
+        // ID_Ticket auslesen
+        ID_Tic = Integer.parseInt(DBController.GetData ("Ticket", "id", "WHERE title='" + Title + "'" + "and description='" + Comment + "'" + "and ID_State ='" + ID_Sta + "'"));
+
+        // Reported Time setzen
+        Status = DBController.InsertData("ReportedTime (ReportedTime,id_Ticket)", "0," + ID_Tic);
+        
         return null;    
     }
     

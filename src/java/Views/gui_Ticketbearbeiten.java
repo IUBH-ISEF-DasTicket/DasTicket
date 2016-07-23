@@ -222,6 +222,15 @@ public class gui_Ticketbearbeiten
 			"ACHTUNG: Keine Beschreibung definiert!",
 			""));
         }
+        // Status überprüfen
+        if (Status.isEmpty())
+        {
+            Error = true;
+            FacesContext.getCurrentInstance().addMessage(
+            null,new FacesMessage(FacesMessage.SEVERITY_WARN,
+			"ACHTUNG: Kein Status definiert!",
+			""));
+        }
         
         // Im Fehlerfall Meldungen anzeigen und Seite aktualisieren
         if (Error)
@@ -249,7 +258,7 @@ public class gui_Ticketbearbeiten
         // Kategorie
         Result = DBController.UpdateData("Ticket","ID_Category", String.valueOf(ID_Cat),"where ID='" + ID + "'");
         // Priorität
-        String Result2 = DBController.UpdateData("Ticket","ID_Priority", String.valueOf(ID_Pri),"where ID='" + ID + "'");
+        Result = DBController.UpdateData("Ticket","ID_Priority", String.valueOf(ID_Pri),"where ID='" + ID + "'");
          // Kurs
         Result = DBController.UpdateData("Ticket","ID_Courses", String.valueOf(ID_Cou),"where ID='" + ID + "'");
          // Status
@@ -257,18 +266,24 @@ public class gui_Ticketbearbeiten
         // Titel
         Result = DBController.UpdateData("Ticket","Title", Title,"where ID='" + ID + "'");
         // Kommentar 
-       Result = DBController.UpdateData("Ticket","description", Comment ,"where ID='" + ID + "'");
+        Result = DBController.UpdateData("Ticket","description", Comment ,"where ID='" + ID + "'");
        // ReportedTime
-       Result = DBController.UpdateData("ReportedTime","ReportedTime", ReportedTime ,"where ID_ticket='" + ID + "'"); 
+        Result = DBController.UpdateData("ReportedTime","ReportedTime", ReportedTime ,"where ID_ticket='" + ID + "'"); 
        
         // Status ausgeben
         FacesContext.getCurrentInstance().addMessage(
             null,new FacesMessage(FacesMessage.SEVERITY_WARN,
-			"STATUS: " + Result2,
+			"STATUS: " + Result,
 			""));
         return null;
     
     
+    }
+    
+        // Abbrechen
+        public String Cancel()        
+    {   
+        return null;
     }
     
     // Getter Methoden
