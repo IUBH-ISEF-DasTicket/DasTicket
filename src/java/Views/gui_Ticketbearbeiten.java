@@ -7,6 +7,7 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.application.FacesMessage;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import javax.faces.model.SelectItem;
 import javax.annotation.PostConstruct;
@@ -45,12 +46,13 @@ public class gui_Ticketbearbeiten
     //String Username = "Admin";
     String Status;
     String ReportedTime;
+    String Worknote;
     List<SelectItem> CourseList;
     List<SelectItem> CategoryList;
     List<SelectItem> PriorityList;
     List<SelectItem> StatusList;
-    List<SelectItem> WorknoteDateList;
-    List<SelectItem> WorknoteNoteList;
+    Collection WorknoteDateList;
+    Collection WorknoteNoteList;
     
     // Test!!!
     Integer ID = 18;
@@ -109,26 +111,30 @@ public class gui_Ticketbearbeiten
         }
         
         // Worknotes Date laden
-        WorknoteDateList = new ArrayList<SelectItem>();
+        WorknoteDateList = new ArrayList();
         i = 1;
         Result = "Start";
         while (Result != null ) 
         {   
-          Result = DBController.GetData("worknotes", "name", "where id= '" + i + "'");
-          WorknoteDateList.add(new SelectItem(Result, Result));
+          Result = DBController.GetData("worknotes", "creationdate", "where id ='" + i + "'");
+          WorknoteDateList.add(Result);
         i++;
         }
         
+        WorknoteDateList.add(Result);
+        
         // Worknotes Note laden
-        WorknoteNoteList = new ArrayList<SelectItem>();
-        i = 1;
+        WorknoteNoteList = new ArrayList();
         Result = "Start";
+        i = 1;
         while (Result != null ) 
         {   
-          Result = DBController.GetData("worknotes", "name", "where id= '" + i + "'");
-          WorknoteNoteList.add(new SelectItem(Result, Result));
-        i++;
+          Result = DBController.GetData("worknotes", "notes", "where id='" + i + "'");
+          WorknoteNoteList.add(Result);
+          i++;
         }
+        
+        WorknoteNoteList.add(Result);
         
         // Werte setzen
         // Kurs setzen
@@ -303,11 +309,11 @@ public class gui_Ticketbearbeiten
     {
     return StatusList;
     }
-    public List<SelectItem> getWorknoteDateList()
+    public Collection getWorknoteDateList()
     {
     return WorknoteDateList;
     }
-    public List<SelectItem> getWorknoteNoteList()
+    public Collection getWorknoteNoteList()
     {
     return WorknoteNoteList;
     }
@@ -343,6 +349,10 @@ public class gui_Ticketbearbeiten
     {
 	return ReportedTime;
     }
+    public String getWorknote() 
+    {
+	return Worknote;
+    }
 
     // Setter Methoden
     public void setPriority(String Priority) 
@@ -376,5 +386,9 @@ public class gui_Ticketbearbeiten
     public void setReportedTime(String ReportedTime) 
     {
         this.ReportedTime = ReportedTime;
+    }
+    public void setWorknote(String Worknote) 
+    {
+        this.Worknote = Worknote;
     }
 }
