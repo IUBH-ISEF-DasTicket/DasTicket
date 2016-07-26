@@ -22,8 +22,8 @@ and open the template in the editor.
             </tr>  
             <c:forEach items="#{gui_Ticketbearbeiten.worknoteNoteList}" var='note' varStatus="status">
                 <tr>
-                <td>#{note}</td>
                 <td>#{gui_Ticketbearbeiten.worknoteDateList[status.index]}</td>
+                <td>#{note}</td>
                 </tr>
            </c:forEach>
         </table>

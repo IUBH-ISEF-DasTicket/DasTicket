@@ -9,6 +9,7 @@ import javax.faces.application.FacesMessage;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.time.LocalDateTime;
 import javax.faces.model.SelectItem;
 import javax.annotation.PostConstruct;
 
@@ -43,6 +44,7 @@ public class gui_Ticketbearbeiten
     String Course;
     String Title;
     String Comment;
+    String NewComment;
     //String Username = "Admin";
     String Status;
     String ReportedTime;
@@ -73,7 +75,10 @@ public class gui_Ticketbearbeiten
         while (Result != null ) 
         {   
           Result = DBController.GetData("priority", "name", "where id= '" + i + "'");
+          if (Result != null)
+          {
           PriorityList.add(new SelectItem(Result, Result));
+          }
           i++;
         }
         
@@ -84,7 +89,10 @@ public class gui_Ticketbearbeiten
         while (Result != null ) 
         {   
           Result = DBController.GetData("category", "name", "where id= '" + i + "'");
+          if (Result != null)
+          {
           CategoryList.add(new SelectItem(Result, Result));
+          }
           i++;
         }
                 
@@ -95,7 +103,10 @@ public class gui_Ticketbearbeiten
         while (Result != null ) 
         {   
           Result = DBController.GetData("courses", "name", "where id= '" + i + "'");
+          if (Result != null)
+          {
           CourseList.add(new SelectItem(Result, Result));
+          }
         i++;
         }
         
@@ -106,10 +117,13 @@ public class gui_Ticketbearbeiten
         while (Result != null ) 
         {   
           Result = DBController.GetData("state", "name", "where id= '" + i + "'");
+          if (Result != null)
+          {
           StatusList.add(new SelectItem(Result, Result));
-        i++;
+          }
+          i++;
         }
-        
+
         // Worknotes Date laden
         WorknoteDateList = new ArrayList();
         i = 1;
@@ -117,11 +131,12 @@ public class gui_Ticketbearbeiten
         while (Result != null ) 
         {   
           Result = DBController.GetData("worknotes", "creationdate", "where id ='" + i + "'");
+          if (Result != null)
+          {
           WorknoteDateList.add(Result);
+          }
         i++;
         }
-        
-        WorknoteDateList.add(Result);
         
         // Worknotes Note laden
         WorknoteNoteList = new ArrayList();
@@ -130,11 +145,12 @@ public class gui_Ticketbearbeiten
         while (Result != null ) 
         {   
           Result = DBController.GetData("worknotes", "notes", "where id='" + i + "'");
+          if (Result != null)
+          {
           WorknoteNoteList.add(Result);
+          }
           i++;
         }
-        
-        WorknoteNoteList.add(Result);
         
         // Werte setzen
         // Kurs setzen
@@ -178,37 +194,7 @@ public class gui_Ticketbearbeiten
        // Reset();     
         return null;    
         }
-        
-        // Priorität überprüfen
-        if (Priority.isEmpty())
-        {
-            Error = true;
-            FacesContext.getCurrentInstance().addMessage(
-            null,new FacesMessage(FacesMessage.SEVERITY_WARN,
-			"ACHTUNG: Keine Priorität ausgewählt!",
-			""));    
-        }
-        
-        // Kurs überprüfen
-        if (Course.isEmpty())
-        {
-            Error = true;
-            FacesContext.getCurrentInstance().addMessage(
-            null,new FacesMessage(FacesMessage.SEVERITY_WARN,
-			"ACHTUNG: Kein Kurs ausgewählt!",
-			""));
-        }
-        
-        // Kategorie überprüfen
-        if (Category.isEmpty())
-        {
-            Error = true;
-            FacesContext.getCurrentInstance().addMessage(
-            null,new FacesMessage(FacesMessage.SEVERITY_WARN,
-			"ACHTUNG: Keine Kategorie ausgewählt!",
-			""));
-        }
-        
+       
         // Titel überprüfen
         if (Title.isEmpty())
         {
@@ -227,17 +213,7 @@ public class gui_Ticketbearbeiten
             null,new FacesMessage(FacesMessage.SEVERITY_WARN,
 			"ACHTUNG: Keine Beschreibung definiert!",
 			""));
-        }
-        // Status überprüfen
-        if (Status.isEmpty())
-        {
-            Error = true;
-            FacesContext.getCurrentInstance().addMessage(
-            null,new FacesMessage(FacesMessage.SEVERITY_WARN,
-			"ACHTUNG: Kein Status definiert!",
-			""));
-        }
-        
+        }        
         // Im Fehlerfall Meldungen anzeigen und Seite aktualisieren
         if (Error)
         {
@@ -276,6 +252,12 @@ public class gui_Ticketbearbeiten
        // ReportedTime
         Result = DBController.UpdateData("ReportedTime","ReportedTime", ReportedTime ,"where ID_ticket='" + ID + "'"); 
        
+        // Worknote
+        if (NewComment.isEmpty() == false)
+        {
+            Result = DBController.InsertData("Worknotes (internal,notes,creationDate,id_Ticket)", "false,'" + NewComment + "','" + LocalDateTime.now() + "'," + ID);
+        }
+        
         // Status ausgeben
         FacesContext.getCurrentInstance().addMessage(
             null,new FacesMessage(FacesMessage.SEVERITY_WARN,
@@ -337,6 +319,10 @@ public class gui_Ticketbearbeiten
     {
 	return Comment;
     }
+    public String getNewComment() 
+    {
+	return NewComment;
+    }
     public String getUsername() 
     {
 	return Username;
@@ -374,6 +360,10 @@ public class gui_Ticketbearbeiten
     public void setComment(String Comment) 
     {
         this.Comment = Comment;
+    }
+    public void setNewComment(String NewComment) 
+    {
+        this.NewComment = NewComment;
     }
         public void setUsername(String Username) 
     {

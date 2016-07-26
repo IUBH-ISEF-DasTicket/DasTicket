@@ -23,7 +23,7 @@
 						<tr>
 							<td id="Zeit">				
 							</td>
-                                                    <td> Eingeloggt als: #{gui_Ticketbearbeiten.username} 	#{gui_Ticketbearbeiten.priority} 							 
+                                                    <td> Eingeloggt als: #{gui_Ticketbearbeiten.username}						 
                                                                 <h:commandButton value="Ausloggen"></h:commandButton>
 							</td>
 						</tr>
@@ -91,11 +91,17 @@
 							</td>  													  
 						</tr>							
 						<tr> 
-							<td >Kommentare</td>
+							<td >Beschreibung</td>
 							<td valign="top" >
-								<h:inputTextarea id="Comment" value="#{gui_Ticketbearbeiten.comment}" style="width:100%;height:100%" rows="5" cols="80" label="Kommentare" />                                                         
+								<h:inputTextarea id="Comment" value="#{gui_Ticketbearbeiten.comment}" style="width:100%;height:100%" rows="5" cols="80" label="Beschreibung" />                                                         
 							</td>					  
-						</tr>				
+						</tr>
+                                                <tr> 
+							<td >Neues Kommentar</td>
+							<td valign="top" >
+								<h:inputTextarea id="NewComment" value="#{gui_Ticketbearbeiten.newComment}" style="width:100%;height:100%" rows="5" cols="80" label="Neues Kommentar" />                                                         
+							</td>					  
+						</tr>	
 					</table> 
                                          <!-- DE: für später -->
                                         <p><b>Kommentar-Historie</b></p>
