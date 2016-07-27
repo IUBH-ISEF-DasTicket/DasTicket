@@ -97,47 +97,54 @@
 							</td>					  
 						</tr>
                                                 <tr> 
-							<td >Neues Kommentar</td>
+							<td >Neuer Kommentar</td>
 							<td valign="top" >
 								<h:inputTextarea id="NewComment" value="#{gui_Ticketbearbeiten.newComment}" style="width:100%;height:100%" rows="5" cols="80" label="Neues Kommentar" />                                                         
 							</td>					  
 						</tr>	
 					</table> 
+                                    
+                                    
+                                    
+                                    
                                          <!-- DE: für später -->
-                                        <p><b>Kommentar-Historie</b></p>
-                                        <h:dataTable value="#{worknnote.worknotes}" var="worknote">
-                                        <h:column>
-                                          <h:outputText value="#{worknote.date}"/>
-                                        </h:column>
-                                        <h:column>
-                                          <h:outputText value="#{worknote.notes}"/>
-                                        </h:column>
-                                      </h:dataTable>
+                                       
                                    
 					<table id = "Rahmen_Tabelle"  width="100%" >
 						<tr>
 							<td colspan="2"> <b>Kommentar-Historie</b> </td>					 
-						</tr>					
+						</tr>	
+                                          
 						<tr>
-							<td width="15%">[WORKNOTE.date]</td>
+                                                    <td width="15%"> <h:outputText value="#{gui_Ticketbearbeiten.worknoteDateList[status.index]}" />
+                                                        
+                                                    </td>
+                                                    
 							<td> 
-								<textarea class="WorknoteRO" style="width:100%;height:100%" rows="2" cols="10" readonly="true"></textarea> 
+								<h:outputText value="#{gui_Ticketbearbeiten.worknoteNoteList}"  />
 							</td>
 						</tr> 					
-						 <tr>
-							<td>[WORKNOTE.date]</td>
+						<tr>
+                                                    <td width="15%"> <h:outputText value="#{gui_Ticketbearbeiten.worknoteDateList[status.index]}" />
+                                                        
+                                                    </td>
+                                                    
 							<td> 
-								<textarea class="WorknoteRO" style="width:100%;height:100%" rows="2" cols="10" readonly="true"></textarea> 
+								<h:outputText value="#{gui_Ticketbearbeiten.worknoteNoteList}"  />
 							</td>
-						</tr> 					
-						 <tr>
-							<td>[WORKNOTE.date]</td>
+						</tr> 				
+						<tr>
+                                                    <td width="15%"> <h:outputText value="#{gui_Ticketbearbeiten.worknoteDateList[status.index]}" />
+                                                        
+                                                    </td>
+                                                    
 							<td> 
-								<textarea class="WorknoteRO" style="width:100%;height:100%" rows="2" cols="10" readonly="true"></textarea> 
+								<h:outputText value="#{gui_Ticketbearbeiten.worknoteNoteList}"  />
 							</td>
-						</tr> 					
+						</tr> 				
 					</table> 
 				
+                                        
 					<table id="Buttons" >
 						<tr>
 						   <td> 
