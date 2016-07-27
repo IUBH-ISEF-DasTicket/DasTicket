@@ -2,7 +2,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"> 
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core" > 
+    
     <h:head>
         <title>Ticket bearbeiten</title>
         <link rel="stylesheet" media="screen,projection"
@@ -103,45 +105,22 @@
 							</td>					  
 						</tr>	
 					</table> 
-                                    
-                                    
-                                    
-                                    
-                                         <!-- DE: für später -->
-                                       
+                                   
                                    
 					<table id = "Rahmen_Tabelle"  width="100%" >
-						<tr>
-							<td colspan="2"> <b>Kommentar-Historie</b> </td>					 
-						</tr>	
-                                          
-						<tr>
-                                                    <td width="15%"> <h:outputText value="#{gui_Ticketbearbeiten.worknoteDateList[status.index]}" />
-                                                        
-                                                    </td>
-                                                    
-							<td> 
-								<h:outputText value="#{gui_Ticketbearbeiten.worknoteNoteList}"  />
-							</td>
-						</tr> 					
-						<tr>
-                                                    <td width="15%"> <h:outputText value="#{gui_Ticketbearbeiten.worknoteDateList[status.index]}" />
-                                                        
-                                                    </td>
-                                                    
-							<td> 
-								<h:outputText value="#{gui_Ticketbearbeiten.worknoteNoteList}"  />
-							</td>
-						</tr> 				
-						<tr>
-                                                    <td width="15%"> <h:outputText value="#{gui_Ticketbearbeiten.worknoteDateList[status.index]}" />
-                                                        
-                                                    </td>
-                                                    
-							<td> 
-								<h:outputText value="#{gui_Ticketbearbeiten.worknoteNoteList}"  />
-							</td>
-						</tr> 				
+                                            <tr>
+                                                <td colspan="2"> <b>Kommentar-Historie</b> </td>					 
+                                            </tr>	
+                                            <tr>
+                                                <th>Datum</th>
+                                                <th>Kommentar</th>
+                                            </tr>  
+                                            <c:forEach items="#{gui_Ticketbearbeiten.worknoteNoteList}" var='note' varStatus="status">
+                                                <tr>
+                                                    <td>#{gui_Ticketbearbeiten.worknoteDateList[status.index]}</td>
+                                                    <td>#{note}</td>
+                                                </tr>
+                                            </c:forEach>			
 					</table> 
 				
                                          
