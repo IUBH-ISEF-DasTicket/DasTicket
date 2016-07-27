@@ -23,12 +23,17 @@ import javax.annotation.PostConstruct;
     String Course = Ausgewählter Kurs
     String Title = Titel des Ticket
     String Comment = Notizen
+    String NewComment = Neue Notizen
     String Username = Aktueller Benutzername
-    Integer ReportedTime = Aktueller Benutzername
-    Date Date = Datum
+    String Status = Status des Ticket
+    Integer ReportedTime = Berechnete Zeit am Ticket
     List CourseList = Kursliste aus DB
     List CategoryList = Kategorielist aus DB
     List PriorityList = Prioritätenliste aus DB
+    List StatusList = Statusliste aus DB
+    Collection WorknoteDateList = Dautmeinträge der Worknotes
+    Collection WorknoteNoteList = Notizeinträge der Worknotes
+*
 * <Sichtbarkeit>
 * public
 */ 
@@ -48,7 +53,6 @@ public class gui_Ticketbearbeiten
     //String Username = "Admin";
     String Status;
     String ReportedTime;
-    String Worknote;
     List<SelectItem> CourseList;
     List<SelectItem> CategoryList;
     List<SelectItem> PriorityList;
@@ -335,10 +339,6 @@ public class gui_Ticketbearbeiten
     {
 	return ReportedTime;
     }
-    public String getWorknote() 
-    {
-	return Worknote;
-    }
 
     // Setter Methoden
     public void setPriority(String Priority) 
@@ -377,8 +377,5 @@ public class gui_Ticketbearbeiten
     {
         this.ReportedTime = ReportedTime;
     }
-    public void setWorknote(String Worknote) 
-    {
-        this.Worknote = Worknote;
-    }
+
 }
