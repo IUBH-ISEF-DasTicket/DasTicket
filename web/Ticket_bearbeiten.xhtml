@@ -26,7 +26,7 @@
 							<td id="Zeit">				
 							</td>
                                                     <td> Eingeloggt als: #{gui_Ticketbearbeiten.username}						 
-                                                                <h:commandButton value="Ausloggen"></h:commandButton>
+                                                                <h:commandButton value="Ausloggen" action="#{gui_TicketErfassen.Logout}"></h:commandButton>
 							</td>
 						</tr>
 					</table>
@@ -47,16 +47,14 @@
 							<td width="15%">Priorität</td>   
 							<td> 
                                                             <h:selectOneMenu id="Priority" value="#{gui_Ticketbearbeiten.priority}">
-      
-                                                                                                 <f:selectItems value= "#{gui_Ticketbearbeiten.priorityList}" itemValue="#{gui_Ticketbearbeiten.priority}" />
-                                                                       </h:selectOneMenu>
+                                                                <f:selectItems value= "#{gui_Ticketbearbeiten.priorityList}" itemValue="#{gui_Ticketbearbeiten.priority}" />
+                                                            </h:selectOneMenu>
 							</td>             
 							<td width="15%" >Kategorie</td> 
 							<td> 
-								 <h:selectOneMenu id="Category" value="#{gui_Ticketbearbeiten.category}">
-      
-                                                                                                 <f:selectItems value= "#{gui_Ticketbearbeiten.categoryList}" />
-                                                                </h:selectOneMenu>
+                                                            <h:selectOneMenu id="Category" value="#{gui_Ticketbearbeiten.category}">
+                                                                <f:selectItems value= "#{gui_Ticketbearbeiten.categoryList}" />
+                                                            </h:selectOneMenu>
 							</td>
 						</tr>								  
 						<tr>
