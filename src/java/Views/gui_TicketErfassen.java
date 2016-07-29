@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.faces.model.SelectItem;
 import javax.annotation.PostConstruct;
+import java.time.LocalDateTime;
 
 /*
 * gui_TicketErfassen
@@ -190,7 +191,7 @@ public class gui_TicketErfassen
         ID_Pri = Integer.parseInt(DBController.GetData ("PRIORITY", "id", "WHERE name='" + Priority + "'"));
         ID_Admin = Integer.parseInt(DBController.GetData ("COURSES", "id_user", "WHERE id = " + ID_Cou));
         ID_User = Integer.parseInt(DBController.GetData ("USER", "id", "WHERE username = '" + Username + "'"));
-
+        
         // Warnung wenn kein zugewiesener Tutor am Kurs 
         if (ID_Admin == 1 && Course.equalsIgnoreCase("#Allgemein") == false)
         {
@@ -200,9 +201,11 @@ public class gui_TicketErfassen
 			""));
         }
         
+        
+        
         // Speichern der Werte
-        Status = DBController.InsertData("Ticket (id_priority, title, description, id_category, id_courses, id_user, id_user2, id_state)", 
-                                         "'" + ID_Pri + "','" + Title + "','" + Comment + "','" + ID_Cat + "','" + ID_Cou + "','" + ID_User + "','" + ID_Admin + "','" + ID_Sta + "'");
+        Status = DBController.InsertData("Ticket (id_priority, title, description, id_category, id_courses, id_user, id_user2, id_state, creationDate)", 
+                                         "'" + ID_Pri + "','" + Title + "','" + Comment + "','" + ID_Cat + "','" + ID_Cou + "','" + ID_User + "','" + ID_Admin + "','" + ID_Sta + "','" + LocalDateTime.now() + "'");
          // Status ausgeben
         FacesContext.getCurrentInstance().addMessage(
             null,new FacesMessage(FacesMessage.SEVERITY_WARN,
