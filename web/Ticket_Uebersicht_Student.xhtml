@@ -5,7 +5,7 @@
       xmlns:f="http://java.sun.com/jsf/core"> 
 
     <h:head>
-        <title>Erfassungsmaske</title>
+        <title>Ticketübersicht</title>
         <link rel="stylesheet" media="screen,projection"
         title="Standardstylesheet" href="style.css"
         type="text/css" />
@@ -22,7 +22,7 @@
 						<tr>
 							<td id="Zeit">				
 							</td>
-							<td> Eingeloggt als: [USER.name] 								 
+                                                    <td> Eingeloggt als: #{gui_TicketUebersicht.username} 								 
 									<h:commandButton value="Ausloggen" action="#{gui_TicketErfassen.Logout}"></h:commandButton>
                                                                 
 							</td>
@@ -34,7 +34,7 @@
 								<img src="logoiubh.png" alt="IUBH" style="width:150px"/>
 							</td>
 							<td>
-								<h2>Ticket erfassen</h2>
+								<h2>Ticketübersicht</h2>
 							</td>
 						</tr>					
 					</table>					
@@ -55,19 +55,15 @@
 								Priorität
 							</td>
 							<td>
-								<form action="select.htm" style="width:100%">      
-									<select name="Prioritaet" size="1">
-										<option>...</option>
-										<option>...</option>
-										<option>...</option>
-									</select>									
-								</form>
+                                                            <h:selectOneMenu id="Priority" value="#{gui_TicketUebersicht.priority}">
+                                                                <f:selectItems value= "#{gui_TicketUebersicht.priorityList}" itemValue="#{gui_TicketUebersicht.priority}" />
+                                                            </h:selectOneMenu>
 							</td>
 							<td>
 								Erstellungsdatum
 							</td>
 							<td>
-								<input style="width:60%;height:100%" type="text"></input> 
+								<h:inputText style="width:60%;height:100%" value="#{gui_TicketUebersicht.creationDate}" size="80" label="Erstellungsdatum"></h:inputText> 
 							</td>
 						</tr>
 						<tr>
@@ -75,25 +71,17 @@
 								Kategorie
 							</td>
 							<td>
-								<form action="select.htm" style="width:100%">      
-									<select name="Prioritaet" size="1">
-										<option>...</option>
-										<option>...</option>
-										<option>...</option>
-									</select>									
-								</form> 
+                                                            <h:selectOneMenu id="Category" value="#{gui_TicketUebersicht.category}">
+                                                                <f:selectItems value= "#{gui_TicketUebersicht.categoryList}" />
+                                                            </h:selectOneMenu>
 							</td>
 							<td>
 								Status
 							</td>
 							<td>
-								<form action="select.htm" style="width:100%">      
-									<select name="Prioritaet" size="1">
-										<option>...</option>
-										<option>...</option>
-										<option>...</option>
-									</select>									
-								</form>
+                                                            <h:selectOneMenu id="Status" value="#{gui_TicketUebersicht.status}">
+                                                                <f:selectItems value= "#{gui_TicketUebersicht.statusList}" />
+                                                            </h:selectOneMenu>
 							</td>
 						</tr>
 						<tr>
@@ -101,13 +89,9 @@
 								Kurs
 							</td>
 							<td>
-								<form action="select.htm" style="width:100%">      
-									<select name="Prioritaet" size="1">
-										<option>...</option>
-										<option>...</option>
-										<option>...</option>
-									</select>									
-								</form>
+                                                            <h:selectOneMenu id="Category" value="#{gui_TicketUebersicht.course}">
+                                                                <f:selectItems value= "#{gui_TicketUebersicht.courseList}" />
+                                                            </h:selectOneMenu>
 							</td>
 							<td>
 								Zuordnung
