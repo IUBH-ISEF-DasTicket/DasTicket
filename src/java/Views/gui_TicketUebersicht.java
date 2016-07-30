@@ -54,15 +54,16 @@ public class gui_TicketUebersicht
     //String Username = "Admin";
     String Status;
     String CreationDate;
+    String TicketID;
+    String SortOrder;
+    String TotalResults;
     List<SelectItem> CourseList;
     List<SelectItem> CategoryList;
     List<SelectItem> PriorityList;
     List<SelectItem> StatusList;
     
-    // Test!!!
-    Integer ID = 18;
-    String Username = "Admin";
-    
+   String Username = "Admin";
+   
     // Initialisieren und laden der Select Einträge
     @PostConstruct
     public void Init()        
@@ -78,10 +79,7 @@ public class gui_TicketUebersicht
         while (Result != null ) 
         {   
           Result = DBController.GetData("priority", "name", "where id= '" + i + "'");
-          if (Result != null)
-          {
           PriorityList.add(new SelectItem(Result, Result));
-          }
           i++;
         }
         
@@ -92,10 +90,7 @@ public class gui_TicketUebersicht
         while (Result != null ) 
         {   
           Result = DBController.GetData("category", "name", "where id= '" + i + "'");
-          if (Result != null)
-          {
           CategoryList.add(new SelectItem(Result, Result));
-          }
           i++;
         }
                 
@@ -106,10 +101,7 @@ public class gui_TicketUebersicht
         while (Result != null ) 
         {   
           Result = DBController.GetData("courses", "name", "where id= '" + i + "'");
-          if (Result != null)
-          {
           CourseList.add(new SelectItem(Result, Result));
-          }
         i++;
         }
         
@@ -120,14 +112,27 @@ public class gui_TicketUebersicht
         while (Result != null ) 
         {   
           Result = DBController.GetData("state", "name", "where id= '" + i + "'");
-          if (Result != null)
-          {
           StatusList.add(new SelectItem(Result, Result));
-          }
           i++;
         }
     }
     
+    public String Search()
+        {
+            
+            return null;
+        }
+    
+    public String Reset()
+    {
+        TicketID = "";
+        Category = "";
+        Priority = "";
+        Course = "";
+        Status = "";
+        CreationDate = "";
+        return null;
+    }    
     
      // Getter Methoden
     public List<SelectItem> getCourseList()
@@ -174,6 +179,18 @@ public class gui_TicketUebersicht
     {
 	return CreationDate;
     }
+    public String getTicketID() 
+    {
+	return TicketID;
+    }
+    public String getSortOrder() 
+    {
+	return SortOrder;
+    }
+    public String getTotalResults() 
+    {
+	return TotalResults;
+    }
     
     // Setter Methoden
     public void setPriority(String Priority) 
@@ -200,9 +217,17 @@ public class gui_TicketUebersicht
     {
         this.Status = Status;
     }
-        public void creationDate(String CreationDate) 
+        public void setCreationDate(String CreationDate) 
     {
         this.CreationDate = CreationDate;
+    }
+    public void setTicketID(String TicketID) 
+    {
+        this.TicketID = TicketID;
+    }
+    public void setSortOrder(String SortOrder) 
+    {
+        this.SortOrder = SortOrder;
     }
 
 }
