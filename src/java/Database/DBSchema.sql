@@ -110,14 +110,15 @@ CREATE TABLE USER
 	username CHAR(30) not null,
 	password CHAR(30) not null,
 	email CHAR(50) not null,
-    id_usergroup INT(32) UNSIGNED,
+        id_usergroup INT(32) UNSIGNED,
+        state bool,
 	FOREIGN KEY (id_usergroup) 
         REFERENCES usergroup(id)
         ON DELETE CASCADE
 );
 
 -- Default User
-insert into USER values (1,'#Allgemein','#Allgemein2016#','Allgemein@iubh.de',3);
+insert into USER values (1,'#Allgemein','#Allgemein2016#','Allgemein@iubh.de',3, true);
 
 -- Courses Tabelle
 CREATE TABLE COURSES
