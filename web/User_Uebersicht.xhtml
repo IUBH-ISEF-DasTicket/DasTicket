@@ -2,7 +2,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"> 
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"> 
 
     <h:head>
         <title>Benutzerverwaltung</title>
@@ -27,7 +28,21 @@
                                                                 
 							</td>
 						</tr>
-					</table>					
+					</table>
+                                        <table width="100%" id="Menue">
+                                        <tr>
+                                            <td width = "33%">
+                                                <h:commandButton value="Übersicht" action="Landing Page.xhtml"></h:commandButton>
+                                            </td>                                         
+                                            <td width = "33%">
+                                                <h:commandButton value="Ticketübersicht" ></h:commandButton>
+                                            </td>
+                                            <td width = "33%">
+                                                <h:commandButton value="Ticketerfassung" action="Erfassungsmaske_JSF.xhtml"></h:commandButton>
+                                            </td>
+                                        </tr>
+                                        
+                                    </table>
 					<table id="Title"  width="100%">						
 						<tr>
 							<td width="50%">
@@ -124,6 +139,9 @@
 					<table width="100%" class = "result">
 						<thead>
 							<tr>
+                                                                <td>
+								<b>ID</b>
+								</td>
 								<td>
 								<b>Username</b>
 								</td>
@@ -141,41 +159,29 @@
 								</td>
 							</tr>
 						</thead>
-						<tbody>
-							<tr>
-								<td>
-								[USER.username]
-								</td>
-								<td>
-								[USER.id_usergroup]
-								</td>
-								<td>
-								[USER.state]
-								</td>								
-								<td>                                                                
-                                                                <a href="Ticket_Uebersicht_Student.xhtml"><img src="edit_icon_2.png" alt="Tickets" /></a>
-								</td>
+						<tbody>							
+                                                    <c:forEach items="#{gui_UserUebersicht.userList}" var='user' varStatus="status">
+							<tr>                                                        
 								<td>								
-                                                                <a href="User_bearbeiten.xhtml"><img src="edit_icon.png" alt="edit" /></a>
+                                                                #{user}
 								</td>
-							</tr>
-							<tr>
-								<td>
-								[USER.username]
+                                                                <td>								
+                                                                #{gui_UserUebersicht.userNameList[user-1]}
 								</td>
 								<td>
-								[USER.id_usergroup]
+								#{gui_UserUebersicht.getUserRole(user)}
 								</td>
 								<td>
-								[USER.state]
+								#{gui_UserUebersicht.getUserState(user)}
 								</td>								
 								<td>
 								<a href="Ticket_Uebersicht_Student.xhtml"><img src="edit_icon_2.png" alt="Tickets" /></a>
 								</td>
 								<td>
 								<a href="User_bearbeiten.xhtml"><img src="edit_icon.png" alt="edit" /></a>
-								</td>
+								</td>                                                        
 							</tr>
+                                                        </c:forEach>
 						</tbody>
 					</table>
 					
