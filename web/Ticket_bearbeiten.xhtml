@@ -30,7 +30,23 @@
 							</td>
 						</tr>
 					</table>
-					
+					<table width="100%" id="Menue">
+                                        <tr>
+                                            <td>
+                                                <h:commandButton value="Übersicht" action="Landing Page.xhtml"></h:commandButton>
+                                            </td>
+                                            <td>
+                                                <h:commandButton value="Benutzerverwaltung" ></h:commandButton>
+                                            </td>
+                                            <td>
+                                                <h:commandButton value="Ticketübersicht" ></h:commandButton>
+                                            </td>
+                                            <td>
+                                                <h:commandButton value="Ticketerfassung" action="Erfassungsmaske_JSF.xhtml"></h:commandButton>
+                                            </td>
+                                        </tr>
+                                        
+                                    </table>
 					<table id="Title"  width="100%">						
 						<tr>
 							<td width="50%">
@@ -41,6 +57,7 @@
 							</td>
 						</tr>					
 					</table>
+                                        
 					
                                         <table id="Rand_neu"  width="100%">
 						<tr>
@@ -93,13 +110,13 @@
 						<tr> 
 							<td >Beschreibung</td>
 							<td valign="top" >
-								<h:inputTextarea id="Comment" value="#{gui_Ticketbearbeiten.comment}" style="width:100%;height:100%" rows="5" cols="80" label="Beschreibung" />                                                         
+								<h:inputTextarea id="Comment" value="#{gui_Ticketbearbeiten.comment}" style="width:100%;height:100%;font-family:Arial; font-size: 15px;" rows="5" cols="80" label="Beschreibung" />                                                         
 							</td>					  
 						</tr>
                                                 <tr> 
 							<td >Neuer Kommentar</td>
 							<td valign="top" >
-								<h:inputTextarea id="NewComment" value="#{gui_Ticketbearbeiten.newComment}" style="width:100%;height:100%" rows="5" cols="80" label="Neues Kommentar" />                                                         
+								<h:inputTextarea id="NewComment" value="#{gui_Ticketbearbeiten.newComment}" style="width:100%;height:100%;font-family:Arial; font-size: 15px;" rows="5" cols="80" label="Neues Kommentar" />                                                         
 							</td>					  
 						</tr>	
 					</table> 
@@ -107,15 +124,15 @@
                                    
 					<table id = "Rahmen_Tabelle"  width="100%" >
                                             <tr>
-                                                <td colspan="2"> <b>Kommentar-Historie</b> </td>					 
+                                                <td colspan="2"> <h3>Kommentar-Historie</h3> </td>					 
                                             </tr>	
                                             <tr>
-                                                <th>Datum</th>
-                                                <th>Kommentar</th>
+                                                <td><b>Datum</b></td>
+                                                <td><b>Kommentar</b></td>
                                             </tr>  
                                             <c:forEach items="#{gui_Ticketbearbeiten.worknoteNoteList}" var='note' varStatus="status">
                                                 <tr>
-                                                    <td>#{gui_Ticketbearbeiten.worknoteDateList[status.index]}</td>
+                                                    <td valign="top">#{gui_Ticketbearbeiten.worknoteDateList[status.index]}</td>
                                                     <td>#{note}</td>
                                                 </tr>
                                             </c:forEach>			

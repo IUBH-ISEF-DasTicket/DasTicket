@@ -23,6 +23,7 @@ textarea.WorknoteRO  {background: #E6E6E6;}
 #Menue {
     border-bottom: medium solid #009091; 
     border-top: medium solid #009091;
+    margin-top: 2px;
 }
 #Rahmen_Tabelle {border-color:black;}
 #Header {border-color:black; text-align: right; font-size: 12px}

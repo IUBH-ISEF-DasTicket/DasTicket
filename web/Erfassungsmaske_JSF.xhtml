@@ -30,7 +30,21 @@
                                                                 
 							</td>
 						</tr>
-					</table>					
+					</table>
+                                        <table width="100%" id="Menue">
+                                        <tr>
+                                            <td width="33%">
+                                                <h:commandButton value="Übersicht" action="Landing Page.xhtml"></h:commandButton>
+                                            </td>
+                                            <td width="33%">
+                                                <h:commandButton value="Benutzerverwaltung" ></h:commandButton>
+                                            </td>
+                                            <td width="33%">
+                                                <h:commandButton value="Ticketübersicht" ></h:commandButton>
+                                            </td>                                          
+                                        </tr>
+                                        
+                                    </table>
 					<table id="Title"  width="100%">						
 						<tr>
 							<td width="50%">
@@ -40,7 +54,8 @@
 								<h2>Ticket erfassen</h2>
 							</td>
 						</tr>					
-					</table>					
+					</table>
+                                        
 					<table width="100%">
 						<tr>              
 							<td width="15%" >Priorität</td>
@@ -91,7 +106,7 @@
 							<td>Kommentare</td>
 							<td>  
                                                             
-                                                            <h:inputTextarea value="#{gui_TicketErfassen.comment}" style="width:100%;height:100%" rows="5" cols="80" label="Kommentare"></h:inputTextarea>   
+                                                            <h:inputTextarea value="#{gui_TicketErfassen.comment}" style="width:100%;height:100%;font-family:Arial; font-size: 15px;" rows="5" cols="80" label="Kommentare"></h:inputTextarea>   
                                                            
 							</td>          
 						</tr>						
