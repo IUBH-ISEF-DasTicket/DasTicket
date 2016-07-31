@@ -11,9 +11,10 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.application.FacesMessage;
 import java.util.ArrayList;
-import java.util.Collection;
+//import java.util.Collection;
 import java.util.List;
 import java.time.LocalDateTime;
+import java.util.TreeMap;
 import javax.faces.model.SelectItem;
 import javax.annotation.PostConstruct;
 
@@ -57,10 +58,12 @@ public class gui_TicketUebersicht
     String TicketID;
     String SortOrder;
     String TotalResults;
+    String Tutor;
     List<SelectItem> CourseList;
     List<SelectItem> CategoryList;
     List<SelectItem> PriorityList;
     List<SelectItem> StatusList;
+    List<SelectItem> TutorList;
     
    String Username = "Admin";
    
@@ -115,10 +118,112 @@ public class gui_TicketUebersicht
           StatusList.add(new SelectItem(Result, Result));
           i++;
         }
+        
+        // Tutoren laden
+        TutorList = new ArrayList<SelectItem>();
+        i = 1;
+        Result = "Start";
+        Integer Max = Integer.parseInt(DBController.GetData("user", "MAX(id)", ""));
+        TutorList.add(new SelectItem("", ""));
+        while ( i <= Max ) 
+        {   
+           Result = DBController.GetData("user", "username", "where id = '" + i + "' and id_usergroup in (1,3)");
+           if (Result != null)
+          {
+            TutorList.add(new SelectItem(Result, Result));
+          }
+            i++;
+        }
     }
     
     public String Search()
         {
+            // Variablen
+            Integer ID_Cat;
+            Integer ID_Cou;
+            Integer ID_Pri;
+            Integer ID_User;
+            Integer ID_Admin;
+            Integer ID_Sta;
+            String Clause;
+            String MaxValues;
+            String OrderBy;
+            
+            //Auslesen der ID's
+            ID_Cat = Integer.parseInt(DBController.GetData ("CATEGORY", "id", "WHERE name='" + Category + "'"));
+            ID_Cou = Integer.parseInt(DBController.GetData ("COURSES", "id", "WHERE name='" + Course + "'"));
+            ID_Sta = Integer.parseInt(DBController.GetData ("STATE", "id", "WHERE name='New'"));
+            ID_Pri = Integer.parseInt(DBController.GetData ("PRIORITY", "id", "WHERE name='" + Priority + "'"));
+            ID_Admin = Integer.parseInt(DBController.GetData ("USER", "id", "WHERE username = '" + Tutor + "'"));
+            ID_User = Integer.parseInt(DBController.GetData ("USER", "id", "WHERE username = '" + Username + "'"));
+            
+            // SQL Statement vorbereiten
+            Clause = "id_user = '" + ID_User + "'";
+            
+            // ID
+            if (TicketID.isEmpty() == false )
+            {
+                Clause = "id = " + TicketID;
+            }
+            
+            // Priorität
+            if (Priority.isEmpty() == false )
+            {
+                Clause = Clause + " and id_priority = '" + ID_Pri + "'";
+            }
+            
+            // Kategorie
+            if (Category.isEmpty() == false )
+            {
+                Clause = Clause + " and id_category = '" + ID_Cat + "'";
+            }
+            
+            // Kurs
+            if (Course.isEmpty() == false )
+            {
+                Clause = Clause + " and id_course = '" + ID_Cou + "'";
+            }
+            
+            // Erstellungsdatum
+            if (CreationDate.isEmpty() == false )
+            {
+                Clause = Clause + " and creationDate = '" + CreationDate + "'";
+            }
+            
+            // Status
+            if (Status.isEmpty() == false )
+            {
+                Clause = Clause + " and state = '" + ID_Sta + "'";
+            }
+            
+            // Zuordnung
+            if (Tutor.isEmpty() == false )
+            {
+                Clause = Clause + " and id_user2 = '" + ID_Admin + "'";
+            }
+            
+            // MaxValues festlegen
+           if (SortOrder.equalsIgnoreCase("Alle"))
+           {
+               MaxValues = "";
+           }
+           else
+           {
+               MaxValues = "TOP " + SortOrder;
+           }
+           
+           
+            // Map für ID
+            TreeMap<String, String> Map_ID = new TreeMap<String, String>();
+            
+            // Map für Kurs
+            TreeMap<String, String> Map_Course = new TreeMap<String, String>();
+            
+            // Map für Titel
+            TreeMap<String, String> Map_Title = new TreeMap<String, String>();
+            
+            // Map für Status
+            TreeMap<String, String> Map_State = new TreeMap<String, String>();
             
             return null;
         }
@@ -150,6 +255,10 @@ public class gui_TicketUebersicht
     public List<SelectItem> getStatusList()
     {
     return StatusList;
+    }
+    public List<SelectItem> getTutorList()
+    {
+    return TutorList;
     }
      public String getPriority() 
     {
@@ -191,6 +300,10 @@ public class gui_TicketUebersicht
     {
 	return TotalResults;
     }
+    public String getTutor() 
+    {
+	return Tutor;
+    }
     
     // Setter Methoden
     public void setPriority(String Priority) 
@@ -228,6 +341,10 @@ public class gui_TicketUebersicht
     public void setSortOrder(String SortOrder) 
     {
         this.SortOrder = SortOrder;
+    }
+    public void setTutor(String Tutor) 
+    {
+        this.Tutor = Tutor;
     }
 
 }

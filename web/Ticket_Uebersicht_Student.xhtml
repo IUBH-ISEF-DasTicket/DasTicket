@@ -97,7 +97,9 @@
 								Zuordnung
 							</td>
 							<td>
-								<input style="width:60%;height:100%" type="text" size="80"></input> 
+                                                            <h:selectOneMenu id="Tutor" value="#{gui_TicketUebersicht.tutor}">
+                                                                <f:selectItems value= "#{gui_TicketUebersicht.tutorList}" />
+                                                            </h:selectOneMenu>
 							</td>
 						</tr>
 						<tr>
@@ -123,7 +125,7 @@
                                                                 <f:selectItem itemValue="Datum" itemLabel="Datum" />
                                                                 <f:selectItem itemValue="Kurs" itemLabel="Kurs" />
                                                                 <f:selectItem itemValue="Status" itemLabel="Status" />
-                                                                <f:selectItem itemValue="Titel" itemLabel="Status" />
+                                                                <f:selectItem itemValue="Titel" itemLabel="Titel" />
                                                             </h:selectOneMenu>
 							</td>
 							<td>
