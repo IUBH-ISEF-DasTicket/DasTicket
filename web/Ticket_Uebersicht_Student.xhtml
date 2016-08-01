@@ -23,7 +23,7 @@
 							<td id="Zeit">				
 							</td>
                                                     <td> Eingeloggt als: #{gui_TicketUebersicht.username} 								 
-									<h:commandButton value="Ausloggen" action="#{gui_TicketErfassen.Logout}"></h:commandButton>
+								<h:commandButton value="Ausloggen" action="#{gui_TicketErfassen.Logout}"></h:commandButton>
                                                                 
 							</td>
 						</tr>
@@ -108,8 +108,8 @@
 						<td>
 						</td>
 						<td colspan = "2">
-						<h:commandButton value="Suchen" action="#{gui_TicketUebersicht.search}"></h:commandButton>
-						<h:commandButton value="Filter zurücksetzen" action="#{gui_TicketUebersicht.reset}"></h:commandButton>
+                                                <h:commandButton action="#{gui_TicketUebersicht.Search}" value="Suchen" ></h:commandButton>
+						<h:commandButton action="#{gui_TicketUebersicht.Reset}" value="Filter_zurücksetzen"></h:commandButton>
 						</td>
 						</tr>
 					</table>

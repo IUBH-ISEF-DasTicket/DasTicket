@@ -137,7 +137,7 @@ public class gui_TicketUebersicht
     }
     
     public String Search()
-        {
+        {               
             // Variablen
             Integer ID_Cat;
             Integer ID_Cou;
@@ -145,21 +145,18 @@ public class gui_TicketUebersicht
             Integer ID_User;
             Integer ID_Admin;
             Integer ID_Sta;
+            Integer i;
             String Clause;
             String MaxValues;
-            String OrderBy;
+            String Result;
             
-            //Auslesen der ID's
-            ID_Cat = Integer.parseInt(DBController.GetData ("CATEGORY", "id", "WHERE name='" + Category + "'"));
-            ID_Cou = Integer.parseInt(DBController.GetData ("COURSES", "id", "WHERE name='" + Course + "'"));
-            ID_Sta = Integer.parseInt(DBController.GetData ("STATE", "id", "WHERE name='New'"));
-            ID_Pri = Integer.parseInt(DBController.GetData ("PRIORITY", "id", "WHERE name='" + Priority + "'"));
-            ID_Admin = Integer.parseInt(DBController.GetData ("USER", "id", "WHERE username = '" + Tutor + "'"));
+            //Auslesen der UserID
             ID_User = Integer.parseInt(DBController.GetData ("USER", "id", "WHERE username = '" + Username + "'"));
             
             // SQL Statement vorbereiten
             Clause = "id_user = '" + ID_User + "'";
-            
+                         
+
             // ID
             if (TicketID.isEmpty() == false )
             {
@@ -169,19 +166,22 @@ public class gui_TicketUebersicht
             // Priorität
             if (Priority.isEmpty() == false )
             {
+                ID_Pri = Integer.parseInt(DBController.GetData ("PRIORITY", "id", "WHERE name='" + Priority + "'"));
                 Clause = Clause + " and id_priority = '" + ID_Pri + "'";
             }
             
             // Kategorie
             if (Category.isEmpty() == false )
             {
+                ID_Cat = Integer.parseInt(DBController.GetData ("CATEGORY", "id", "WHERE name='" + Category + "'"));
                 Clause = Clause + " and id_category = '" + ID_Cat + "'";
             }
             
             // Kurs
             if (Course.isEmpty() == false )
             {
-                Clause = Clause + " and id_course = '" + ID_Cou + "'";
+                ID_Cou = Integer.parseInt(DBController.GetData ("COURSES", "id", "WHERE name='" + Course + "'"));
+                Clause = Clause + " and id_courses = '" + ID_Cou + "'";
             }
             
             // Erstellungsdatum
@@ -193,12 +193,14 @@ public class gui_TicketUebersicht
             // Status
             if (Status.isEmpty() == false )
             {
+                ID_Sta = Integer.parseInt(DBController.GetData ("STATE", "id", "WHERE name='New'"));
                 Clause = Clause + " and state = '" + ID_Sta + "'";
             }
             
             // Zuordnung
             if (Tutor.isEmpty() == false )
             {
+                ID_Admin = Integer.parseInt(DBController.GetData ("USER", "id", "WHERE username = '" + Tutor + "'"));
                 Clause = Clause + " and id_user2 = '" + ID_Admin + "'";
             }
             
@@ -212,18 +214,28 @@ public class gui_TicketUebersicht
                MaxValues = "TOP " + SortOrder;
            }
            
-           
-            // Map für ID
+           // TreeMaps anlegen
+            TreeMap<Integer, String> Map_Courses = new TreeMap<Integer, String>();
+            TreeMap<String, String> Map_Title = new TreeMap<String, String>();
+            TreeMap<String, String> Map_State = new TreeMap<String, String>();
             TreeMap<String, String> Map_ID = new TreeMap<String, String>();
             
-            // Map für Kurs
-            TreeMap<String, String> Map_Course = new TreeMap<String, String>();
+            // Befüllen der Maps
+            i = 1;
+            Result = "Start";
+            Integer Max = Integer.parseInt(DBController.GetData("ticket", "MAX(id)", Clause));
+           
+            while ( i <= Max ) 
+                {   
+                    Result = DBController.GetData("Courses", "name","WHERE id=(select id_courses from ticket where id = " + i + " " + Clause  + "order by " + SortOrder + ")");
+                    if (Result != null)
+                        {
+                            Map_Courses.put(i,Result);
+                        }
+                    i++;
+                }
             
-            // Map für Titel
-            TreeMap<String, String> Map_Title = new TreeMap<String, String>();
             
-            // Map für Status
-            TreeMap<String, String> Map_State = new TreeMap<String, String>();
             
             return null;
         }
