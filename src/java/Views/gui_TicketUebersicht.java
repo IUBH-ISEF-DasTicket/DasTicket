@@ -8,8 +8,8 @@ package Views;
 import Database.DBController;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-//import javax.faces.context.FacesContext;
-//import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
+import javax.faces.application.FacesMessage;
 import java.util.ArrayList;
 //import java.util.Collection;
 import java.util.List;
@@ -71,7 +71,10 @@ public class gui_TicketUebersicht
     @PostConstruct
     public void Init()        
     {
-        
+            FacesContext.getCurrentInstance().addMessage(
+            null,new FacesMessage(FacesMessage.SEVERITY_WARN,
+			"PostConstruct",
+			""));
         String Result;
         Integer i;
            
@@ -137,7 +140,12 @@ public class gui_TicketUebersicht
     }
     
     public String Search()
-        {               
+            
+        {          
+            FacesContext.getCurrentInstance().addMessage(
+            null,new FacesMessage(FacesMessage.SEVERITY_WARN,
+			"Search",
+			""));
             // Variablen
             Integer ID_Cat;
             Integer ID_Cou;
@@ -261,6 +269,10 @@ public class gui_TicketUebersicht
     
     public String Reset()
     {
+                    FacesContext.getCurrentInstance().addMessage(
+            null,new FacesMessage(FacesMessage.SEVERITY_WARN,
+			"Reset",
+			""));
         TicketID = "";
         Category = "";
         Priority = "";
