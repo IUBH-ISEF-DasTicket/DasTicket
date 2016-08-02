@@ -8,12 +8,12 @@ package Views;
 import Database.DBController;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.context.FacesContext;
-import javax.faces.application.FacesMessage;
+//import javax.faces.context.FacesContext;
+//import javax.faces.application.FacesMessage;
 import java.util.ArrayList;
 //import java.util.Collection;
 import java.util.List;
-import java.time.LocalDateTime;
+//import java.time.LocalDateTime;
 import java.util.TreeMap;
 import javax.faces.model.SelectItem;
 import javax.annotation.PostConstruct;
@@ -216,27 +216,46 @@ public class gui_TicketUebersicht
            
            // TreeMaps anlegen
             TreeMap<Integer, String> Map_Courses = new TreeMap<Integer, String>();
-            TreeMap<String, String> Map_Title = new TreeMap<String, String>();
-            TreeMap<String, String> Map_State = new TreeMap<String, String>();
-            TreeMap<String, String> Map_ID = new TreeMap<String, String>();
+            TreeMap<Integer, String> Map_Title = new TreeMap<Integer, String>();
+            TreeMap<Integer, String> Map_State = new TreeMap<Integer, String>();
+            TreeMap<Integer, String> Map_ID = new TreeMap<Integer, String>();
             
             // Befüllen der Maps
+            Integer Max = Integer.parseInt(DBController.GetData("ticket", "MAX(id)","WHERE " + Clause));
             i = 1;
             Result = "Start";
-            Integer Max = Integer.parseInt(DBController.GetData("ticket", "MAX(id)", Clause));
-           
             while ( i <= Max ) 
                 {   
-                    Result = DBController.GetData("Courses", "name","WHERE id=(select id_courses from ticket where id = " + i + " " + Clause  + "order by " + SortOrder + ")");
+                    // Kurse
+                    Result = DBController.GetData("Courses", "name","WHERE id=(select id_courses from ticket where id = " + i + " " + Clause  + " order by " + SortOrder + ")");
                     if (Result != null)
                         {
                             Map_Courses.put(i,Result);
                         }
+                    
+                    // Titel
+                    Result = DBController.GetData("ticket", "title","WHERE " + Clause + " order by " + SortOrder);
+                    if (Result != null)
+                        {
+                            Map_Title.put(i,Result);
+                        }
+                    
+                    // Status
+                    Result = DBController.GetData("State", "Name","WHERE id=(select id_state from ticket where id = " + i + " " + Clause  + " order by " + SortOrder + ")");
+                    if (Result != null)
+                        {
+                            Map_State.put(i,Result);
+                        }
+                    
+                    // ID
+                    Result = DBController.GetData("ticket", "id","WHERE " + Clause + " order by " + SortOrder);
+                    if (Result != null)
+                        {
+                            Map_ID.put(i,Result);
+                        }
+                    
                     i++;
                 }
-            
-            
-            
             return null;
         }
     
