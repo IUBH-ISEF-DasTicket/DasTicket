@@ -54,7 +54,7 @@ CREATE TABLE CATEGORY
 
 -- Category füllen
 INSERT INTO CATEGORY (name) VALUES
-	('Service Request'),
+    ('Service Request'),
     ('Incident'),
     ('Question');
 

@@ -238,7 +238,7 @@ public class gui_TicketUebersicht
             
             Integer Max = Integer.parseInt(DBController.GetData("ticket", "MAX(id)","WHERE " + Clause));
             
-            i = 1;
+            i = 0;
             Result = "Start";
             while ( i <= Max ) 
                 {   
