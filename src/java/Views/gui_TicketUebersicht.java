@@ -66,14 +66,14 @@ public class gui_TicketUebersicht
     List<SelectItem> TutorList;
     
    String Username = "Admin";
-   
+
     // Initialisieren und laden der Select Einträge
     @PostConstruct
     public void Init()        
     {
             FacesContext.getCurrentInstance().addMessage(
             null,new FacesMessage(FacesMessage.SEVERITY_WARN,
-			"PostConstruct",
+			"DEBUG:   PostConstruct",
 			""));
         String Result;
         Integer i;
@@ -137,20 +137,22 @@ public class gui_TicketUebersicht
           }
             i++;
         }
+  
     }
-    
+   
     public String Search()
             
         {          
             FacesContext.getCurrentInstance().addMessage(
             null,new FacesMessage(FacesMessage.SEVERITY_WARN,
-			"Search",
+			"DEBUG:   Search",
 			""));
+            
             // Variablen
             Integer ID_Cat;
             Integer ID_Cou;
             Integer ID_Pri;
-            Integer ID_User;
+            Integer ID_User = 1;
             Integer ID_Admin;
             Integer ID_Sta;
             Integer i;
@@ -161,6 +163,7 @@ public class gui_TicketUebersicht
             //Auslesen der UserID
             ID_User = Integer.parseInt(DBController.GetData ("USER", "id", "WHERE username = '" + Username + "'"));
             
+             
             // SQL Statement vorbereiten
             Clause = "id_user = '" + ID_User + "'";
                          
@@ -168,7 +171,7 @@ public class gui_TicketUebersicht
             // ID
             if (TicketID.isEmpty() == false )
             {
-                Clause = "id = " + TicketID;
+                Clause = Clause + " and id = " + TicketID;
             }
             
             // Priorität
@@ -201,8 +204,8 @@ public class gui_TicketUebersicht
             // Status
             if (Status.isEmpty() == false )
             {
-                ID_Sta = Integer.parseInt(DBController.GetData ("STATE", "id", "WHERE name='New'"));
-                Clause = Clause + " and state = '" + ID_Sta + "'";
+                ID_Sta = Integer.parseInt(DBController.GetData ("STATE", "id", "WHERE name='" + Status + "'"));
+                Clause = Clause + " and id_state = '" + ID_Sta + "'";
             }
             
             // Zuordnung
@@ -222,63 +225,92 @@ public class gui_TicketUebersicht
                MaxValues = "TOP " + SortOrder;
            }
            
+
+            
            // TreeMaps anlegen
             TreeMap<Integer, String> Map_Courses = new TreeMap<Integer, String>();
             TreeMap<Integer, String> Map_Title = new TreeMap<Integer, String>();
             TreeMap<Integer, String> Map_State = new TreeMap<Integer, String>();
             TreeMap<Integer, String> Map_ID = new TreeMap<Integer, String>();
+           
             
             // Befüllen der Maps
+            
             Integer Max = Integer.parseInt(DBController.GetData("ticket", "MAX(id)","WHERE " + Clause));
-            i = 1;
+            
+            i = 17;
             Result = "Start";
             while ( i <= Max ) 
                 {   
-                    // Kurse
-                    Result = DBController.GetData("Courses", "name","WHERE id=(select id_courses from ticket where id = " + i + " " + Clause  + " order by " + SortOrder + ")");
+                    // Kurs
+                    Result = DBController.GetData("Courses", "name","WHERE id=(select id_courses from ticket where id = " + i + " and " + Clause  + " order by " + SortOrder + ")");
+                    
                     if (Result != null)
                         {
                             Map_Courses.put(i,Result);
+                                        FacesContext.getCurrentInstance().addMessage(
+            null,new FacesMessage(FacesMessage.SEVERITY_WARN,
+			"DEBUG Kurs:   " + Map_Courses.get(i),
+			""));
                         }
                     
                     // Titel
-                    Result = DBController.GetData("ticket", "title","WHERE " + Clause + " order by " + SortOrder);
+                    Result = DBController.GetData("ticket", "title","WHERE id= " + i + " and " + Clause + " order by " + SortOrder);
+
                     if (Result != null)
                         {
                             Map_Title.put(i,Result);
+                                                                    FacesContext.getCurrentInstance().addMessage(
+            null,new FacesMessage(FacesMessage.SEVERITY_WARN,
+			"DEBUG Titel:   " + Map_Title.get(i),
+			""));
                         }
                     
                     // Status
-                    Result = DBController.GetData("State", "Name","WHERE id=(select id_state from ticket where id = " + i + " " + Clause  + " order by " + SortOrder + ")");
+                    Result = DBController.GetData("State", "Name","WHERE id=(select id_state from ticket where id = " + i + " and " + Clause  + " order by " + SortOrder + ")");
                     if (Result != null)
                         {
                             Map_State.put(i,Result);
+                                                                    FacesContext.getCurrentInstance().addMessage(
+            null,new FacesMessage(FacesMessage.SEVERITY_WARN,
+			"DEBUG Status:   " + Map_State.get(i),
+			""));
                         }
                     
                     // ID
-                    Result = DBController.GetData("ticket", "id","WHERE " + Clause + " order by " + SortOrder);
+                    Result = DBController.GetData("ticket", "id","WHERE id= " +i + " and " + Clause + " order by " + SortOrder);
                     if (Result != null)
                         {
                             Map_ID.put(i,Result);
+                                                                    FacesContext.getCurrentInstance().addMessage(
+            null,new FacesMessage(FacesMessage.SEVERITY_WARN,
+			"DEBUG ID:   " + Map_ID.get(i),
+			""));
                         }
                     
                     i++;
                 }
+
             return null;
+
+
         }
     
     public String Reset()
     {
+        
                     FacesContext.getCurrentInstance().addMessage(
             null,new FacesMessage(FacesMessage.SEVERITY_WARN,
 			"Reset",
 			""));
+                    
         TicketID = "";
         Category = "";
         Priority = "";
         Course = "";
         Status = "";
         CreationDate = "";
+        
         return null;
     }    
     
@@ -388,6 +420,10 @@ public class gui_TicketUebersicht
     public void setTutor(String Tutor) 
     {
         this.Tutor = Tutor;
+    }
+        public void setTotalResults(String TotalResults) 
+    {
+        this.TotalResults = TotalResults;
     }
 
 }
