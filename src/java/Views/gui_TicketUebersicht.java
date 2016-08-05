@@ -80,54 +80,70 @@ public class gui_TicketUebersicht
            
         // Prioritäten laden
         PriorityList = new ArrayList<SelectItem>();
+        PriorityList.add(new SelectItem("---", "---"));
         i = 1;
         Result = "Start";
         while (Result != null ) 
         {   
           Result = DBController.GetData("priority", "name", "where id= '" + i + "'");
-          PriorityList.add(new SelectItem(Result, Result));
+          if (Result != null)
+          {
+            PriorityList.add(new SelectItem(Result, Result));
+          }
           i++;
         }
         
         // Kategorie laden
         CategoryList = new ArrayList<SelectItem>();
+        CategoryList.add(new SelectItem("---", "---"));
         i = 1;
         Result = "Start";
         while (Result != null ) 
         {   
           Result = DBController.GetData("category", "name", "where id= '" + i + "'");
-          CategoryList.add(new SelectItem(Result, Result));
+          if (Result != null)
+          {
+            CategoryList.add(new SelectItem(Result, Result));
+          }
           i++;
         }
-                
+        
         // Kurse laden
         CourseList = new ArrayList<SelectItem>();
+        CourseList.add(new SelectItem("---", "---"));
         i = 1;
         Result = "Start";
         while (Result != null ) 
-        {   
+        {
           Result = DBController.GetData("courses", "name", "where id= '" + i + "'");
-          CourseList.add(new SelectItem(Result, Result));
+          if (Result != null)
+          {  
+            CourseList.add(new SelectItem(Result, Result));
+          }
         i++;
         }
         
         // Status laden
         StatusList = new ArrayList<SelectItem>();
+        StatusList.add(new SelectItem("---", "---"));
         i = 1;
         Result = "Start";
         while (Result != null ) 
         {   
           Result = DBController.GetData("state", "name", "where id= '" + i + "'");
-          StatusList.add(new SelectItem(Result, Result));
+          if (Result != null)
+          {  
+            StatusList.add(new SelectItem(Result, Result));
+          }
           i++;
         }
         
         // Tutoren laden
         TutorList = new ArrayList<SelectItem>();
+        TutorList.add(new SelectItem("---", "---"));
         i = 1;
         Result = "Start";
         Integer Max = Integer.parseInt(DBController.GetData("user", "MAX(id)", ""));
-        TutorList.add(new SelectItem("", ""));
         while ( i <= Max ) 
         {   
            Result = DBController.GetData("user", "username", "where id = '" + i + "' and id_usergroup in (1,3)");
@@ -156,6 +172,7 @@ public class gui_TicketUebersicht
             Integer ID_Admin;
             Integer ID_Sta;
             Integer i;
+            Integer Max;
             String Clause;
             String MaxValues;
             String Result;
@@ -175,21 +192,21 @@ public class gui_TicketUebersicht
             }
             
             // Priorität
-            if (Priority.isEmpty() == false )
+            if (Priority.equalsIgnoreCase("---") == false )
             {
                 ID_Pri = Integer.parseInt(DBController.GetData ("PRIORITY", "id", "WHERE name='" + Priority + "'"));
                 Clause = Clause + " and id_priority = '" + ID_Pri + "'";
             }
             
             // Kategorie
-            if (Category.isEmpty() == false )
+            if (Category.equalsIgnoreCase("---") == false )
             {
                 ID_Cat = Integer.parseInt(DBController.GetData ("CATEGORY", "id", "WHERE name='" + Category + "'"));
                 Clause = Clause + " and id_category = '" + ID_Cat + "'";
             }
             
             // Kurs
-            if (Course.isEmpty() == false )
+            if (Course.equalsIgnoreCase("---") == false )
             {
                 ID_Cou = Integer.parseInt(DBController.GetData ("COURSES", "id", "WHERE name='" + Course + "'"));
                 Clause = Clause + " and id_courses = '" + ID_Cou + "'";
@@ -202,14 +219,14 @@ public class gui_TicketUebersicht
             }
             
             // Status
-            if (Status.isEmpty() == false )
+            if (Status.equalsIgnoreCase("---") == false )
             {
                 ID_Sta = Integer.parseInt(DBController.GetData ("STATE", "id", "WHERE name='" + Status + "'"));
                 Clause = Clause + " and id_state = '" + ID_Sta + "'";
             }
             
             // Zuordnung
-            if (Tutor.isEmpty() == false )
+            if (Tutor.equalsIgnoreCase("---") == false )
             {
                 ID_Admin = Integer.parseInt(DBController.GetData ("USER", "id", "WHERE username = '" + Tutor + "'"));
                 Clause = Clause + " and id_user2 = '" + ID_Admin + "'";
@@ -225,7 +242,33 @@ public class gui_TicketUebersicht
                MaxValues = "TOP " + SortOrder;
            }
            
-
+           // Sortorder übesetzen
+          switch (SortOrder) 
+          {
+               case "ID":       SortOrder = "ID";
+                                break;
+          
+               case "Kurs":     SortOrder = "ID_Course";
+                                break;
+               
+               case "Titel":    SortOrder = "Title";
+                                break;
+               case "Status":   SortOrder = "ID_State";
+                                break;
+               default:  SortOrder = "ID";
+                            break;
+          }
+           // Ergibnisse prüfen
+           Result = DBController.GetData("ticket", "id","WHERE " + Clause);
+           
+           if (Result == null)
+           {
+                FacesContext.getCurrentInstance().addMessage(
+            null,new FacesMessage(FacesMessage.SEVERITY_WARN,
+			"DEBUG Keine passenden Tickets",
+			""));
+                return null;
+           }
             
            // TreeMaps anlegen
             TreeMap<Integer, String> Map_Courses = new TreeMap<Integer, String>();
@@ -236,14 +279,14 @@ public class gui_TicketUebersicht
             
             // Befüllen der Maps
             
-            Integer Max = Integer.parseInt(DBController.GetData("ticket", "MAX(id)","WHERE " + Clause));
-            
-            i = 0;
+            Max = Integer.parseInt(DBController.GetData("ticket", "MAX(id)","WHERE " + Clause));
+            i = Integer.parseInt(DBController.GetData("ticket", "MIN(id)","WHERE " + Clause));
+
             Result = "Start";
             while ( i <= Max ) 
                 {   
                     // Kurs
-                    Result = DBController.GetData("Courses", "name","WHERE id=(select id_courses from ticket where id = " + i + " and " + Clause  + " order by " + SortOrder + ")");
+                    Result = DBController.GetData("Courses", "name","WHERE id = (select id_courses from ticket where id = " + i + " and " + Clause  + " order by " + SortOrder + " LIMIT 1)");
                     
                     if (Result != null)
                         {
@@ -255,7 +298,7 @@ public class gui_TicketUebersicht
                         }
                     
                     // Titel
-                    Result = DBController.GetData("ticket", "title","WHERE id= " + i + " and " + Clause + " order by " + SortOrder);
+                    Result = DBController.GetData("ticket", "title","WHERE id = " + i + " and " + Clause + " order by " + SortOrder + " LIMIT 1");
 
                     if (Result != null)
                         {
@@ -267,7 +310,7 @@ public class gui_TicketUebersicht
                         }
                     
                     // Status
-                    Result = DBController.GetData("State", "Name","WHERE id=(select id_state from ticket where id = " + i + " and " + Clause  + " order by " + SortOrder + ")");
+                    Result = DBController.GetData("State", "Name","WHERE id=(select id_state from ticket where id = " + i + " and " + Clause  + " order by " + SortOrder + " LIMIT 1)");
                     if (Result != null)
                         {
                             Map_State.put(i,Result);
@@ -278,7 +321,7 @@ public class gui_TicketUebersicht
                         }
                     
                     // ID
-                    Result = DBController.GetData("ticket", "id","WHERE id= " +i + " and " + Clause + " order by " + SortOrder);
+                    Result = DBController.GetData("ticket", "id","WHERE id = " + i + " and " + Clause + " order by " + SortOrder + " LIMIT 1");
                     if (Result != null)
                         {
                             Map_ID.put(i,Result);
@@ -305,10 +348,10 @@ public class gui_TicketUebersicht
 			""));
                     
         TicketID = "";
-        Category = "";
-        Priority = "";
-        Course = "";
-        Status = "";
+        Category = "---";
+        Priority = "---";
+        Course = "---";
+        Status = "---";
         CreationDate = "";
         
         return null;
