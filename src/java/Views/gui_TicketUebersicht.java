@@ -159,11 +159,6 @@ public class gui_TicketUebersicht
     public String Search()
             
         {          
-            FacesContext.getCurrentInstance().addMessage(
-            null,new FacesMessage(FacesMessage.SEVERITY_WARN,
-			"DEBUG:   Search",
-			""));
-            
             // Variablen
             Integer ID_Cat;
             Integer ID_Cou;
@@ -173,18 +168,17 @@ public class gui_TicketUebersicht
             Integer ID_Sta;
             Integer i;
             Integer Max;
+            Integer MaxValues;
+            Integer Counter = 1;
             String Clause;
-            String MaxValues;
             String Result;
             
             //Auslesen der UserID
             ID_User = Integer.parseInt(DBController.GetData ("USER", "id", "WHERE username = '" + Username + "'"));
             
-             
             // SQL Statement vorbereiten
             Clause = "id_user = '" + ID_User + "'";
                          
-
             // ID
             if (TicketID.isEmpty() == false )
             {
@@ -233,13 +227,13 @@ public class gui_TicketUebersicht
             }
             
             // MaxValues festlegen
-           if (SortOrder.equalsIgnoreCase("Alle"))
+           if (TotalResults.equalsIgnoreCase("Alle"))
            {
-               MaxValues = "";
+               MaxValues = 1000;
            }
            else
            {
-               MaxValues = "TOP " + SortOrder;
+               MaxValues = Integer.parseInt(TotalResults);
            }
            
            // Sortorder übesetzen
@@ -258,6 +252,7 @@ public class gui_TicketUebersicht
                default:  SortOrder = "ID";
                             break;
           }
+          
            // Ergibnisse prüfen
            Result = DBController.GetData("ticket", "id","WHERE " + Clause);
            
@@ -275,63 +270,66 @@ public class gui_TicketUebersicht
             TreeMap<Integer, String> Map_Title = new TreeMap<Integer, String>();
             TreeMap<Integer, String> Map_State = new TreeMap<Integer, String>();
             TreeMap<Integer, String> Map_ID = new TreeMap<Integer, String>();
-           
-            
-            // Befüllen der Maps
-            
+             
+            // Befüllen der Maps 
             Max = Integer.parseInt(DBController.GetData("ticket", "MAX(id)","WHERE " + Clause));
             i = Integer.parseInt(DBController.GetData("ticket", "MIN(id)","WHERE " + Clause));
-
-            Result = "Start";
-            while ( i <= Max ) 
+            
+            while ( i <= Max && Counter <= MaxValues)  
                 {   
-                    // Kurs
-                    Result = DBController.GetData("Courses", "name","WHERE id = (select id_courses from ticket where id = " + i + " and " + Clause  + " order by " + SortOrder + " LIMIT 1)");
+                    // Prüfe ob Ticket existiert
+                    Result = DBController.GetData("ticket", "id","WHERE id= " + i + " and " + Clause);
                     
                     if (Result != null)
-                        {
-                            Map_Courses.put(i,Result);
-                                        FacesContext.getCurrentInstance().addMessage(
-            null,new FacesMessage(FacesMessage.SEVERITY_WARN,
-			"DEBUG Kurs:   " + Map_Courses.get(i),
-			""));
-                        }
-                    
-                    // Titel
-                    Result = DBController.GetData("ticket", "title","WHERE id = " + i + " and " + Clause + " order by " + SortOrder + " LIMIT 1");
+                    {
+                        // Kurs
+                        Result = DBController.GetData("Courses", "name","WHERE id = (select id_courses from ticket where id = " + i + " and " + Clause  + " order by " + SortOrder + ")");
 
-                    if (Result != null)
-                        {
-                            Map_Title.put(i,Result);
-                                                                    FacesContext.getCurrentInstance().addMessage(
-            null,new FacesMessage(FacesMessage.SEVERITY_WARN,
-			"DEBUG Titel:   " + Map_Title.get(i),
-			""));
-                        }
-                    
-                    // Status
-                    Result = DBController.GetData("State", "Name","WHERE id=(select id_state from ticket where id = " + i + " and " + Clause  + " order by " + SortOrder + " LIMIT 1)");
-                    if (Result != null)
-                        {
-                            Map_State.put(i,Result);
-                                                                    FacesContext.getCurrentInstance().addMessage(
-            null,new FacesMessage(FacesMessage.SEVERITY_WARN,
-			"DEBUG Status:   " + Map_State.get(i),
-			""));
-                        }
-                    
-                    // ID
-                    Result = DBController.GetData("ticket", "id","WHERE id = " + i + " and " + Clause + " order by " + SortOrder + " LIMIT 1");
-                    if (Result != null)
-                        {
-                            Map_ID.put(i,Result);
-                                                                    FacesContext.getCurrentInstance().addMessage(
-            null,new FacesMessage(FacesMessage.SEVERITY_WARN,
-			"DEBUG ID:   " + Map_ID.get(i),
-			""));
-                        }
-                    
-                    i++;
+                        if (Result != null)
+                            {
+                                Map_Courses.put(i,Result);
+                                            FacesContext.getCurrentInstance().addMessage(
+                null,new FacesMessage(FacesMessage.SEVERITY_WARN,
+                            "DEBUG Kurs:   " + Map_Courses.get(i),
+                            ""));
+                            }
+
+                        // Titel
+                        Result = DBController.GetData("ticket", "title","WHERE id = " + i + " and " + Clause + " order by " + SortOrder);
+
+                        if (Result != null)
+                            {
+                                Map_Title.put(i,Result);
+                                                                        FacesContext.getCurrentInstance().addMessage(
+                null,new FacesMessage(FacesMessage.SEVERITY_WARN,
+                            "DEBUG Titel:   " + Map_Title.get(i),
+                            ""));
+                            }
+
+                        // Status
+                        Result = DBController.GetData("State", "Name","WHERE id=(select id_state from ticket where id = " + i + " and " + Clause  + " order by " + SortOrder + ")");
+                        if (Result != null)
+                            {
+                                Map_State.put(i,Result);
+                                                                        FacesContext.getCurrentInstance().addMessage(
+                null,new FacesMessage(FacesMessage.SEVERITY_WARN,
+                            "DEBUG Status:   " + Map_State.get(i),
+                            ""));
+                            }
+
+                        // ID
+                        Result = DBController.GetData("ticket", "id","WHERE id = " + i + " and " + Clause + " order by " + SortOrder);
+                        if (Result != null)
+                            {
+                                Map_ID.put(i,Result);
+                                                                        FacesContext.getCurrentInstance().addMessage(
+                null,new FacesMessage(FacesMessage.SEVERITY_WARN,
+                            "DEBUG ID:   " + Map_ID.get(i),
+                            ""));
+                            }
+                        Counter++;
+                    }
+                        i++;
                 }
 
             return null;
@@ -341,12 +339,7 @@ public class gui_TicketUebersicht
     
     public String Reset()
     {
-        
-                    FacesContext.getCurrentInstance().addMessage(
-            null,new FacesMessage(FacesMessage.SEVERITY_WARN,
-			"Reset",
-			""));
-                    
+        // Alle Kriterien zurücksetzen
         TicketID = "";
         Category = "---";
         Priority = "---";
