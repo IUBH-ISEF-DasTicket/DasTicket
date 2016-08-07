@@ -23,30 +23,50 @@
 								<img src="logoiubh.png" alt="IUBH" style="width:150px"/>
 							</td>
 							<td>
-								<h2>Login</h2>
+                                                            <h2>Login</h2>
 							</td>
 						</tr>					
 					</table>
 				 <h:form>
+                                     <table>
+                                                <tr>
+                                                    <td> <h4>Willkommen bei der Ticketanwendung der IUBH Fernstudium. </h4> </td>
+                                                    <br/>
+                                                </tr>
+                                     </table>
 					<table>
-						<tr>  
+
+                                                <tr>  
 							<td> Benutzername* </td>
 							<td>  
 								<!-- <input type="text" ></input> -->
                                                                 <h:inputText id="Username" value="#{gui_Login.typedUsername}" required="true" label="Emailadresse"></h:inputText>
-                                                                <h:message for="Username"></h:message>
+                                                                
 							</td> 
 						</tr>		
 						<tr>  
 							<td> Passwort* </td>
 							<td> 
                                                                  <h:inputSecret id="UserPassword" value="#{gui_Login.typedUserPassword}" required="true" label="Passwort"></h:inputSecret>
-                                                                 <h:message for="UserPassword"></h:message>
+                                                                 
 							</td>    
 						</tr>  
 						<tr> 
-							<td> </td>
-							<td>                                                               
+                                                        <td></td>
+							<td> 
+                                                            <font color="red" size="2px"> <h:message  for="Username"></h:message></font>
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td> </td>
+                            
+							<td> 
+                                                            <font color="red" size="2px"><h:message for="UserPassword"></h:message></font>
+                                                        </td>   
+                                                </tr>
+                                                <tr>
+                                                        <td></td>
+                                                        <td>                                                               
                                                                 <h:commandButton action="#{gui_Login.CheckLogin}"
                                                                 value="Login"></h:commandButton>
                                                            
@@ -59,7 +79,12 @@
 							</td>		
 						</tr>						
 					</table>
-                                      </h:form>	
+                                         <table>
+                                                <tr>
+                                                    <td> <br/> Du hast noch keine Anmeldedaten? <br/> Bitte wende dich an an den IT-Helpdesk der IUBH (it-helpdesk@iubh-fernstudium.de)</td>
+                                                </tr>
+                                        </table>                                     
+                                     </h:form>	
 				</td>
 			</tr>
 		</table>
