@@ -47,4 +47,6 @@ table.result thead {border: 1px solid black;padding: 5px; background-color: #E6E
     height:auto;
     display:inline-block;
 }
-
+.button{
+    width: 200px;
+}
