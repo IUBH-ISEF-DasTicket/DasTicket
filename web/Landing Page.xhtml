@@ -10,7 +10,9 @@
         title="Standardstylesheet" href="style.css"
         type="text/css" />
     </h:head>
-    
+        <f:metadata>
+        <f:viewParam name="Username" value="#{gui_LandingPage.username}" />
+    </f:metadata>
 	<script type="text/javascript" language="javascript" src="TimeFunctions.js"></script>
 	
     <h:body onload="startTime()">
@@ -30,11 +32,11 @@
                                                     </td>
                                                     
                                                     <td width="20%"> 
-                                                        Eingeloggt als: #{GUI_LandingPage.username} <br/>
+                                                        Eingeloggt als: #{gui_LandingPage.username} <br/>
                                                     </td>
                                                     
                                                     <td width="15%">
-                                                        <h:commandButton value="Ausloggen" action="#{GUI_LandingPage.Logout}"></h:commandButton>
+                                                        <h:commandButton value="Ausloggen" action="#{gui_LandingPage.Logout}"></h:commandButton>
                                                     </td>
                                                     
 						</tr>
@@ -46,7 +48,7 @@
                                                 <div class="divider"/>
                                                 <h:commandButton value="Ticketübersicht" class="button"></h:commandButton>
                                                 <div class="divider"/>
-                                                <h:commandButton value="Ticketerfassung" action="Erfassungsmaske_JSF.xhtml" class="button"></h:commandButton>                                                
+                                                <h:commandButton value="Ticketerfassung" action="Erfassungsmaske_JSF?faces-redirect=true&amp;includeViewParams=true" class="button"></h:commandButton>                                                
                                                 </td>                                    
                                             </tr>
                                         </table>
