@@ -12,6 +12,7 @@ import java.util.List;
 import java.time.LocalDateTime;
 import javax.faces.model.SelectItem;
 import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpServletRequest;
 
 /*
 * gui_TicketErfassen
@@ -58,133 +59,104 @@ public class gui_Ticketbearbeiten
     List<SelectItem> PriorityList;
     List<SelectItem> StatusList;
     Collection WorknoteDateList;
-    Collection WorknoteNoteList;
+    /*Collection*/ String [][] WorknoteNoteList;
     
     // Test!!!
     Integer ID = 1;
     String Username = "Admin";
+    
+    
+    
+    
     
      // Initialisieren und laden der Select Einträge
     @PostConstruct
     public void Init()        
     {
         
-        String Result;
-        Integer i;
-           
-        // Prioritäten laden
+        
+        /*
+        FacesContext.getCurrentInstance().addMessage(
+            null,new FacesMessage(FacesMessage.SEVERITY_WARN,
+			"request = " + req,
+			""));
+        */
+        
+        
         PriorityList = new ArrayList<SelectItem>();
-        i = 1;
-        Result = "Start";
-        while (Result != null ) 
-        {   
-          Result = DBController.GetData("priority", "name", "where id= '" + i + "'");
-          if (Result != null)
-          {
-          PriorityList.add(new SelectItem(Result, Result));
-          }
-          i++;
+        PriorityList.add(new SelectItem("---", "---"));
+        String[][] Priorities =  DBController.GetData("priority", "name", "");
+        
+        for (int j = 0; j < Priorities.length; ++j) 
+        {
+            PriorityList.add(new SelectItem(Priorities[j][0], Priorities[j][0]));
+             
         }
         
-        // Kategorie laden
-        CategoryList = new ArrayList<SelectItem>();
-        i = 1;
-        Result = "Start";
-        while (Result != null ) 
-        {   
-          Result = DBController.GetData("category", "name", "where id= '" + i + "'");
-          if (Result != null)
-          {
-          CategoryList.add(new SelectItem(Result, Result));
-          }
-          i++;
-        }
-                
-        // Kurse laden
         CourseList = new ArrayList<SelectItem>();
-        i = 1;
-        Result = "Start";
-        while (Result != null ) 
-        {   
-          Result = DBController.GetData("courses", "name", "where id= '" + i + "'");
-          if (Result != null)
-          {
-          CourseList.add(new SelectItem(Result, Result));
-          }
-        i++;
+        CourseList.add(new SelectItem("---", "---"));
+        String[][] Courses =  DBController.GetData("courses", "name", "");
+        
+        for (int j = 0; j < Courses.length; ++j) 
+        {
+            CourseList.add(new SelectItem(Courses[j][0], Courses[j][0]));
+             
         }
         
-        // Status laden
+        CategoryList = new ArrayList<SelectItem>();
+        CategoryList.add(new SelectItem("---", "---"));
+        String[][] Categories =  DBController.GetData("category", "name", "");
+        
+        for (int j = 0; j < Categories.length; ++j) 
+        {
+            CategoryList.add(new SelectItem(Categories[j][0], Categories[j][0]));
+             
+        }
+        
         StatusList = new ArrayList<SelectItem>();
-        i = 1;
-        Result = "Start";
-        while (Result != null ) 
-        {   
-          Result = DBController.GetData("state", "name", "where id= '" + i + "'");
-          if (Result != null)
-          {
-          StatusList.add(new SelectItem(Result, Result));
-          }
-          i++;
+        StatusList.add(new SelectItem("---", "---"));
+        String[][] status =  DBController.GetData("state", "name", "");
+        
+        for (int j = 0; j < status.length; ++j) 
+        {
+            StatusList.add(new SelectItem(status[j][0], status[j][0]));
+             
         }
+        
+        String[][] worknote =  DBController.GetData("worknotes", "creationDate, notes", "where id_ticket = " + ID);
+        WorknoteNoteList = worknote;
 
-        // Worknotes Date laden
-        WorknoteDateList = new ArrayList();
-        i = 1;
-        Result = "Start";
-        while (Result != null ) 
-        {   
-          Result = DBController.GetData("worknotes", "creationdate", "where id ='" + i + "'");
-          if (Result != null)
-          {
-          WorknoteDateList.add(Result);
-          }
-        i++;
-        }
-        
-        // Worknotes Note laden
-        WorknoteNoteList = new ArrayList();
-        Result = "Start";
-        i = 1;
-        while (Result != null ) 
-        {   
-          Result = DBController.GetData("worknotes", "notes", "where id='" + i + "'");
-          if (Result != null)
-          {
-          WorknoteNoteList.add(Result);
-          }
-          i++;
-        }
-        
         // Werte setzen
         // Kurs setzen
-        Course = DBController.GetData("courses", "name", "where id =(select id_courses from ticket where ID=" + ID +")");
+        String[][] TicketCourse = DBController.GetData("courses", "name", "where id =(select id_courses from ticket where ID=" + ID +")");
+        Course = TicketCourse[0][0];
          // Status setzen
-        Status = DBController.GetData("state", "name", "where id =(select id_state from ticket where ID=" + ID +")");
-         // Kategorie setzen
-        Category = DBController.GetData("category", "name", "where id =(select id_category from ticket where ID=" + ID +")");
-         // Priorität setzen
-        Priority = DBController.GetData("priority", "name", "where id =(select id_priority from ticket where ID=" + ID +")");
-         // Beschreibung setzen
-        Comment = DBController.GetData("ticket", "description", "where id =" + ID);
+        String[][] TicketStatus = DBController.GetData("state", "name", "where id =(select id_state from ticket where ID=" + ID +")");
+        Status = TicketStatus[0][0];
+        // Kategorie setzen
+        String[][] TicketCategory = DBController.GetData("category", "name", "where id =(select id_category from ticket where ID=" + ID +")");
+        Category = TicketCategory[0][0];
+        // Priorität setzen
+        String[][] TicketPriority = DBController.GetData("priority", "name", "where id =(select id_priority from ticket where ID=" + ID +")");
+        Priority = TicketPriority[0][0];
+        // Beschreibung setzen
+        String[][] TicketComment = DBController.GetData("ticket", "description", "where id =" + ID);
+        Comment = TicketComment[0][0];
         // Titel setzen
-        Title = DBController.GetData("ticket", "title", "where id =" + ID);
+        String[][] TicketTitle = DBController.GetData("ticket", "title", "where id =" + ID);
+        Title = TicketTitle[0][0];
         // Gebuchte Zeit setzen
-        ReportedTime = DBController.GetData("ReportedTime", "ReportedTime", "where id_ticket =" + ID);
-        
+        String[][] TicketReportedTime = DBController.GetData("ReportedTime", "ReportedTime", "where id_ticket =" + ID);
+        ReportedTime = TicketReportedTime[0][0];
+                
     }
     
         // Speichern
     public String Save()        
     {
-        String Result;
+        String Result = "";
         Boolean Error;
-        Integer ID_Cat;
-        Integer ID_Cou;
-        Integer ID_Pri;
-        Integer ID_Admin;
-        Integer ID_Sta;
-        
+                        
         Error = false;
                 
         // Username überprüfen
@@ -224,15 +196,16 @@ public class gui_Ticketbearbeiten
             return null;   
         }
         
-        //Auslesen der ID's
-        ID_Cat = Integer.parseInt(DBController.GetData ("CATEGORY", "id", "WHERE name='" + Category + "'"));
-        ID_Cou = Integer.parseInt(DBController.GetData ("COURSES", "id", "WHERE name='" + Course + "'"));
-        ID_Sta = Integer.parseInt(DBController.GetData ("STATE", "id", "WHERE name='" + Status + "'"));
-        ID_Pri = Integer.parseInt(DBController.GetData ("PRIORITY", "id", "WHERE name='" + Priority + "'"));
-        ID_Admin = Integer.parseInt(DBController.GetData ("COURSES", "id_user", "WHERE id ='" + ID_Cou + "'"));
+        //Auslesen der ID's       
+        String[][] ID_Cat = DBController.GetData ("CATEGORY", "id", "WHERE name='" + Category + "'");
+        String[][] ID_Cou = DBController.GetData ("COURSES", "id", "WHERE name='" + Course + "'");
+        String[][] ID_Sta = DBController.GetData ("STATE", "id", "WHERE name='" + Status + "'");
+        String[][] ID_Pri = DBController.GetData ("PRIORITY", "id", "WHERE name='" + Priority + "'");
+        String[][] ID_Admin = DBController.GetData ("COURSES", "id_user", "WHERE id = " + ID_Cou[0][0]);
+        
         
         // Warnung wenn kein zugewiesener Tutor am Kurs 
-        if (ID_Admin == 1 && Course.equalsIgnoreCase("#Allgemein") == false)
+        if (ID_Admin[0][0].equals("1") && Course.equalsIgnoreCase("#Allgemein") == false)
         {
             FacesContext.getCurrentInstance().addMessage(
             null,new FacesMessage(FacesMessage.SEVERITY_WARN,
@@ -241,20 +214,22 @@ public class gui_Ticketbearbeiten
         }
         
         // Speichern der Werte
+        
+        
         // Kategorie
-        Result = DBController.UpdateData("Ticket","ID_Category", String.valueOf(ID_Cat),"where ID='" + ID + "'");
+        DBController.UpdateData("Ticket","ID_Category", String.valueOf(ID_Cat[0][0]),"where ID='" + ID + "'");
         // Priorität
-        Result = DBController.UpdateData("Ticket","ID_Priority", String.valueOf(ID_Pri),"where ID='" + ID + "'");
+        DBController.UpdateData("Ticket","ID_Priority", String.valueOf(ID_Pri[0][0]),"where ID='" + ID + "'");
          // Kurs
-        Result = DBController.UpdateData("Ticket","ID_Courses", String.valueOf(ID_Cou),"where ID='" + ID + "'");
+        DBController.UpdateData("Ticket","ID_Courses", String.valueOf(ID_Cou[0][0]),"where ID='" + ID + "'");
          // Status
-        Result = DBController.UpdateData("Ticket","ID_State", String.valueOf(ID_Sta),"where ID='" + ID + "'");
+        DBController.UpdateData("Ticket","ID_State", String.valueOf(ID_Sta[0][0]),"where ID='" + ID + "'");
         // Titel
-        Result = DBController.UpdateData("Ticket","Title", Title,"where ID='" + ID + "'");
+        DBController.UpdateData("Ticket","Title", Title,"where ID='" + ID + "'");
         // Kommentar 
-        Result = DBController.UpdateData("Ticket","description", Comment ,"where ID='" + ID + "'");
+        DBController.UpdateData("Ticket","description", Comment ,"where ID='" + ID + "'");
        // ReportedTime
-        Result = DBController.UpdateData("ReportedTime","ReportedTime", ReportedTime ,"where ID_ticket='" + ID + "'"); 
+        DBController.UpdateData("ReportedTime","ReportedTime", ReportedTime ,"where ID_ticket='" + ID + "'"); 
        
         // Worknote
         if (NewComment.isEmpty() == false)
@@ -267,6 +242,11 @@ public class gui_Ticketbearbeiten
             null,new FacesMessage(FacesMessage.SEVERITY_WARN,
 			"STATUS: " + Result,
 			""));
+        
+        // Worknotes neu laden
+        String[][] worknote =  DBController.GetData("worknotes", "creationDate, notes", "where id_ticket = " + ID);
+        WorknoteNoteList = worknote;
+        
         return null;
     
     
@@ -299,7 +279,7 @@ public class gui_Ticketbearbeiten
     {
     return WorknoteDateList;
     }
-    public Collection getWorknoteNoteList()
+    public String[][] getWorknoteNoteList()
     {
     return WorknoteNoteList;
     }

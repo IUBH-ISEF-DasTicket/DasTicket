@@ -52,41 +52,35 @@ public class gui_TicketErfassen
     // Initialisieren und laden der Select Einträge
     @PostConstruct
     public void Init()        
-    {
-        String Result;
-        Integer i;
-           
-        // Prioritäten laden
+    {                        
         PriorityList = new ArrayList<SelectItem>();
-        i = 1;
-        Result = "Start";
-        while (Result != null ) 
-        {   
-          Result = DBController.GetData("priority", "name", "where id= '" + i + "'");
-          PriorityList.add(new SelectItem(Result, Result));
-          i++;
-        }
-      
-        // Kategorie laden
-        CategoryList = new ArrayList<SelectItem>();
-        i = 1;
-        Result = "Start";
-        while (Result != null ) 
-        {   
-          Result = DBController.GetData("category", "name", "where id= '" + i + "'");
-          CategoryList.add(new SelectItem(Result, Result));
-          i++;
+        PriorityList.add(new SelectItem("---", "---"));
+        String[][] Priorities =  DBController.GetData("priority", "name", "");
+        
+        for (int j = 0; j < Priorities.length; ++j) 
+        {
+            PriorityList.add(new SelectItem(Priorities[j][0], Priorities[j][0]));
+             
         }
         
-        // Kurse laden
         CourseList = new ArrayList<SelectItem>();
-        i = 1;
-        Result = "Start";
-        while (Result != null ) 
-        {   
-          Result = DBController.GetData("courses", "name", "where id= '" + i + "'");
-          CourseList.add(new SelectItem(Result, Result));
-        i++;
+        CourseList.add(new SelectItem("---", "---"));
+        String[][] Courses =  DBController.GetData("courses", "name", "");
+        
+        for (int j = 0; j < Courses.length; ++j) 
+        {
+            CourseList.add(new SelectItem(Courses[j][0], Courses[j][0]));
+             
+        }
+        
+        CategoryList = new ArrayList<SelectItem>();
+        CategoryList.add(new SelectItem("---", "---"));
+        String[][] Categories =  DBController.GetData("category", "name", "");
+        
+        for (int j = 0; j < Categories.length; ++j) 
+        {
+            CategoryList.add(new SelectItem(Categories[j][0], Categories[j][0]));
+             
         }
                    
     }
@@ -105,14 +99,7 @@ public class gui_TicketErfassen
     public String Save()        
     {
         String Status;
-        Boolean Error;
-        Integer ID_Cat;
-        Integer ID_Cou;
-        Integer ID_Pri;
-        Integer ID_User;
-        Integer ID_Admin;
-        Integer ID_Sta;
-        Integer ID_Tic;
+        Boolean Error;      
         
         Error = false;
                 
@@ -184,16 +171,17 @@ public class gui_TicketErfassen
             return null;   
         }
         
-        //Auslesen der ID's
-        ID_Cat = Integer.parseInt(DBController.GetData ("CATEGORY", "id", "WHERE name='" + Category + "'"));
-        ID_Cou = Integer.parseInt(DBController.GetData ("COURSES", "id", "WHERE name='" + Course + "'"));
-        ID_Sta = Integer.parseInt(DBController.GetData ("STATE", "id", "WHERE name='New'"));
-        ID_Pri = Integer.parseInt(DBController.GetData ("PRIORITY", "id", "WHERE name='" + Priority + "'"));
-        ID_Admin = Integer.parseInt(DBController.GetData ("COURSES", "id_user", "WHERE id = " + ID_Cou));
-        ID_User = Integer.parseInt(DBController.GetData ("USER", "id", "WHERE username = '" + Username + "'"));
+        //Auslesen der ID's        
+        String[][] ID_Cat = DBController.GetData ("CATEGORY", "id", "WHERE name='" + Category + "'");
+        String[][] ID_Cou = DBController.GetData ("COURSES", "id", "WHERE name='" + Course + "'");
+        String[][] ID_Sta = DBController.GetData ("STATE", "id", "WHERE name='New'");
+        String[][] ID_Pri = DBController.GetData ("PRIORITY", "id", "WHERE name='" + Priority + "'");
+        String[][] ID_Admin = DBController.GetData ("COURSES", "id_user", "WHERE id = " + ID_Cou[0][0]);
+        String[][] ID_User = DBController.GetData ("USER", "id", "WHERE username = '" + Username + "'");
+        
         
         // Warnung wenn kein zugewiesener Tutor am Kurs 
-        if (ID_Admin == 1 && Course.equalsIgnoreCase("#Allgemein") == false)
+        if (ID_Admin[0][0].equals("1") && Course.equalsIgnoreCase("#Allgemein") == false)
         {
             FacesContext.getCurrentInstance().addMessage(
             null,new FacesMessage(FacesMessage.SEVERITY_WARN,
@@ -205,7 +193,7 @@ public class gui_TicketErfassen
         
         // Speichern der Werte
         Status = DBController.InsertData("Ticket (id_priority, title, description, id_category, id_courses, id_user, id_user2, id_state, creationDate)", 
-                                         "'" + ID_Pri + "','" + Title + "','" + Comment + "','" + ID_Cat + "','" + ID_Cou + "','" + ID_User + "','" + ID_Admin + "','" + ID_Sta + "','" + LocalDateTime.now() + "'");
+                                         "'" + ID_Pri[0][0] + "','" + Title + "','" + Comment + "','" + ID_Cat[0][0] + "','" + ID_Cou[0][0] + "','" + ID_User[0][0] + "','" + ID_Admin[0][0] + "','" + ID_Sta[0][0] + "','" + LocalDateTime.now() + "'");
          // Status ausgeben
         FacesContext.getCurrentInstance().addMessage(
             null,new FacesMessage(FacesMessage.SEVERITY_WARN,
@@ -213,10 +201,10 @@ public class gui_TicketErfassen
 			""));
         
         // ID_Ticket auslesen
-        ID_Tic = Integer.parseInt(DBController.GetData ("Ticket", "id", "WHERE title='" + Title + "'" + "and description='" + Comment + "'" + "and ID_State ='" + ID_Sta + "'"));
+        String[][] ID_Tic = DBController.GetData ("Ticket", "id", "WHERE title='" + Title + "'" + "and description='" + Comment + "'" + "and ID_State ='" + ID_Sta[0][0] + "'");
 
         // Reported Time setzen
-        Status = DBController.InsertData("ReportedTime (ReportedTime,id_Ticket)", "0," + ID_Tic);
+        DBController.InsertData("ReportedTime (ReportedTime,id_Ticket)", "0," + ID_Tic[0][0]);
         
         return null;    
     }
@@ -297,7 +285,7 @@ public class gui_TicketErfassen
     {
         this.Comment = Comment;
     }
-        public void setUsername(String Username) 
+    public void setUsername(String Username) 
     {
         this.Username = Username;
     }

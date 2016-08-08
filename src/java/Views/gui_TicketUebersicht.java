@@ -65,7 +65,9 @@ public class gui_TicketUebersicht
     List<SelectItem> StatusList;
     List<SelectItem> TutorList;
     
-   String Username = "Admin";
+    String [][] ListOfTickets;
+    
+    String Username = "Admin";
 
     // Initialisieren und laden der Select Einträge
     @PostConstruct
@@ -75,263 +77,185 @@ public class gui_TicketUebersicht
             null,new FacesMessage(FacesMessage.SEVERITY_WARN,
 			"DEBUG:   PostConstruct",
 			""));
-        String Result;
-        Integer i;
-           
-        // Prioritäten laden
+            
+            
         PriorityList = new ArrayList<SelectItem>();
         PriorityList.add(new SelectItem("---", "---"));
-        i = 1;
-        Result = "Start";
-        while (Result != null ) 
-        {   
-          Result = DBController.GetData("priority", "name", "where id= '" + i + "'");
-          if (Result != null)
-          {
-            PriorityList.add(new SelectItem(Result, Result));
-          }
-          i++;
+        String[][] Priorities =  DBController.GetData("priority", "name", "");
+        
+        for (int j = 0; j < Priorities.length; ++j) 
+        {
+            PriorityList.add(new SelectItem(Priorities[j][0], Priorities[j][0]));
+             
         }
         
-        // Kategorie laden
-        CategoryList = new ArrayList<SelectItem>();
-        CategoryList.add(new SelectItem("---", "---"));
-        i = 1;
-        Result = "Start";
-        while (Result != null ) 
-        {   
-          Result = DBController.GetData("category", "name", "where id= '" + i + "'");
-          if (Result != null)
-          {
-            CategoryList.add(new SelectItem(Result, Result));
-          }
-          i++;
-        }
-        
-        // Kurse laden
         CourseList = new ArrayList<SelectItem>();
         CourseList.add(new SelectItem("---", "---"));
-        i = 1;
-        Result = "Start";
-        while (Result != null ) 
+        String[][] Courses =  DBController.GetData("courses", "name", "");
+        
+        for (int j = 0; j < Courses.length; ++j) 
         {
-          Result = DBController.GetData("courses", "name", "where id= '" + i + "'");
-          if (Result != null)
-          {  
-            CourseList.add(new SelectItem(Result, Result));
-          }
-        i++;
+            CourseList.add(new SelectItem(Courses[j][0], Courses[j][0]));
+             
         }
         
-        // Status laden
+        CategoryList = new ArrayList<SelectItem>();
+        CategoryList.add(new SelectItem("---", "---"));
+        String[][] Categories =  DBController.GetData("category", "name", "");
+        
+        for (int j = 0; j < Categories.length; ++j) 
+        {
+            CategoryList.add(new SelectItem(Categories[j][0], Categories[j][0]));
+             
+        }
+        
         StatusList = new ArrayList<SelectItem>();
         StatusList.add(new SelectItem("---", "---"));
-        i = 1;
-        Result = "Start";
-        while (Result != null ) 
-        {   
-          Result = DBController.GetData("state", "name", "where id= '" + i + "'");
-          if (Result != null)
-          {  
-            StatusList.add(new SelectItem(Result, Result));
-          }
-          i++;
-        }
+        String[][] status =  DBController.GetData("state", "name", "");
         
-        // Tutoren laden
+        for (int j = 0; j < status.length; ++j) 
+        {
+            StatusList.add(new SelectItem(status[j][0], status[j][0]));
+             
+        }    
+            
         TutorList = new ArrayList<SelectItem>();
         TutorList.add(new SelectItem("---", "---"));
-        i = 1;
-        Result = "Start";
-        Integer Max = Integer.parseInt(DBController.GetData("user", "MAX(id)", ""));
-        while ( i <= Max ) 
-        {   
-           Result = DBController.GetData("user", "username", "where id = '" + i + "' and id_usergroup in (1,3)");
-           if (Result != null)
-          {
-            TutorList.add(new SelectItem(Result, Result));
-          }
-            i++;
-        }
+        String[][] tutor =  DBController.GetData("user", "username", "where id_usergroup in (1,3)");
+        
+        for (int j = 0; j < tutor.length; ++j) 
+        {
+            TutorList.add(new SelectItem(tutor[j][0], tutor[j][0]));
+             
+        }    
+        
+        String[][] Result = DBController.GetData("ticket", "id, (select name from courses where id = id_courses), title, (select name from state where id = id_state)", "");
+        ListOfTickets = Result;
   
     }
    
-    public String Search()
-            
+    public String Search()            
         {          
             // Variablen
             Integer ID_Cat;
             Integer ID_Cou;
             Integer ID_Pri;
-            Integer ID_User = 1;
+            String ID_User = "1";
             Integer ID_Admin;
             Integer ID_Sta;
             Integer i;
             Integer Max;
-            Integer MaxValues;
+            
             Integer Counter = 1;
-            String Clause;
-            String Result;
             
-            //Auslesen der UserID
-            ID_User = Integer.parseInt(DBController.GetData ("USER", "id", "WHERE username = '" + Username + "'"));
+            String[][] user = DBController.GetData ("USER", "id", "WHERE username = '" + Username + "'");
+            ID_User = user[0][0];
             
-            // SQL Statement vorbereiten
-            Clause = "id_user = '" + ID_User + "'";
-                         
-            // ID
+            //String query = "WHERE id_user = '" + ID_User + "'";
+            String query = "";
+            
             if (TicketID.isEmpty() == false )
             {
-                Clause = Clause + " and id = " + TicketID;
+                query += "id = " + TicketID + " AND ";
             }
             
             // Priorität
             if (Priority.equalsIgnoreCase("---") == false )
-            {
-                ID_Pri = Integer.parseInt(DBController.GetData ("PRIORITY", "id", "WHERE name='" + Priority + "'"));
-                Clause = Clause + " and id_priority = '" + ID_Pri + "'";
+            {                
+                query += "id_priority = (select id from priority where name = '" + Priority + "') AND ";
             }
             
             // Kategorie
             if (Category.equalsIgnoreCase("---") == false )
-            {
-                ID_Cat = Integer.parseInt(DBController.GetData ("CATEGORY", "id", "WHERE name='" + Category + "'"));
-                Clause = Clause + " and id_category = '" + ID_Cat + "'";
+            {                
+                query += "id_category = (select id from category where name = '" + Category + "') AND ";
             }
             
             // Kurs
             if (Course.equalsIgnoreCase("---") == false )
             {
-                ID_Cou = Integer.parseInt(DBController.GetData ("COURSES", "id", "WHERE name='" + Course + "'"));
-                Clause = Clause + " and id_courses = '" + ID_Cou + "'";
+                query += "id_courses = (select id from courses where name = '" + Course + "') AND ";                
             }
             
             // Erstellungsdatum
             if (CreationDate.isEmpty() == false )
             {
-                Clause = Clause + " and creationDate = '" + CreationDate + "'";
+                query += "creationDate = STR_TO_DATE('" + CreationDate + "','%d-%m-%Y') AND ";
             }
             
             // Status
             if (Status.equalsIgnoreCase("---") == false )
             {
-                ID_Sta = Integer.parseInt(DBController.GetData ("STATE", "id", "WHERE name='" + Status + "'"));
-                Clause = Clause + " and id_state = '" + ID_Sta + "'";
+                query += "id_state = (select id from state where name = '" + Status + "') AND ";
             }
             
             // Zuordnung
             if (Tutor.equalsIgnoreCase("---") == false )
             {
-                ID_Admin = Integer.parseInt(DBController.GetData ("USER", "id", "WHERE username = '" + Tutor + "'"));
-                Clause = Clause + " and id_user2 = '" + ID_Admin + "'";
+                query += "id_user2 = (select id from user where username = '" + Tutor + "') AND ";                
+            }                        
+            
+            // Letztes AND wegschneiden
+            if (query.isEmpty() == false)
+            {
+                query = query.substring(0, query.length() - 4);
             }
             
-            // MaxValues festlegen
-           if (TotalResults.equalsIgnoreCase("Alle"))
-           {
-               MaxValues = 1000;
-           }
-           else
-           {
-               MaxValues = Integer.parseInt(TotalResults);
-           }
-           
-           // Sortorder übesetzen
-          switch (SortOrder) 
-          {
-               case "ID":       SortOrder = "ID";
-                                break;
-          
-               case "Kurs":     SortOrder = "ID_Course";
-                                break;
-               
-               case "Titel":    SortOrder = "Title";
-                                break;
-               case "Status":   SortOrder = "ID_State";
-                                break;
-               default:  SortOrder = "ID";
-                            break;
-          }
-          
-           // Ergibnisse prüfen
-           Result = DBController.GetData("ticket", "id","WHERE " + Clause);
-           
-           if (Result == null)
-           {
-                FacesContext.getCurrentInstance().addMessage(
-            null,new FacesMessage(FacesMessage.SEVERITY_WARN,
-			"DEBUG Keine passenden Tickets",
-			""));
-                return null;
-           }
+            switch (SortOrder) 
+            {
+                case "ID":          SortOrder = "id";
+                                    break;
+                case "Datum":    SortOrder = "creationDate";
+                                    break;
+                case "Kurs":       SortOrder = "id_courses";
+                                    break;
+                case "Status":      SortOrder = "id_state";
+                                    break;
+                case "Titel":      SortOrder = "title";
+                                    break;
+                default:            SortOrder = "id";
+                                    break;
+            }
             
-           // TreeMaps anlegen
-            TreeMap<Integer, String> Map_Courses = new TreeMap<Integer, String>();
-            TreeMap<Integer, String> Map_Title = new TreeMap<Integer, String>();
-            TreeMap<Integer, String> Map_State = new TreeMap<Integer, String>();
-            TreeMap<Integer, String> Map_ID = new TreeMap<Integer, String>();
-             
-            // Befüllen der Maps 
-            Max = Integer.parseInt(DBController.GetData("ticket", "MAX(id)","WHERE " + Clause));
-            i = Integer.parseInt(DBController.GetData("ticket", "MIN(id)","WHERE " + Clause));
+            if (query.isEmpty() == false)
+            {
+                query = "WHERE " + query + " ORDER BY " + SortOrder;
+            }
+                
+
             
-            while ( i <= Max && Counter <= MaxValues)  
-                {   
-                    // Prüfe ob Ticket existiert
-                    Result = DBController.GetData("ticket", "id","WHERE id= " + i + " and " + Clause);
-                    
-                    if (Result != null)
-                    {
-                        // Kurs
-                        Result = DBController.GetData("Courses", "name","WHERE id = (select id_courses from ticket where id = " + i + " and " + Clause  + " order by " + SortOrder + ")");
+            String MaxValues;           
+            if (TotalResults.equalsIgnoreCase("Alle"))
+            {
+               MaxValues = "";
+            }
+            else
+            {
+               MaxValues = "LIMIT " + TotalResults;
+            }
+            query += " " + MaxValues;
+            
 
-                        if (Result != null)
-                            {
-                                Map_Courses.put(i,Result);
-                                            FacesContext.getCurrentInstance().addMessage(
-                null,new FacesMessage(FacesMessage.SEVERITY_WARN,
-                            "DEBUG Kurs:   " + Map_Courses.get(i),
-                            ""));
-                            }
+            String[][] Result = DBController.GetData("ticket", "id, (select name from courses where id = id_courses), title, (select name from state where id = id_state)", query);
+            ListOfTickets = Result;
 
-                        // Titel
-                        Result = DBController.GetData("ticket", "title","WHERE id = " + i + " and " + Clause + " order by " + SortOrder);
-
-                        if (Result != null)
-                            {
-                                Map_Title.put(i,Result);
-                                                                        FacesContext.getCurrentInstance().addMessage(
-                null,new FacesMessage(FacesMessage.SEVERITY_WARN,
-                            "DEBUG Titel:   " + Map_Title.get(i),
-                            ""));
-                            }
-
-                        // Status
-                        Result = DBController.GetData("State", "Name","WHERE id=(select id_state from ticket where id = " + i + " and " + Clause  + " order by " + SortOrder + ")");
-                        if (Result != null)
-                            {
-                                Map_State.put(i,Result);
-                                                                        FacesContext.getCurrentInstance().addMessage(
-                null,new FacesMessage(FacesMessage.SEVERITY_WARN,
-                            "DEBUG Status:   " + Map_State.get(i),
-                            ""));
-                            }
-
-                        // ID
-                        Result = DBController.GetData("ticket", "id","WHERE id = " + i + " and " + Clause + " order by " + SortOrder);
-                        if (Result != null)
-                            {
-                                Map_ID.put(i,Result);
-                                                                        FacesContext.getCurrentInstance().addMessage(
-                null,new FacesMessage(FacesMessage.SEVERITY_WARN,
-                            "DEBUG ID:   " + Map_ID.get(i),
-                            ""));
-                            }
-                        Counter++;
-                    }
-                        i++;
+            /*
+            String test = "";
+            for (int i=0; i<Result.length; ++i) 
+            {
+                for (int j=0; j<Result[i].length; ++j) 
+                {
+                    test += Result[i][j] + ", ";
                 }
 
+            test += "/";
+            }                
+
+            FacesContext.getCurrentInstance().addMessage(null,new FacesMessage(FacesMessage.SEVERITY_WARN, 
+                        "query = SELECT id, username, (select name from usergroup where id = id_usergroup), case state when 1 then 'aktiv' else 'inaktiv' end FROM user " + query, ""));
+            */
+            
+            
             return null;
 
 
@@ -349,6 +273,11 @@ public class gui_TicketUebersicht
         
         return null;
     }    
+    
+    public String LinkToEdit (String id)
+    {
+        return "Ticket_bearbeiten.xhtml?id= " + id;       
+    }
     
      // Getter Methoden
     public List<SelectItem> getCourseList()
@@ -371,7 +300,7 @@ public class gui_TicketUebersicht
     {
     return TutorList;
     }
-     public String getPriority() 
+    public String getPriority() 
     {
 	return Priority;
     }
@@ -457,9 +386,19 @@ public class gui_TicketUebersicht
     {
         this.Tutor = Tutor;
     }
-        public void setTotalResults(String TotalResults) 
+    public void setTotalResults(String TotalResults) 
     {
         this.TotalResults = TotalResults;
+    }
+    
+    public String[][] getListOfTickets() 
+    {
+	return ListOfTickets;
+    }
+    
+    public void setListOfTickets( String[][] listOfTickets) 
+    {
+	this.ListOfTickets = listOfTickets;
     }
 
 }

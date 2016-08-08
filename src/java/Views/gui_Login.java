@@ -34,8 +34,8 @@ public class gui_Login implements Serializable
     public String CheckLogin ()
     {
         // Variablen
-         String storedUserPassword;
-         String storedUsername;
+         String[][] storedUserPassword;
+         String[][] storedUsername;
      
         
         // Benutzerdaten aus Datenbankabfragen
@@ -45,7 +45,7 @@ public class gui_Login implements Serializable
 
         // Daten prüfen
         // Falscher Benutzername
-        if (storedUsername == null)
+        if (storedUsername[0][0] == null)
         {
             FacesContext.getCurrentInstance().addMessage(
             null,new FacesMessage(FacesMessage.SEVERITY_WARN,
@@ -56,7 +56,7 @@ public class gui_Login implements Serializable
         }
         
         // Eingabe korrekt
-        if (storedUsername.equalsIgnoreCase(typedUsername) && storedUserPassword.equals(typedUserPassword) )
+        if (storedUsername[0][0].equalsIgnoreCase(typedUsername) && storedUserPassword[0][0].equals(typedUserPassword) )
         {
             FacesContext.getCurrentInstance().addMessage(
             null,new FacesMessage(FacesMessage.SEVERITY_WARN,
