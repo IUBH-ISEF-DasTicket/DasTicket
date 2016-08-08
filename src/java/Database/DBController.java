@@ -5,6 +5,9 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.util.ArrayList;
+import java.util.List;
 
 
 
@@ -34,8 +37,8 @@ public class DBController
         // Variablen für Verbindungsaufbau
         String DBServer = "Localhost";
         String DBInstance = "dasticket";
-        String DBUser = "Admin";
-        String DBPassword = "Admin123";
+        String DBUser = "root";
+        String DBPassword = "root12345";
         
         // Initialisiere Treiber
         try 
@@ -202,7 +205,76 @@ public class DBController
          }
     }
     
-    public static String GetData(String TableName, String Column, String Clause)
+    public static String[][] GetData(String TableName, String Column, String Clause)
+    {
+        // Connection aufbauen
+        connection = InitConnection();
+        
+        // Variablen für Statement
+        String SQLStatement;
+        String result = null;
+        String[][] rowData = null;
+
+        try 
+         {
+            // SQL Statement vorbereiten
+            SQLStatement = "select " + Column + " from " + TableName + " " + Clause;
+            statement = connection.createStatement();
+            
+            System.out.println("query = : select " + Column + " from " + TableName + " " + Clause);
+            
+            // SQL Statement ausführen und in ResultSet schreiben
+            ResultSet rs = statement.executeQuery(SQLStatement);
+            
+            ResultSetMetaData rsmd = rs.getMetaData();                         
+            
+            int columnCount = rsmd.getColumnCount();
+            List rows = new ArrayList();
+            
+            // ResultSet auswerten
+            while (rs.next())
+                 {
+                    String[] row = new String[columnCount];
+                    for(int i = 1; i <= columnCount; i++)
+                    {
+                        row[i-1] = rs.getString(i);
+                    }
+                    rows.add(row);
+                                        
+                    System.out.println("Selected Data: " + result);
+                 }
+            rowData = (String[][])rows.toArray(new String[rows.size()][columnCount]);
+            
+            System.out.println("result rows = " + rowData.length);
+            
+            if (rowData.length == 0)
+            {
+                rowData = new String[1][1];
+                rowData[0][0] = "";
+            }                        
+             
+         } 
+         // Fehlerbehandlung
+         catch (SQLException ex) 
+         {
+                System.out.println("SQLException: " + ex.getMessage());
+                System.out.println("SQLState: " + ex.getSQLState());
+                System.out.println("VendorError: " + ex.getErrorCode());
+                rowData = new String[1][1];
+                rowData[0][0] = "";
+         }
+         // Statement & Connection schließen
+         finally
+         {
+            CloseStatement(statement);
+            CloseConnection(connection);
+                      
+         }       
+           
+    return rowData;   
+    }
+    
+    public static String GetSingleData(String TableName, String Column, String Clause)
     {
         // Connection aufbauen
         connection = InitConnection();
@@ -248,7 +320,7 @@ public class DBController
         // Ergebnis ausgeben
          return result;
         
-    }
+}
     
     public static void CloseStatement(Statement statement)
     {
