@@ -23,53 +23,52 @@
 				<td>				
 					<table id = "Header" width="100%">
 						<tr>
-							<td id="Zeit">				
-							</td>
-                                                    <td> Eingeloggt als: #{gui_Ticketbearbeiten.username}						 
-                                                                <h:commandButton value="Ausloggen" action="#{gui_TicketErfassen.Logout}"></h:commandButton>
-							</td>
+                                                    
+                                                    <td width="15%">
+                                                        <img src="logoiubh.png" alt="IUBH" style="width:150px" align="left"/>
+                                                    </td>
+                                                    
+                                                    <td width="50%" align="center">
+                                                        <h2>Ticket bearbeiten</h2>    
+                                                    </td>
+                                                    
+                                                    <td width="20%"> 
+                                                        Eingeloggt als: #{gui_Ticketbearbeiten.username}								                      
+                                                    </td>
+                                                    
+                                                    <td width="15%">
+                                                        <h:commandButton value="Ausloggen" action="#{gui_TicketErfassen.Logout}"></h:commandButton>
+                                                    </td>
+                                                    
 						</tr>
 					</table>
-					<table width="100%" id="Menue">
-                                        <tr>
-                                            <td>
-                                                <h:commandButton value="Übersicht" action="Landing Page.xhtml"></h:commandButton>
-                                            </td>
-                                            <td>
-                                                <h:commandButton value="Benutzerverwaltung" ></h:commandButton>
-                                            </td>
-                                            <td>
-                                                <h:commandButton value="Ticketübersicht" ></h:commandButton>
-                                            </td>
-                                            <td>
-                                                <h:commandButton value="Ticketerfassung" action="Erfassungsmaske_JSF.xhtml"></h:commandButton>
-                                            </td>
-                                        </tr>
-                                        
-                                    </table>
-					<table id="Title"  width="100%">						
-						<tr>
-							<td width="50%">
-								<img src="logoiubh.png" alt="IUBH" style="width:150px"/>
-							</td>
-							<td>
-								<h2>Ticket bearbeiten</h2>
-							</td>
-						</tr>					
-					</table>
-                                        
-					
+                                    
+                                        <table width="100%" id="Menue">
+                                            <tr>
+                                                <td>
+                                                <h:commandButton value="Übersicht" action="Landing Page.xhtml" class="button"></h:commandButton>
+                                                <div class="divider"/>
+                                                <h:commandButton value="Benutzerverwaltung" class="button"></h:commandButton>
+                                                <div class="divider"/>
+                                                <h:commandButton value="Ticketübersicht" class="button"></h:commandButton>
+                                                <div class="divider"/>
+                                                <h:commandButton value="Ticketerfassung" action="Erfassungsmaske_JSF.xhtml" class="button"></h:commandButton>
+                                                </td>
+                                                                                      
+                                            </tr>
+                                        </table>                                                                            
+					<br/><br/>
                                         <table id="Rand_neu"  width="100%">
 						<tr>
 							<td width="15%">Priorität</td>   
 							<td> 
-                                                            <h:selectOneMenu id="Priority" value="#{gui_Ticketbearbeiten.priority}">
-                                                                <f:selectItems value= "#{gui_Ticketbearbeiten.priorityList}" itemValue="#{gui_Ticketbearbeiten.priority}" />
+                                                            <h:selectOneMenu id="Priority" value="#{gui_Ticketbearbeiten.priority}" style="width:150px">
+                                                                <f:selectItems value= "#{gui_Ticketbearbeiten.priorityList}" itemValue="#{gui_Ticketbearbeiten.priority}"/>
                                                             </h:selectOneMenu>
 							</td>             
 							<td width="15%" >Kategorie</td> 
 							<td> 
-                                                            <h:selectOneMenu id="Category" value="#{gui_Ticketbearbeiten.category}">
+                                                            <h:selectOneMenu id="Category" value="#{gui_Ticketbearbeiten.category}" style="width:150px">
                                                                 <f:selectItems value= "#{gui_Ticketbearbeiten.categoryList}" />
                                                             </h:selectOneMenu>
 							</td>
@@ -77,14 +76,14 @@
 						<tr>
 							<td>Status</td>   
 							<td> 
-                                                               <h:selectOneMenu id="Status" value="#{gui_Ticketbearbeiten.status}">
+                                                               <h:selectOneMenu id="Status"  value="#{gui_Ticketbearbeiten.status}" style="width:150px">
 
                                                                     <f:selectItems value= "#{gui_Ticketbearbeiten.statusList}" />
                                                                </h:selectOneMenu>	
 							</td>             
 							<td>Kurs</td> 
 							<td> 
-								<h:selectOneMenu id="Course" value="#{gui_Ticketbearbeiten.course}">
+								<h:selectOneMenu id="Course" value="#{gui_Ticketbearbeiten.course}" style="width:150px">
                                                                             <f:selectItems value= "#{gui_Ticketbearbeiten.courseList}" />
                                                                 </h:selectOneMenu>
 							</td>
@@ -93,11 +92,11 @@
 							<td> </td>   
 							<td> </td>
 							<td>gebuchte Zeit</td>
-							<td> <h:inputText id="ReportedTime" value="#{gui_Ticketbearbeiten.reportedTime}" label="Gebuchte Zeit"></h:inputText>
+							<td> <h:inputText id="ReportedTime" value="#{gui_Ticketbearbeiten.reportedTime}" label="Gebuchte Zeit" style="width:150px"></h:inputText>
                                                         </td>
 						</tr>
 					</table>					
-					
+					<br/>
 					<table id = "Title"  width="100%" >   				
 						<tr>
 							<td width="15%">Titel</td>
@@ -148,7 +147,13 @@
 							<td> 
                                                                 <h:commandButton value="Abbrechen" action="#{gui_Ticketbearbeiten.Cancel}"></h:commandButton>
 							</td>           
-						</tr> 				   
+						</tr> 
+                                                                                            <tr>
+                                                    <td>
+                                                        <h:messages style="font-size:12px; color:red"></h:messages>
+                                                    </td>
+     
+						</tr> 	
 					</table> 
 					  				
 				</td>
