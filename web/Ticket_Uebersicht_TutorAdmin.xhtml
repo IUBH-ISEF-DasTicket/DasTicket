@@ -5,12 +5,14 @@
       xmlns:f="http://java.sun.com/jsf/core"> 
 
     <h:head>
-        <title>Ticket Übersicht</title>
+        <title>Ticketübersicht</title>
         <link rel="stylesheet" media="screen,projection"
         title="Standardstylesheet" href="style.css"
         type="text/css" />
     </h:head>
-    
+            <f:metadata>
+            <f:viewParam name="Username" value="#{gui_TicketUebersichtTutor.username}" />          
+            </f:metadata>
 	<script type="text/javascript" language="javascript" src="TimeFunctions.js"></script>
 	
     <h:body onload="startTime()">
@@ -22,8 +24,8 @@
 						<tr>
 							<td id="Zeit">				
 							</td>
-							<td> Eingeloggt als: [USER.name] 								 
-                                <h:commandButton value="Ausloggen" action="#{gui_TicketErfassen.Logout}"></h:commandButton>
+                                                    <td> Eingeloggt als: #{gui_TicketUebersichtTutor.username} 								 
+								<h:commandButton value="Ausloggen" action="#{gui_TicketErfassen.Logout}"></h:commandButton>
                                                                 
 							</td>
 						</tr>
@@ -34,7 +36,7 @@
 								<img src="logoiubh.png" alt="IUBH" style="width:150px"/>
 							</td>
 							<td>
-								<h2>Ticket erfassen</h2>
+								<h2>Ticketübersicht</h2>
 							</td>
 						</tr>					
 					</table>					
@@ -45,7 +47,7 @@
 								ID
 							</td>
 							<td width="30%">
-								<input style="width:60%;height:100%" type="text"></input> 
+								<h:inputText style="width:60%;height:100%" value="#{gui_TicketUebersichtTutor.ticketID}" size="80" label="ID"></h:inputText> 
 							</td>
 							<td width="20%"></td>
 							<td width="30%"></td>
@@ -55,19 +57,15 @@
 								Priorität
 							</td>
 							<td>
-								<form action="select.htm" style="width:100%">      
-									<select name="Prioritaet" size="1">
-										<option>...</option>
-										<option>...</option>
-										<option>...</option>
-									</select>									
-								</form>
+                                                            <h:selectOneMenu id="Priority" value="#{gui_TicketUebersichtTutor.priority}">
+                                                                <f:selectItems value= "#{gui_TicketUebersichtTutor.priorityList}" itemValue="#{gui_TicketUebersichtTutor.priority}" />
+                                                            </h:selectOneMenu>
 							</td>
 							<td>
 								Erstellungsdatum
 							</td>
 							<td>
-								<input style="width:60%;height:100%" type="text"></input> 
+								<h:inputText style="width:60%;height:100%" value="#{gui_TicketUebersichtTutor.creationDate}" size="80" label="Erstellungsdatum"></h:inputText> 
 							</td>
 						</tr>
 						<tr>
@@ -75,25 +73,17 @@
 								Kategorie
 							</td>
 							<td>
-								<form action="select.htm" style="width:100%">      
-									<select name="Prioritaet" size="1">
-										<option>...</option>
-										<option>...</option>
-										<option>...</option>
-									</select>									
-								</form> 
+                                                            <h:selectOneMenu id="Category" value="#{gui_TicketUebersichtTutor.category}">
+                                                                <f:selectItems value= "#{gui_TicketUebersichtTutor.categoryList}" />
+                                                            </h:selectOneMenu>
 							</td>
 							<td>
 								Status
 							</td>
 							<td>
-								<form action="select.htm" style="width:100%">      
-									<select name="Prioritaet" size="1">
-										<option>...</option>
-										<option>...</option>
-										<option>...</option>
-									</select>									
-								</form>
+                                                            <h:selectOneMenu id="Status" value="#{gui_TicketUebersichtTutor.status}">
+                                                                <f:selectItems value= "#{gui_TicketUebersichtTutor.statusList}" />
+                                                            </h:selectOneMenu>
 							</td>
 						</tr>
 						<tr>
@@ -101,29 +91,27 @@
 								Kurs
 							</td>
 							<td>
-								<form action="select.htm" style="width:100%">      
-									<select name="Prioritaet" size="1">
-										<option>...</option>
-										<option>...</option>
-										<option>...</option>
-									</select>									
-								</form>
+                                                            <h:selectOneMenu id="Course" value="#{gui_TicketUebersichtTutor.course}">
+                                                                <f:selectItems value= "#{gui_TicketUebersichtTutor.courseList}" />
+                                                            </h:selectOneMenu>
 							</td>
 							<td>
-								Kunde
+								Zuordnung
 							</td>
 							<td>
-								<input style="width:60%;height:100%" type="text" size="80"></input> 
+                                                            <h:selectOneMenu id="Tutor" value="#{gui_TicketUebersichtTutor.tutor}">
+                                                                <f:selectItems value= "#{gui_TicketUebersichtTutor.tutorList}" />
+                                                            </h:selectOneMenu>
 							</td>
 						</tr>
-						<tr>                                                    
-						<td colspan = "4">
-                                                    <h:commandButton value="Suchen" style="margin-right:1em" ></h:commandButton>
-                                                    <h:commandButton value="Filter zurücksetzen"></h:commandButton>
+						<tr>
+						<td>
 						</td>
 						<td>
 						</td>
-						<td>						
+						<td colspan = "2">
+                                                <h:commandButton action="#{gui_TicketUebersichtTutor.Search}" value="Suchen" ></h:commandButton>
+						<h:commandButton action="#{gui_TicketUebersichtTutor.Reset}" value="Filter zurücksetzen"></h:commandButton>
 						</td>
 						</tr>
 					</table>
@@ -134,23 +122,22 @@
 							</td>
 							<td>
 								Sortieren nach 
-								<form action="select.htm" style="width:100%">      
-									<select name="Prioritaet" size="1">
-										<option>...</option>
-										<option>...</option>
-										<option>...</option>
-									</select>									
-								</form>
+                                                            <h:selectOneMenu id="SortOrder" value="#{gui_TicketUebersichtTutor.sortOrder}">
+                                                                <f:selectItem itemValue="ID" itemLabel="ID" />
+                                                                <f:selectItem itemValue="Datum" itemLabel="Datum" />
+                                                                <f:selectItem itemValue="Kurs" itemLabel="Kurs" />
+                                                                <f:selectItem itemValue="Status" itemLabel="Status" />
+                                                                <f:selectItem itemValue="Titel" itemLabel="Titel" />
+                                                            </h:selectOneMenu>
 							</td>
 							<td>
 								Anzahl Ergebnisse
-								<form action="select.htm" style="width:100%">      
-									<select name="Prioritaet" size="1">
-										<option>50</option>
-										<option>100</option>
-										<option>200</option>
-									</select>									
-								</form>
+                                                            <h:selectOneMenu id="TotalResults" value="#{gui_TicketUebersichtTutor.totalResults}">
+                                                                <f:selectItem itemValue="50" itemLabel="50" />
+                                                                <f:selectItem itemValue="100" itemLabel="100" />
+                                                                <f:selectItem itemValue="200" itemLabel="200" />
+                                                                <f:selectItem itemValue="Alle" itemLabel="Alle" />
+                                                            </h:selectOneMenu>
 							</td>
 						</tr>
 					</table>
@@ -162,10 +149,10 @@
 								<b>ID</b>
 								</td>
 								<td>
-								<b>Priorität</b>
+								<b>Kurs</b>
 								</td>
 								<td>
-								<b>Kategorie</b>
+								<b>Titel</b>
 								</td>
 								<td>
 								<b>Status</b>
