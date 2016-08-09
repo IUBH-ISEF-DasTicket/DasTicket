@@ -213,7 +213,8 @@ public class gui_TicketErfassen
         public String Cancel()        
     {   
         Reset();
-        return null;
+        return "Landing Page?faces-redirect=true&includeViewParams=true";
+
     }
     
     // Standardwerte wiederherstellen
