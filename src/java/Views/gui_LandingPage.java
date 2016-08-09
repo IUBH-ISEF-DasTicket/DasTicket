@@ -17,7 +17,7 @@ import javax.faces.context.FacesContext;
  */
 @ManagedBean
 @SessionScoped
-public class GUI_LandingPage  implements Serializable
+public class gui_LandingPage  implements Serializable
 {
     // Klassenvariablen
     String Username;   
