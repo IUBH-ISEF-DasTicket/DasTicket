@@ -62,27 +62,14 @@ public class gui_Ticketbearbeiten
     /*Collection*/ String [][] WorknoteNoteList;
     
     // Test!!!
-    Integer ID = 1;
+    Integer ID = 366;
     String Username = "Admin";
-    
-    
-    
-    
     
      // Initialisieren und laden der Select Einträge
     @PostConstruct
     public void Init()        
     {
-        
-        
-        /*
-        FacesContext.getCurrentInstance().addMessage(
-            null,new FacesMessage(FacesMessage.SEVERITY_WARN,
-			"request = " + req,
-			""));
-        */
-        
-        
+               
         PriorityList = new ArrayList<SelectItem>();
         PriorityList.add(new SelectItem("---", "---"));
         String[][] Priorities =  DBController.GetData("priority", "name", "");
@@ -214,8 +201,6 @@ public class gui_Ticketbearbeiten
         }
         
         // Speichern der Werte
-        
-        
         // Kategorie
         DBController.UpdateData("Ticket","ID_Category", String.valueOf(ID_Cat[0][0]),"where ID='" + ID + "'");
         // Priorität
@@ -246,6 +231,8 @@ public class gui_Ticketbearbeiten
         // Worknotes neu laden
         String[][] worknote =  DBController.GetData("worknotes", "creationDate, notes", "where id_ticket = " + ID);
         WorknoteNoteList = worknote;
+        // Kommentar leeren
+        NewComment = "";
         
         return null;
     
