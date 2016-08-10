@@ -34,6 +34,7 @@ import javax.annotation.PostConstruct;
     List CategoryList = Kategorielist aus DB
     List PriorityList = Prioritätenliste aus DB
     List StatusList = Statusliste aus DB
+    String [][] ListOfTickets = Ergebnis der Suche
 *
 * <Sichtbarkeit>
 * public
@@ -61,7 +62,6 @@ public class gui_TicketUebersichtTutor
     List<SelectItem> PriorityList;
     List<SelectItem> StatusList;
     List<SelectItem> TutorList;
-    
     String [][] ListOfTickets;
     
 
@@ -69,12 +69,7 @@ public class gui_TicketUebersichtTutor
     @PostConstruct
     public void Init()        
     {
-            FacesContext.getCurrentInstance().addMessage(
-            null,new FacesMessage(FacesMessage.SEVERITY_WARN,
-			"DEBUG:   PostConstruct",
-			""));
-            
-            
+        
         PriorityList = new ArrayList<SelectItem>();
         PriorityList.add(new SelectItem("---", "---"));
         String[][] Priorities =  DBController.GetData("priority", "name", "");
@@ -136,56 +131,51 @@ public class gui_TicketUebersichtTutor
             String query;
             
             // User2 prüfen
-            query = "id_user2 = (select id from user where username='" + Username + "')";
+            query = "WHERE id_user2 = (select id from user where username='" + Username + "')";
             
             // Ticket ID
             if (TicketID.isEmpty() == false )
             {
-                query += "id = " + TicketID + " AND ";
+                query += " AND id = " + TicketID;
             }
             
             // Priorität
             if (Priority.equalsIgnoreCase("---") == false )
             {                
-                query += "id_priority = (select id from priority where name = '" + Priority + "') AND ";
+                query += " AND id_priority = (select id from priority where name = '" + Priority + "')";
             }
             
             // Kategorie
             if (Category.equalsIgnoreCase("---") == false )
             {                
-                query += "id_category = (select id from category where name = '" + Category + "') AND ";
+                query += " AND id_category = (select id from category where name = '" + Category + "')";
             }
             
             // Kurs
             if (Course.equalsIgnoreCase("---") == false )
             {
-                query += "id_courses = (select id from courses where name = '" + Course + "') AND ";                
+                query += " AND id_courses = (select id from courses where name = '" + Course + "')";                
             }
             
             // Erstellungsdatum
             if (CreationDate.isEmpty() == false )
             {
-                query += "creationDate = STR_TO_DATE('" + CreationDate + "','%d-%m-%Y') AND ";
+                query += " AND creationDate = '" + CreationDate + "'";
             }
             
             // Status
             if (Status.equalsIgnoreCase("---") == false )
             {
-                query += "id_state = (select id from state where name = '" + Status + "') AND ";
+                query += " AND id_state = (select id from state where name = '" + Status + "')";
             }
             
             // Zuordnung
             if (Tutor.equalsIgnoreCase("---") == false )
             {
-                query += "id_user2 = (select id from user where username = '" + Tutor + "') AND ";                
+                query += " AND id_user2 = (select id from user where username = '" + Tutor + "')";                
             }                        
             
-            // Letztes AND wegschneiden
-            if (query.isEmpty() == false)
-            {
-                query = query.substring(0, query.length() - 4);
-            }
-            
+            // Sortierung
             switch (SortOrder) 
             {
                 case "ID":          SortOrder = "id";
@@ -201,14 +191,10 @@ public class gui_TicketUebersichtTutor
                 default:            SortOrder = "id";
                                     break;
             }
+         
+            query += " ORDER BY " + SortOrder;
             
-            if (query.isEmpty() == false)
-            {
-                query = "WHERE " + query + " ORDER BY " + SortOrder;
-            }
-                
-
-            
+            // Begrenzung der Ergebnisse
             String MaxValues;           
             if (TotalResults.equalsIgnoreCase("Alle"))
             {
@@ -221,12 +207,16 @@ public class gui_TicketUebersichtTutor
             
             query += " " + MaxValues;
             
-
+            // Suche nach Tickets
             String[][] Result = DBController.GetData("ticket", "id, (select name from courses where id = id_courses), title, (select name from state where id = id_state)", query);
             ListOfTickets = Result;
             
+             // Status ausgeben
+        FacesContext.getCurrentInstance().addMessage(
+            null,new FacesMessage(FacesMessage.SEVERITY_WARN,
+			"STATUS: " + query,
+			""));
             return null;
-
 
         }
     
