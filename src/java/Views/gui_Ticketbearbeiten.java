@@ -62,7 +62,7 @@ public class gui_Ticketbearbeiten
     /*Collection*/ String [][] WorknoteNoteList;
     
     // Test!!!
-    Integer ID = 366;
+    Integer ID = 1;
     String Username = "Admin";
     
      // Initialisieren und laden der Select Einträge
@@ -71,7 +71,7 @@ public class gui_Ticketbearbeiten
     {
                
         PriorityList = new ArrayList<SelectItem>();
-        PriorityList.add(new SelectItem("---", "---"));
+        //PriorityList.add(new SelectItem("", ""));
         String[][] Priorities =  DBController.GetData("priority", "name", "");
         
         for (int j = 0; j < Priorities.length; ++j) 
@@ -81,7 +81,7 @@ public class gui_Ticketbearbeiten
         }
         
         CourseList = new ArrayList<SelectItem>();
-        CourseList.add(new SelectItem("---", "---"));
+        //CourseList.add(new SelectItem("", ""));
         String[][] Courses =  DBController.GetData("courses", "name", "");
         
         for (int j = 0; j < Courses.length; ++j) 
@@ -91,7 +91,7 @@ public class gui_Ticketbearbeiten
         }
         
         CategoryList = new ArrayList<SelectItem>();
-        CategoryList.add(new SelectItem("---", "---"));
+        //CategoryList.add(new SelectItem("", ""));
         String[][] Categories =  DBController.GetData("category", "name", "");
         
         for (int j = 0; j < Categories.length; ++j) 
@@ -101,7 +101,7 @@ public class gui_Ticketbearbeiten
         }
         
         StatusList = new ArrayList<SelectItem>();
-        StatusList.add(new SelectItem("---", "---"));
+        //StatusList.add(new SelectItem("", ""));
         String[][] status =  DBController.GetData("state", "name", "");
         
         for (int j = 0; j < status.length; ++j) 
@@ -111,8 +111,8 @@ public class gui_Ticketbearbeiten
         }
         
         String[][] worknote =  DBController.GetData("worknotes", "creationDate, notes", "where id_ticket = " + ID);
-        WorknoteNoteList = worknote;
-
+        WorknoteNoteList = worknote;                                       
+        
         // Werte setzen
         // Kurs setzen
         String[][] TicketCourse = DBController.GetData("courses", "name", "where id =(select id_courses from ticket where ID=" + ID +")");

@@ -260,8 +260,8 @@ public class DBController
                 System.out.println("SQLException: " + ex.getMessage());
                 System.out.println("SQLState: " + ex.getSQLState());
                 System.out.println("VendorError: " + ex.getErrorCode());
-                rowData = new String[1][1];
-                rowData[0][0] = "";
+                rowData = null;
+                
          }
          // Statement & Connection schließen
          finally

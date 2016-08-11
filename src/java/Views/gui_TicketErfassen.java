@@ -54,7 +54,7 @@ public class gui_TicketErfassen
     public void Init()        
     {                        
         PriorityList = new ArrayList<SelectItem>();
-        PriorityList.add(new SelectItem("---", "---"));
+        PriorityList.add(new SelectItem("", ""));
         String[][] Priorities =  DBController.GetData("priority", "name", "");
         
         for (int j = 0; j < Priorities.length; ++j) 
@@ -64,7 +64,7 @@ public class gui_TicketErfassen
         }
         
         CourseList = new ArrayList<SelectItem>();
-        CourseList.add(new SelectItem("---", "---"));
+        CourseList.add(new SelectItem("", ""));
         String[][] Courses =  DBController.GetData("courses", "name", "");
         
         for (int j = 0; j < Courses.length; ++j) 
@@ -74,7 +74,7 @@ public class gui_TicketErfassen
         }
         
         CategoryList = new ArrayList<SelectItem>();
-        CategoryList.add(new SelectItem("---", "---"));
+        CategoryList.add(new SelectItem("", ""));
         String[][] Categories =  DBController.GetData("category", "name", "");
         
         for (int j = 0; j < Categories.length; ++j) 

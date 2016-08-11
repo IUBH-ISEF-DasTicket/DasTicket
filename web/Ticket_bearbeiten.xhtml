@@ -127,13 +127,17 @@
                                             <tr>
                                                 <td><b>Datum</b></td>
                                                 <td><b>Kommentar</b></td>
-                                            </tr>  
-                                            <c:forEach items="#{gui_Ticketbearbeiten.worknoteNoteList}" var='note' varStatus="status">
-                                                <tr>
-                                                    <td valign="top">#{gui_Ticketbearbeiten.worknoteDateList[status.index]}</td>
-                                                    <td>#{note}</td>
-                                                </tr>
-                                            </c:forEach>			
+                                            </tr>                                             	                                            
+                                            <c:forEach var="row" items="${gui_Ticketbearbeiten.worknoteNoteList}">
+                                            <tr>
+                                                <c:forEach var="column" items="${row}">
+                                                    <td>
+                                                        ${column}
+                                                    </td>
+                                                </c:forEach>
+                                            </tr>
+                                            </c:forEach>
+                                            
 					</table> 
 				
                                          

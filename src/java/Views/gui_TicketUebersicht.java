@@ -143,7 +143,7 @@ public class gui_TicketUebersicht
             String ID_User = "1";
             Integer ID_Admin;
             Integer ID_Sta;
-            Integer i;
+            
             Integer Max;
             
             Integer Counter = 1;
@@ -151,55 +151,48 @@ public class gui_TicketUebersicht
             String[][] user = DBController.GetData ("USER", "id", "WHERE username = '" + Username + "'");
             ID_User = user[0][0];
             
-            //String query = "WHERE id_user = '" + ID_User + "'";
-            String query = "";
+            String query = "WHERE id_user = '" + ID_User + "'";            
             
             if (TicketID.isEmpty() == false )
             {
-                query += "id = " + TicketID + " AND ";
+                query += " AND id = " + TicketID;
             }
             
             // Priorität
             if (Priority.equalsIgnoreCase("---") == false )
             {                
-                query += "id_priority = (select id from priority where name = '" + Priority + "') AND ";
+                query += " AND id_priority = (select id from priority where name = '" + Priority + "')";
             }
             
             // Kategorie
             if (Category.equalsIgnoreCase("---") == false )
             {                
-                query += "id_category = (select id from category where name = '" + Category + "') AND ";
+                query += " AND id_category = (select id from category where name = '" + Category + "')";
             }
             
             // Kurs
             if (Course.equalsIgnoreCase("---") == false )
             {
-                query += "id_courses = (select id from courses where name = '" + Course + "') AND ";                
+                query += " AND id_courses = (select id from courses where name = '" + Course + "')";                
             }
             
             // Erstellungsdatum
             if (CreationDate.isEmpty() == false )
             {
-                query += "creationDate = STR_TO_DATE('" + CreationDate + "','%d-%m-%Y') AND ";
+                query += " AND creationDate = STR_TO_DATE('" + CreationDate + "','%d-%m-%Y')";
             }
             
             // Status
             if (Status.equalsIgnoreCase("---") == false )
             {
-                query += "id_state = (select id from state where name = '" + Status + "') AND ";
+                query += " AND id_state = (select id from state where name = '" + Status + "')";
             }
             
             // Zuordnung
             if (Tutor.equalsIgnoreCase("---") == false )
             {
-                query += "id_user2 = (select id from user where username = '" + Tutor + "') AND ";                
-            }                        
-            
-            // Letztes AND wegschneiden
-            if (query.isEmpty() == false)
-            {
-                query = query.substring(0, query.length() - 4);
-            }
+                query += " AND id_user2 = (select id from user where username = '" + Tutor + "')";                
+            }                                                
             
             switch (SortOrder) 
             {
@@ -219,7 +212,7 @@ public class gui_TicketUebersicht
             
             if (query.isEmpty() == false)
             {
-                query = "WHERE " + query + " ORDER BY " + SortOrder;
+                query = query + " ORDER BY " + SortOrder;
             }
                 
 
@@ -238,22 +231,10 @@ public class gui_TicketUebersicht
 
             String[][] Result = DBController.GetData("ticket", "id, (select name from courses where id = id_courses), title, (select name from state where id = id_state)", query);
             ListOfTickets = Result;
-
-            /*
-            String test = "";
-            for (int i=0; i<Result.length; ++i) 
-            {
-                for (int j=0; j<Result[i].length; ++j) 
-                {
-                    test += Result[i][j] + ", ";
-                }
-
-            test += "/";
-            }                
-
+                        
             FacesContext.getCurrentInstance().addMessage(null,new FacesMessage(FacesMessage.SEVERITY_WARN, 
-                        "query = SELECT id, username, (select name from usergroup where id = id_usergroup), case state when 1 then 'aktiv' else 'inaktiv' end FROM user " + query, ""));
-            */
+                        "query = SELECT id, (select name from courses where id = id_courses), title, (select name from state where id = id_state) FROM ticket " + query, ""));
+            
             
             
             return null;

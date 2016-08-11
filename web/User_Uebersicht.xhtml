@@ -59,20 +59,17 @@
 							<td width="20%">
 								Username
 							</td>
-							<td width="30%">
-								<input style="width:60%;height:100%" type="text"></input> 
+							<td width="30%">								
+                                                            <h:inputText style="width:60%;height:100%" value="#{gui_UserUebersicht.name}" size="80" label="Name"></h:inputText> 
 							</td>
 							<td width="20%">
 							Status
 							</td>
 							
 							<td width="30%">
-							<form action="select.htm" style="width:100%">      
-									<select name="Prioritaet" size="1">
-										<option>aktiv</option>
-										<option>inaktiv</option>										
-									</select>									
-								</form>
+                                                        <h:selectOneMenu id="Status" value="#{gui_UserUebersicht.state}">
+                                                            <f:selectItems value= "#{gui_UserUebersicht.userStateList}" />
+                                                        </h:selectOneMenu>
 							</td>													
 						</tr>
 						<tr>
@@ -80,31 +77,23 @@
 								Rolle
 							</td>
 							<td>
-								<form action="select.htm" style="width:100%">      
-									<select name="Rolle" size="1">
-										<option>Student</option>
-										<option>Tutor</option>
-										<option>Admin</option>
-									</select>									
-								</form> 
+                                                        <h:selectOneMenu id="Rolle" value="#{gui_UserUebersicht.role}">
+                                                                <f:selectItems value= "#{gui_UserUebersicht.roleList}" />
+                                                        </h:selectOneMenu> 
 							</td>						
 							<td>
 								Kurs
 							</td>
 							<td>
-								<form action="select.htm" style="width:100%">      
-									<select name="Kurs" size="1">
-										<option>...</option>
-										<option>...</option>
-										<option>...</option>
-									</select>									
-								</form> 
+                                                            <h:selectOneMenu id="Kurs" value="#{gui_UserUebersicht.course}">
+                                                                <f:selectItems value= "#{gui_UserUebersicht.courseList}" />
+                                                        </h:selectOneMenu> 
 							</td>							
 						</tr>
 						<tr>
 						<td colspan = "4">
-                                                    <h:commandButton value="Suchen" style="margin-right:1em"></h:commandButton>
-                                                    <h:commandButton value="Filter zurücksetzen"></h:commandButton>
+                                                    <h:commandButton value="Suchen" action="#{gui_UserUebersicht.Search}" style="margin-right:1em"></h:commandButton>
+                                                    <h:commandButton value="Filter zurücksetzen" action="#{gui_UserUebersicht.Reset}" ></h:commandButton>
 						</td>						
 						</tr>
 					</table>
@@ -115,23 +104,21 @@
 							</td>
 							<td>
 								Sortieren nach 
-								<form action="select.htm" style="width:100%">      
-									<select name="Prioritaet" size="1">
-										<option>...</option>
-										<option>...</option>
-										<option>...</option>
-									</select>									
-								</form>
+                                                                <h:selectOneMenu id="SortOrder" value="#{gui_UserUebersicht.sortOrder}">
+                                                                <f:selectItem itemValue="ID" itemLabel="ID" />
+                                                                <f:selectItem itemValue="Username" itemLabel="Username" />
+                                                                <f:selectItem itemValue="Rolle" itemLabel="Rolle" />
+                                                                <f:selectItem itemValue="Status" itemLabel="Status" />                                                                
+                                                            </h:selectOneMenu>
 							</td>
 							<td>
 								Anzahl Ergebnisse
-								<form action="select.htm" style="width:100%">      
-									<select name="Prioritaet" size="1">
-										<option>50</option>
-										<option>100</option>
-										<option>200</option>
-									</select>									
-								</form>
+                                                            <h:selectOneMenu id="TotalResults" value="#{gui_UserUebersicht.totalResults}">
+                                                                <f:selectItem itemValue="50" itemLabel="50" />
+                                                                <f:selectItem itemValue="100" itemLabel="100" />
+                                                                <f:selectItem itemValue="200" itemLabel="200" />
+                                                                <f:selectItem itemValue="Alle" itemLabel="Alle" />
+                                                            </h:selectOneMenu>
 							</td>
 						</tr>
 					</table>
@@ -159,29 +146,23 @@
 								</td>
 							</tr>
 						</thead>
-						<tbody>							
-                                                    <c:forEach items="#{gui_UserUebersicht.userList}" var='user' varStatus="status">
-							<tr>                                                        
-								<td>								
-                                                                #{user}
-								</td>
-                                                                <td>								
-                                                                #{gui_UserUebersicht.userNameList[user-1]}
-								</td>
-								<td>
-								#{gui_UserUebersicht.getUserRole(user)}
-								</td>
-								<td>
-								#{gui_UserUebersicht.getUserState(user)}
-								</td>								
-								<td>
-								<a href="Ticket_Uebersicht_Student.xhtml"><img src="edit_icon_2.png" alt="Tickets" /></a>
-								</td>
-								<td>
-								<a href="User_bearbeiten.xhtml"><img src="edit_icon.png" alt="edit" /></a>
-								</td>                                                        
-							</tr>
+						<tbody>
+                                                    
+                                                    <c:forEach var="row" items="${gui_UserUebersicht.listOfUsers}">
+                                                    <tr>
+                                                        <c:forEach var="column" items="${row}">
+                                                            <td>
+                                                                ${column}
+                                                            </td>                                                            
                                                         </c:forEach>
+                                                        <td>
+                                                            <a href="Ticket_Uebersicht_Student.xhtml"><img src="edit_icon_2.png" alt="Tickets" /></a>
+							</td>
+							<td>
+                                                            <a href="User_bearbeiten.xhtml"><img src="edit_icon.png" alt="edit" /></a>
+							</td> 
+                                                    </tr>
+                                                    </c:forEach>                                                                                                        
 						</tbody>
 					</table>
 					
