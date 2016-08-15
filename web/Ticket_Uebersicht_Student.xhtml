@@ -21,25 +21,39 @@
 				<td>				
 					<table id = "Header" width="100%">
 						<tr>
-							<td id="Zeit">				
-							</td>
-                                                    <td> Eingeloggt als: #{gui_TicketUebersicht.username} 								 
-								<h:commandButton value="Ausloggen" action="#{gui_TicketErfassen.Logout}"></h:commandButton>
-                                                                
-							</td>
+                                                    
+                                                    <td width="15%">
+                                                        <img src="logoiubh.png" alt="IUBH" style="width:150px" align="left"/>
+                                                    </td>
+                                                    
+                                                    <td width="50%" align="center">
+                                                        <h2>Ticketübersicht</h2>    
+                                                    </td>
+                                                    
+                                                    <td width="20%"> 
+                                                        Eingeloggt als: #{gui_TicketUebersicht.username}  <br/>
+                                                    </td>
+                                                    
+                                                    <td width="15%">
+                                                        <h:commandButton value="Ausloggen" action="#{gui_TicketErfassen.Logout}"></h:commandButton>
+                                                    </td>
+                                                    
 						</tr>
-					</table>					
-					<table id="Title"  width="100%">						
-						<tr>
-							<td width="50%">
-								<img src="logoiubh.png" alt="IUBH" style="width:150px"/>
-							</td>
-							<td>
-								<h2>Ticketübersicht</h2>
-							</td>
-						</tr>					
-					</table>					
-					
+					</table>
+                                        <table width="100%" id="Menue">
+                                            <tr>
+                                                <td>
+                                                <h:commandButton value="Übersicht" action="Landing Page.xhtml" class="button"></h:commandButton>
+                                                <div class="divider"/>
+                                                <h:commandButton value="Benutzerverwaltung" class="button"></h:commandButton>
+                                                <div class="divider"/>
+                                                <h:commandButton value="Ticketübersicht" class="button"></h:commandButton>
+                                                <div class="divider"/>
+                                                <h:commandButton value="Ticketerfassung" action="Erfassungsmaske_JSF?faces-redirect=true&amp;includeViewParams=true" class="button"></h:commandButton>                                                
+                                                </td>                                    
+                                            </tr>
+                                        </table>
+ 					<br/> <br/>
 					<table width="100%">
 						<tr>
 							<td width="20%">
@@ -114,6 +128,7 @@
 						</td>
 						</tr>
 					</table>
+                                        <br/>
 					<table width="100%">
 						<tr>
 							<td>
