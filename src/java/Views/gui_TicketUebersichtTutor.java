@@ -121,8 +121,9 @@ public class gui_TicketUebersichtTutor
         }    
         
         String[][] Result = DBController.GetData("ticket", "id, (select name from courses where id = id_courses), title, (select name from state where id = id_state)", "");
-        ListOfTickets = Result;
-  
+        ListOfTickets = Result;   
+        
+
     }
    
     public String Search()            
@@ -209,10 +210,21 @@ public class gui_TicketUebersichtTutor
             
             // Suche nach Tickets
             String[][] Result = DBController.GetData("ticket", "id, (select name from courses where id = id_courses), title, (select name from state where id = id_state)", query);
-            ListOfTickets = Result;
-            
+             if (Result[0][0].equalsIgnoreCase("") == false)
+                {
+                    ListOfTickets = Result;
+                }
+             else
+                {
+                    FacesContext.getCurrentInstance().addMessage(
+                    null,new FacesMessage(FacesMessage.SEVERITY_WARN,
+			"ACHTUNG: Keine Tickets mit der Suchmaske gefunden!",
+			""));
+                }
+             
+             
              // Status ausgeben
-        FacesContext.getCurrentInstance().addMessage(
+            FacesContext.getCurrentInstance().addMessage(
             null,new FacesMessage(FacesMessage.SEVERITY_WARN,
 			"STATUS: " + query,
 			""));
@@ -229,6 +241,10 @@ public class gui_TicketUebersichtTutor
         Course = "---";
         Status = "---";
         CreationDate = "";
+        
+        // Ergebnisse zurücksetzen
+        String[][] Result = DBController.GetData("ticket", "id, (select name from courses where id = id_courses), title, (select name from state where id = id_state)", "");
+        ListOfTickets = Result;
         
         return null;
     }    

@@ -167,6 +167,7 @@
 							</tr>
 						</thead>
 						<tbody>
+                                                    
                                                     <c:forEach var="row" items="#{gui_TicketUebersichtTutor.listOfTickets}">
 							<tr>
                                                             <c:forEach var="column" items="#{row}">
@@ -174,12 +175,14 @@
                                                                     #{column}
                                                                 </td>
                                                             </c:forEach>
+                                                           
 								<td>
 								<img src="delete_icon.png" alt="delete"/>
 								</td>
 								<td>
 								<img src="edit_icon.png" alt="edit"/>
 								</td>
+
 							</tr>
                                                     </c:forEach>
 						</tbody>
