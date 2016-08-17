@@ -58,7 +58,7 @@
 								ID
 							</td>
 							<td width="30%">
-								<h:inputText style="width:60%;height:100%" value="#{gui_TicketUebersicht.ticketID}" size="80" label="ID"></h:inputText> 
+								<h:inputText style="width:60%;height:100%" value="#{gui_TicketUebersicht.ticketID}"  class="box" label="ID"></h:inputText> 
 							</td>
 							<td width="20%"></td>
 							<td width="30%"></td>
@@ -68,7 +68,7 @@
 								Priorität
 							</td>
 							<td>
-                                                            <h:selectOneMenu id="Priority" value="#{gui_TicketUebersicht.priority}">
+                                                            <h:selectOneMenu id="Priority" value="#{gui_TicketUebersicht.priority}"  class="box">
                                                                 <f:selectItems value= "#{gui_TicketUebersicht.priorityList}" itemValue="#{gui_TicketUebersicht.priority}" />
                                                             </h:selectOneMenu>
 							</td>
@@ -76,7 +76,7 @@
 								Erstellungsdatum
 							</td>
 							<td>
-								<h:inputText style="width:60%;height:100%" value="#{gui_TicketUebersicht.creationDate}" size="80" label="Erstellungsdatum"></h:inputText> 
+								<h:inputText style="width:60%;height:100%" value="#{gui_TicketUebersicht.creationDate}" label="Erstellungsdatum" class="box"></h:inputText> 
 							</td>
 						</tr>
 						<tr>
@@ -84,7 +84,7 @@
 								Kategorie
 							</td>
 							<td>
-                                                            <h:selectOneMenu id="Category" value="#{gui_TicketUebersicht.category}">
+                                                            <h:selectOneMenu id="Category" value="#{gui_TicketUebersicht.category}"  class="box">
                                                                 <f:selectItems value= "#{gui_TicketUebersicht.categoryList}" />
                                                             </h:selectOneMenu>
 							</td>
@@ -92,7 +92,7 @@
 								Status
 							</td>
 							<td>
-                                                            <h:selectOneMenu id="Status" value="#{gui_TicketUebersicht.status}">
+                                                            <h:selectOneMenu id="Status" value="#{gui_TicketUebersicht.status}"  class="box">
                                                                 <f:selectItems value= "#{gui_TicketUebersicht.statusList}" />
                                                             </h:selectOneMenu>
 							</td>
@@ -102,7 +102,7 @@
 								Kurs
 							</td>
 							<td>
-                                                            <h:selectOneMenu id="Course" value="#{gui_TicketUebersicht.course}">
+                                                            <h:selectOneMenu id="Course" value="#{gui_TicketUebersicht.course}"  class="box">
                                                                 <f:selectItems value= "#{gui_TicketUebersicht.courseList}" />
                                                             </h:selectOneMenu>
 							</td>
@@ -110,19 +110,26 @@
 								Zuordnung
 							</td>
 							<td>
-                                                            <h:selectOneMenu id="Tutor" value="#{gui_TicketUebersicht.tutor}">
+                                                            <h:selectOneMenu id="Tutor" value="#{gui_TicketUebersicht.tutor}"  class="box">
                                                                 <f:selectItems value= "#{gui_TicketUebersicht.tutorList}" />
                                                             </h:selectOneMenu>
 							</td>
 						</tr>
 						<tr>
+                                                    <td> 
+                                                        <br/> 
+                                                    </td>
+						</tr>
+						<tr>                                                    
 						<td>
+                                                    <h:commandButton action="#{gui_TicketUebersicht.Search}" value="Suchen" class="button"></h:commandButton>
+                                                    
 						</td>
 						<td>
+                                                    <h:commandButton action="#{gui_TicketUebersicht.Reset}" value="Filter zurücksetzen" class="button"></h:commandButton>
 						</td>
 						<td colspan = "2">
-                                                <h:commandButton action="#{gui_TicketUebersicht.Search}" value="Suchen" ></h:commandButton>
-						<h:commandButton action="#{gui_TicketUebersicht.Reset}" value="Filter zurücksetzen"></h:commandButton>
+
 						</td>
 						</tr>
 					</table>
