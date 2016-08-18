@@ -56,12 +56,12 @@ public class gui_TicketUebersichtTutor
     String TicketID;
     String SortOrder;
     String TotalResults;
-    String Tutor;
+    String User;
     List<SelectItem> CourseList;
     List<SelectItem> CategoryList;
     List<SelectItem> PriorityList;
     List<SelectItem> StatusList;
-    List<SelectItem> TutorList;
+    List<SelectItem> UserList;
     String [][] ListOfTickets;
     
 
@@ -110,13 +110,13 @@ public class gui_TicketUebersichtTutor
              
         }    
             
-        TutorList = new ArrayList<SelectItem>();
-        TutorList.add(new SelectItem("---", "---"));
-        String[][] tutor =  DBController.GetData("user", "username", "where id_usergroup in (1,3)");
+        UserList = new ArrayList<SelectItem>();
+        UserList.add(new SelectItem("---", "---"));
+        String[][] tutor =  DBController.GetData("user", "username", "where id_usergroup not in (1,3)");
         
         for (int j = 0; j < tutor.length; ++j) 
         {
-            TutorList.add(new SelectItem(tutor[j][0], tutor[j][0]));
+            UserList.add(new SelectItem(tutor[j][0], tutor[j][0]));
              
         }    
         
@@ -171,9 +171,9 @@ public class gui_TicketUebersichtTutor
             }
             
             // Zuordnung
-            if (Tutor.equalsIgnoreCase("---") == false )
+            if (User.equalsIgnoreCase("---") == false )
             {
-                query += " AND id_user2 = (select id from user where username = '" + Tutor + "')";                
+                query += " AND id_user = (select id from user where username = '" + User + "')";                
             }                        
             
             // Sortierung
@@ -216,18 +216,15 @@ public class gui_TicketUebersichtTutor
                 }
              else
                 {
+                    Result = DBController.GetData("ticket", "id, (select name from courses where id = id_courses), title, (select name from state where id = id_state)", "");
+                    ListOfTickets = Result;  
                     FacesContext.getCurrentInstance().addMessage(
                     null,new FacesMessage(FacesMessage.SEVERITY_WARN,
 			"ACHTUNG: Keine Tickets mit der Suchmaske gefunden!",
 			""));
                 }
              
-             
-             // Status ausgeben
-            FacesContext.getCurrentInstance().addMessage(
-            null,new FacesMessage(FacesMessage.SEVERITY_WARN,
-			"STATUS: " + query,
-			""));
+
             return null;
 
         }
@@ -249,9 +246,26 @@ public class gui_TicketUebersichtTutor
         return null;
     }    
     
-    public String LinkToEdit (String id)
+public String EditTicket ()
     {
-        return "Ticket_bearbeiten.xhtml?id= " + id;       
+         //Status ausgeben
+            FacesContext.getCurrentInstance().addMessage(
+            null,new FacesMessage(FacesMessage.SEVERITY_WARN,
+			"Hier soll das Ticket bearbeitet werden!",
+			""));
+        //return "Ticket_bearbeiten.xhtml?id= " + id;       
+        return null;
+    }
+    
+    public void DeleteTicket()
+    {
+        // Löschen des Tickets
+        //DBController.DeleteData ("ticket", "WHERE ID = " + id);
+         // Status ausgeben
+            FacesContext.getCurrentInstance().addMessage(
+            null,new FacesMessage(FacesMessage.SEVERITY_WARN,
+			"Hier soll das Ticket gelöscht werden!",
+			""));
     }
     
      // Getter Methoden
@@ -271,9 +285,9 @@ public class gui_TicketUebersichtTutor
     {
     return StatusList;
     }
-    public List<SelectItem> getTutorList()
+    public List<SelectItem> getUserList()
     {
-    return TutorList;
+    return UserList;
     }
     public String getPriority() 
     {
@@ -315,9 +329,9 @@ public class gui_TicketUebersichtTutor
     {
 	return TotalResults;
     }
-    public String getTutor() 
+    public String getUser() 
     {
-	return Tutor;
+	return User;
     }
     
     // Setter Methoden
@@ -357,9 +371,9 @@ public class gui_TicketUebersichtTutor
     {
         this.SortOrder = SortOrder;
     }
-    public void setTutor(String Tutor) 
+    public void setUser(String User) 
     {
-        this.Tutor = Tutor;
+        this.User = User;
     }
     public void setTotalResults(String TotalResults) 
     {

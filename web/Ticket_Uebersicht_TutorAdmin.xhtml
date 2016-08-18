@@ -33,7 +33,7 @@
                                                     </td>
                                                     
                                                     <td width="20%"> 
-                                                        Eingeloggt als: #{gui_TicketUebersicht.username}  <br/>
+                                                        Eingeloggt als: #{gui_TicketUebersichtTutor.username}  <br/>
                                                     </td>
                                                     
                                                     <td width="15%">
@@ -114,8 +114,8 @@
 								Zuordnung
 							</td>
 							<td>
-                                                            <h:selectOneMenu id="Tutor" value="#{gui_TicketUebersichtTutor.tutor}" class="box">
-                                                                <f:selectItems value= "#{gui_TicketUebersichtTutor.tutorList}" />
+                                                            <h:selectOneMenu id="Tutor" value="#{gui_TicketUebersichtTutor.user}" class="box">
+                                                                <f:selectItems value= "#{gui_TicketUebersichtTutor.userList}" />
                                                             </h:selectOneMenu>
 							</td>
                                                 </tr>
@@ -126,11 +126,11 @@
 						</tr>
 						<tr>                                                    
 						<td>
-                                                    <h:commandButton action="#{gui_TicketUebersicht.Search}" value="Suchen" class="button"></h:commandButton>
+                                                    <h:commandButton action="#{gui_TicketUebersichtTutor.Search}" value="Suchen" class="button"></h:commandButton>
                                                     
 						</td>
 						<td>
-                                                    <h:commandButton action="#{gui_TicketUebersicht.Reset}" value="Filter zurücksetzen" class="button"></h:commandButton>
+                                                    <h:commandButton action="#{gui_TicketUebersichtTutor.Reset}" value="Filter zurücksetzen" class="button"></h:commandButton>
 						</td>
 						<td colspan = "2">
 
@@ -200,10 +200,14 @@
                                                             </c:forEach>
                                                            
 								<td>
-								<img src="delete_icon.png" alt="delete"/>
+                                                                    <h:commandLink action="#{gui_TicketUebersichtTutor.DeleteTicket}">
+                                                                        <img src="delete_icon.png" alt="delete"/>
+                                                                    </h:commandLink>
 								</td>
 								<td>
-								<img src="edit_icon.png" alt="edit"/>
+                                                                    <h:commandLink action="#{gui_TicketUebersichtTutor.EditTicket}">
+                                                                        <img src="edit_icon.png" alt="edit"/>
+                                                                    </h:commandLink>
 								</td>
 
 							</tr>
