@@ -12,8 +12,10 @@ import javax.faces.context.FacesContext;
 import javax.faces.application.FacesMessage;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import javax.faces.model.SelectItem;
 import javax.annotation.PostConstruct;
+
 
 /*
 * gui_TicketUebersichtTutor
@@ -248,24 +250,42 @@ public class gui_TicketUebersichtTutor
     
 public String EditTicket ()
     {
+        FacesContext fc = FacesContext.getCurrentInstance();
+        Map<String,String> params = fc.getExternalContext().getRequestParameterMap();
+
+        String EditTicketID  = params.get("EditTicketID");
          //Status ausgeben
             FacesContext.getCurrentInstance().addMessage(
             null,new FacesMessage(FacesMessage.SEVERITY_WARN,
-			"Hier soll das Ticket bearbeitet werden!",
+			"Hier soll das Ticket:  " + EditTicketID + " bearbeitet werden!",
 			""));
-        //return "Ticket_bearbeiten.xhtml?id= " + id;       
+        //return "Ticket_bearbeiten.xhtml?id= " + id;
+       // HtmlDataTable table = getParentDatatable (UIComponent);
+ 
         return null;
     }
+
     
     public void DeleteTicket()
     {
+        // Parameterliste erzeugen
+        FacesContext fc = FacesContext.getCurrentInstance();
+        Map<String,String> params = fc.getExternalContext().getRequestParameterMap();
+
+        // Parameter abfragen
+        String DelTicketID  = params.get("DelTicketID");
+        
         // Löschen des Tickets
-        //DBController.DeleteData ("ticket", "WHERE ID = " + id);
-         // Status ausgeben
-            FacesContext.getCurrentInstance().addMessage(
+        DBController.DeleteData ("ticket", "WHERE ID = " + DelTicketID);
+        
+        // Status ausgeben
+        FacesContext.getCurrentInstance().addMessage(
             null,new FacesMessage(FacesMessage.SEVERITY_WARN,
-			"Hier soll das Ticket gelöscht werden!",
-			""));
+		"Ticket mit der ID: " + DelTicketID +  " wurde gelöscht!",
+		""));
+            
+        // Suche erneut starten
+        Search();
     }
     
      // Getter Methoden
