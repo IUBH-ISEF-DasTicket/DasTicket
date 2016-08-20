@@ -149,7 +149,47 @@ public class DBController
 
             //  SQL Statement ausführen
             statement.executeUpdate(SQLStatement);
-            System.out.println("Update Data");
+            System.out.println("Update Data: " + SQLStatement);
+            
+         } 
+         // Fehlerbehandlung
+         catch (SQLException ex) 
+         {
+                Result = "SQLException: " + ex.getMessage();
+                System.out.println("SQLException: " + ex.getMessage());
+                System.out.println("SQLState: " + ex.getSQLState());
+                System.out.println("VendorError: " + ex.getErrorCode());
+         }
+         // Statement & Connection schließen
+         finally
+         {
+             CloseStatement(statement);
+             CloseConnection(connection);
+         }
+         Result = "Daten erfolgreich eingefügt";
+         return Result;
+        
+    }
+    
+    public static String UpdateDataWithInt(String TableName, String Column, String Value, String Clause)
+    {
+        String Result;
+        
+        // Connection aufbauen
+        connection = InitConnection(); 
+        
+        // Vatriable für SQL Statement
+        String SQLStatement;
+
+         try 
+         {
+            // SQL Statement vorbereiten
+            SQLStatement = "Update " + TableName + " Set " + Column + "=" + "" +  Value + " " + Clause;
+            statement = connection.createStatement();
+
+            //  SQL Statement ausführen
+            statement.executeUpdate(SQLStatement);
+            System.out.println("Update Data: " + SQLStatement);
             
          } 
          // Fehlerbehandlung
@@ -221,7 +261,7 @@ public class DBController
             SQLStatement = "select " + Column + " from " + TableName + " " + Clause;
             statement = connection.createStatement();
             
-            System.out.println("query = : select " + Column + " from " + TableName + " " + Clause);
+            System.out.println("query = " + SQLStatement);
             
             // SQL Statement ausführen und in ResultSet schreiben
             ResultSet rs = statement.executeQuery(SQLStatement);
@@ -240,8 +280,7 @@ public class DBController
                         row[i-1] = rs.getString(i);
                     }
                     rows.add(row);
-                                        
-                    System.out.println("Selected Data: " + result);
+                                                            
                  }
             rowData = (String[][])rows.toArray(new String[rows.size()][columnCount]);
             
@@ -249,8 +288,7 @@ public class DBController
             
             if (rowData.length == 0)
             {
-                rowData = new String[1][1];
-                rowData[0][0] = "";
+                rowData = new String[0][0];
             }                        
              
          } 

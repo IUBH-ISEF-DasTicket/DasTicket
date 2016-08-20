@@ -10,8 +10,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.time.LocalDateTime;
+import java.util.Map;
 import javax.faces.model.SelectItem;
 import javax.annotation.PostConstruct;
+import javax.faces.bean.RequestScoped;
 import javax.servlet.http.HttpServletRequest;
 
 /*
@@ -41,7 +43,8 @@ import javax.servlet.http.HttpServletRequest;
 
 // Managed Bean 
 @ManagedBean
-@SessionScoped
+//@SessionScoped
+@RequestScoped
 
 public class gui_Ticketbearbeiten 
 {
@@ -69,7 +72,25 @@ public class gui_Ticketbearbeiten
     @PostConstruct
     public void Init()        
     {
-               
+        
+        Map<String, String> params =FacesContext.getCurrentInstance().
+                   getExternalContext().getRequestParameterMap();
+        String ExternalTicketId = params.get("TicketID");
+        /*
+        FacesContext.getCurrentInstance().addMessage(
+            null,new FacesMessage(FacesMessage.SEVERITY_WARN,
+			"ExternalUserId = " + ExternalUserId,
+			"")); */
+        
+        // Check if ExternalUserId is a number
+        if (ExternalTicketId != null)
+        {
+            if (ExternalTicketId.matches("\\d+") == true)
+            {
+                ID = Integer.parseInt(ExternalTicketId);
+            }
+        }
+        
         PriorityList = new ArrayList<SelectItem>();
         //PriorityList.add(new SelectItem("", ""));
         String[][] Priorities =  DBController.GetData("priority", "name", "");
@@ -134,7 +155,10 @@ public class gui_Ticketbearbeiten
         Title = TicketTitle[0][0];
         // Gebuchte Zeit setzen
         String[][] TicketReportedTime = DBController.GetData("ReportedTime", "ReportedTime", "where id_ticket =" + ID);
-        ReportedTime = TicketReportedTime[0][0];
+        if (TicketReportedTime.length > 0)
+        {
+            ReportedTime = TicketReportedTime[0][0];
+        }
                 
     }
     
@@ -237,12 +261,6 @@ public class gui_Ticketbearbeiten
         return null;
     
     
-    }
-    
-        // Abbrechen
-        public String Cancel()        
-    {   
-        return null;
     }
     
     // Getter Methoden

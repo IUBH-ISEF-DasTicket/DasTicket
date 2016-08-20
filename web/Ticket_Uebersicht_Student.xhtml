@@ -195,8 +195,11 @@
                                                         <td>
                                                             <img src="delete_icon.png" alt="delete"/>
 							</td>
-                                                        <td>
-                                                            <img src="edit_icon.png" alt="edit"/>
+                                                        <td>                                                          
+                                                            <h:commandLink  action="#{gui_TicketUebersicht.editTicket()}">
+                                                                <f:param name="TicketID" value="#{row[0]}"></f:param>
+                                                                <img src="edit_icon.png" alt="edit"/>
+                                                            </h:commandLink>
                                                         </td>
                                                     </tr>
                                                     </c:forEach>

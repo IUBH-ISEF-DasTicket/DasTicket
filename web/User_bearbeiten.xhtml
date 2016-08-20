@@ -93,79 +93,46 @@
                                     <table>
                                         <tr>
                                             <td colspan="2">
-                                                Kurszuordnung:
+                                                <b>Kurszuordnung:</b>
                                             </td>
                                             
                                         </tr>
                                         <tr>
-                                            <td valign="top">                                                
-                                                <table id = "Attached"  width="100%" >
-                                                    <tr>
-                                                        <td>
-                                                            <b>Zugeordnet</b>
-                                                        </td>
-                                                        <td>
-                                                            <b>entfernen</b>
-                                                        </td>
-                                                    </tr>
-                                                    <c:forEach var="row" items="${gui_Userbearbeiten.attachedCourses}">
-                                                    <tr>
-                                                        <c:forEach var="column" items="${row}">
-                                                            <td>
-                                                                ${column}
-                                                            </td>
-                                                        </c:forEach>
-                                                        <td>
-                                                            <h:selectBooleanCheckbox />
-                                                        </td>
-                                                    </tr>
-                                                        
-                                                    </c:forEach>                                            
-						</table>                                                 
-                                            </td>
-                                            <!--
-                                            <td>
-                                                <p><a href="User_bearbeiten.xhtml"><img src="edit_icon.png" alt="edit" /></a></p>
-                                                <p><a href="User_bearbeiten.xhtml"><img src="edit_icon_3.png" alt="edit" /></a></p>
-                                            </td>
-                                            -->
-                                            <td valign="top">                                                
-                                                <table id = "NotAttached"  width="100%" >   
-                                                    <tr>
-                                                        <td>
-                                                            <b>nicht zugeordnet</b>
-                                                        </td>
-                                                        <td>
-                                                            <b>hinzufügen</b>
-                                                        </td>
-                                                    </tr>
-                                                    <c:forEach var="row" items="${gui_Userbearbeiten.notAttachedCourses}">
-                                                    <tr>
-                                                        <c:forEach var="column" items="${row}">
-                                                            <td>
-                                                                ${column}
-                                                            </td>
-                                                        </c:forEach>
-                                                        <td>
-                                                            <h:selectBooleanCheckbox />
-                                                        </td>
-                                                    </tr>
-                                                    </c:forEach>                                            
-						</table>                                                
+                                            <td valign="top">  
+                                                Zugeordnet:
+                                                <h:dataTable var="rowA" value="#{gui_Userbearbeiten.attachedCourses}">
+                                                    <h:column> 
+                                                         <h:outputText value="#{rowA[0]}" />                                                         
+                                                    </h:column>
+                                                    <h:column>                                                          
+                                                         <h:selectBooleanCheckbox value="#{gui_Userbearbeiten.attached[rowA[0]]}"/>
+                                                    </h:column>
+                                                </h:dataTable>                                                                
+                                            </td>                                                                                       
+                                            <td valign="top">    
+                                                Nicht zugeordnet:
+                                                <h:dataTable var="rowB" value="#{gui_Userbearbeiten.notAttachedCourses}">
+                                                    <h:column> 
+                                                         <h:outputText value="#{rowB[0]}" />                                                         
+                                                    </h:column>
+                                                    <h:column>                                                         
+                                                         <h:selectBooleanCheckbox value="#{gui_Userbearbeiten.notAttached[rowB[0]]}"/>
+                                                    </h:column>
+                                                </h:dataTable>                                                                                           
                                             </td>
                                         </tr>                                        
                                     </table>
                                     
 					<table id="Buttons" >
 						<tr>
-						   <td> 
-                                                       <h:commandButton value="Speichern" action="#{gui_Userbearbeiten.Save}" ></h:commandButton>
-							</td>           
+                                                    <td> 
+                                                    <h:commandButton value="Speichern" action="#{gui_Userbearbeiten.Save}" ></h:commandButton>
+                                                    </td>           
 						</tr> 
 						<tr>
-							<td> 
-                                                                <h:commandButton value="Abbrechen"></h:commandButton>
-							</td>           
+                                                    <td> 
+                                                    <h:commandButton value="Abbrechen" action = "User_Uebersicht.xhtml" ></h:commandButton>
+                                                    </td>           
 						</tr> 				   
 					</table> 
 					  				

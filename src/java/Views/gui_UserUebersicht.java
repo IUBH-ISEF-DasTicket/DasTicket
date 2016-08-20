@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.time.LocalDateTime;
+import java.util.Map;
 import java.util.TreeMap;
 import javax.faces.model.SelectItem;
 import javax.annotation.PostConstruct;
@@ -68,8 +69,7 @@ public class gui_UserUebersicht
         
         RoleList = new ArrayList<SelectItem>();
         RoleList.add(new SelectItem("---", "---"));
-        String[][] Roles =  DBController.GetData("usergroup", "name", "");
-        
+        String[][] Roles =  DBController.GetData("usergroup", "name", "");        
         for (int i = 0; i < Roles.length; ++i) 
         {
             RoleList.add(new SelectItem(Roles[i][0], Roles[i][0]));
@@ -296,7 +296,19 @@ public class gui_UserUebersicht
     return null;
 
     }
-}
-
     
+    public String editUser()
+    {
+        FacesContext fc = FacesContext.getCurrentInstance();
+        Map<String,String> params = fc.getExternalContext().getRequestParameterMap();
 
+        String UserID  = params.get("UserID");
+        /*
+            FacesContext.getCurrentInstance().addMessage(
+            null,new FacesMessage(FacesMessage.SEVERITY_WARN,
+			"Hier soll der Benutzer :  " + UserID + " bearbeitet werden!",
+			""));*/
+        return "User_bearbeiten.xhtml?id=" + UserID;       
+         
+    }
+}

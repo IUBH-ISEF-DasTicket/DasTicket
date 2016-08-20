@@ -157,10 +157,13 @@
                                                             </td>                                                            
                                                         </c:forEach>
                                                         <td>
-                                                            <a href="Ticket_Uebersicht_Student.xhtml"><img src="edit_icon_2.png" alt="Tickets" /></a>
+                                                            <a href="Ticket_Uebersicht_Student.xhtml"><img src="edit_icon_2.png" alt="Tickets" /></a>                                                                                                                                                                                    
 							</td>
-							<td>
-                                                            <a href="User_bearbeiten.xhtml"><img src="edit_icon.png" alt="edit" /></a>
+							<td>                                                            
+                                                            <h:commandLink  action="#{gui_UserUebersicht.editUser()}">
+                                                                <f:param name="UserID" value="#{row[0]}"></f:param>
+                                                                <img src="edit_icon.png" alt="edit"/>
+                                                            </h:commandLink>
 							</td> 
                                                     </tr>
                                                     </c:forEach>                                                                                                        

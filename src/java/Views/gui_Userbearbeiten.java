@@ -14,8 +14,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 import javax.faces.model.SelectItem;
 import javax.annotation.PostConstruct;
+import javax.faces.bean.RequestScoped;
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -25,7 +28,8 @@ import javax.servlet.http.HttpServletRequest;
 
 // Managed Bean 
 @ManagedBean
-@SessionScoped
+//@SessionScoped
+@RequestScoped
 
 public class gui_Userbearbeiten {
     
@@ -39,14 +43,33 @@ public class gui_Userbearbeiten {
     String[][] NotAttachedCourses;
     String[][] AttachedCourses;
     
+    private Map<String, Boolean> Attached = new HashMap<String, Boolean>();
+    private Map<String, Boolean> NotAttached = new HashMap<String, Boolean>();
+    
     Integer ID = 1;
     
     @PostConstruct
     public void Init()        
     {   
+                
+        Map<String, String> params =FacesContext.getCurrentInstance().
+                   getExternalContext().getRequestParameterMap();
+        String ExternalUserId = params.get("UserID");
+        /*
+        FacesContext.getCurrentInstance().addMessage(
+            null,new FacesMessage(FacesMessage.SEVERITY_WARN,
+			"ExternalUserId = " + ExternalUserId,
+			"")); */
         
-        //String[][] NotAttachedCourses = DBController.GetData("courses", "name", "");
-
+        // Check if ExternalUserId is a number
+        if (ExternalUserId != null)
+        {
+            if (ExternalUserId.matches("\\d+") == true)
+            {
+                ID = Integer.parseInt(ExternalUserId);
+            }
+        }
+                
         // Username
         String[][] UserUsername = DBController.GetData("user", "username", "where id =" + ID);
         Name = UserUsername[0][0];
@@ -56,8 +79,7 @@ public class gui_Userbearbeiten {
         Email = UserEmail[0][0];
         
         
-        // Rolle
-        
+        // Rolle        
         RolesList = new ArrayList<SelectItem>();
         String[][] Roles =  DBController.GetData("usergroup", "name", "");
         
@@ -67,8 +89,8 @@ public class gui_Userbearbeiten {
              
         }
         
-        String[][] TicketRole = DBController.GetData("usergroup", "name", "where id =(select id_usergroup from user where ID=" + ID +")");
-        Role = TicketRole[0][0];                             
+        String[][] UserRole = DBController.GetData("usergroup", "name", "where id =(select id_usergroup from user where ID=" + ID +")");
+        Role = UserRole[0][0];                             
         
         // Status              
         StatusList = new ArrayList<SelectItem>();
@@ -78,16 +100,43 @@ public class gui_Userbearbeiten {
         String[][] TicketStatus = DBController.GetData("user", "case state when 1 then 'aktiv' else 'inaktiv' end", "where id =" + ID);
         Status = TicketStatus[0][0];
         
-        AttachedCourses = DBController.GetData("courses", "name", "where id_user = " + ID);
-        NotAttachedCourses = DBController.GetData("courses", "name", "where id_user != " + ID);
+        AttachedCourses = DBController.GetData("courses", "name", "where id_user = " + ID);        
+        NotAttachedCourses = DBController.GetData("courses", "name", "where (id_user != " + ID + " OR id_user is null)");
         
-        
+        // clear HashMaps when there is no data
+        if (AttachedCourses.length == 0)
+        {
+            Attached.clear();
+        }
+        if (NotAttachedCourses.length == 0)
+        {
+            NotAttached.clear();
+        }                        
     }
     
     public void Save()        
     {
         Boolean Error = false;
-        String Result;
+        String Result= "";
+        
+        String[][] CourseID;
+        
+        for( String name: Attached.keySet() )
+        {               
+            if (Attached.get(name) == true)
+            {                   
+                CourseID = DBController.GetData ("courses", "id", "WHERE name = '" + name + "'");
+                Result = DBController.UpdateDataWithInt("courses","id_user", "null" ,"where id='" + CourseID[0][0] + "'");
+            }           
+        }                                
+        for( String name: NotAttached.keySet() )
+        {            
+            if (NotAttached.get(name) == true)
+            {                   
+                CourseID = DBController.GetData ("courses", "id", "WHERE name = '" + name + "'");
+                Result = DBController.UpdateData("courses","id_user", ID+"" ,"where id='" + CourseID[0][0] + "'");
+            }           
+        }                  
         
         // Username überprüfen
         if (Username.isEmpty())
@@ -117,7 +166,22 @@ public class gui_Userbearbeiten {
 			""));
         }
         
+        if (Error == true)
+        {
+            return;
+        }
+        
         String[][] RoleID = DBController.GetData ("usergroup", "id", "WHERE name = '" + Role + "'");
+        
+        String[][] OldRoleId = DBController.GetData("usergroup", "id", "where id =(select id_usergroup from user where ID=" + ID +")");
+        
+        if (RoleID[0][0].equals(OldRoleId[0][0]))
+        {
+            FacesContext.getCurrentInstance().addMessage(
+            null,new FacesMessage(FacesMessage.SEVERITY_WARN,
+			"ACHTUNG: Dem Benutzer wurde diese Rolle bereits zugeteilt.",
+			""));
+        }
         
         String StatusBool;
         
@@ -138,7 +202,22 @@ public class gui_Userbearbeiten {
         FacesContext.getCurrentInstance().addMessage(
             null,new FacesMessage(FacesMessage.SEVERITY_WARN,
 			"STATUS: " + Result,
-			""));                
+			""));  
+        
+        // Refresh Lists
+        AttachedCourses = DBController.GetData("courses", "name", "where id_user = " + ID);
+        NotAttachedCourses = DBController.GetData("courses", "name", "where (id_user != " + ID + " OR id_user is null)");
+        
+        // unselect all courses
+        for( String name: Attached.keySet() )
+        {               
+            Attached.put(name, false);           
+        }                        
+        
+        for( String name: NotAttached.keySet() )
+        {            
+            NotAttached.put(name, false);                    
+        }                                
     }
     
     public String getName()
@@ -186,6 +265,16 @@ public class gui_Userbearbeiten {
     return AttachedCourses;
     }
         
+    public Map<String, Boolean> getAttached()
+    {
+    return Attached;
+    }    
+    
+    public Map<String, Boolean> getNotAttached()
+    {
+    return NotAttached;
+    }  
+    
     public void setName(String name) 
     {
         this.Name = name;
@@ -214,17 +303,10 @@ public class gui_Userbearbeiten {
     public void setNotAttachedCourses(String[][] notAttachedCourses) 
     {
         this.NotAttachedCourses = notAttachedCourses;
-    }
+    }    
 	
     public void setAttachedCourses(String[][] attachedCourses) 
     {
         this.AttachedCourses = attachedCourses;
     }
-	
-
-
-
-    
-    
-    
 }

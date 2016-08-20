@@ -123,8 +123,10 @@ public class gui_TicketUebersichtTutor
         }    
         
         String[][] Result = DBController.GetData("ticket", "id, (select name from courses where id = id_courses), title, (select name from state where id = id_state)", "");
-        ListOfTickets = Result;   
-        
+        if (Result.length > 0)
+        {
+            ListOfTickets = Result;   
+        }        
 
     }
    
@@ -212,11 +214,12 @@ public class gui_TicketUebersichtTutor
             
             // Suche nach Tickets
             String[][] Result = DBController.GetData("ticket", "id, (select name from courses where id = id_courses), title, (select name from state where id = id_state)", query);
-             if (Result[0][0].equalsIgnoreCase("") == false)
+            
+            if (Result.length > 0)
                 {
                     ListOfTickets = Result;
                 }
-             else
+            else
                 {
                     Result = DBController.GetData("ticket", "id, (select name from courses where id = id_courses), title, (select name from state where id = id_state)", "");
                     ListOfTickets = Result;  
@@ -224,11 +227,8 @@ public class gui_TicketUebersichtTutor
                     null,new FacesMessage(FacesMessage.SEVERITY_WARN,
 			"ACHTUNG: Keine Tickets mit der Suchmaske gefunden!",
 			""));
-                }
-             
-
+                }             
             return null;
-
         }
     
     public String Reset()

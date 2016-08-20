@@ -13,6 +13,7 @@ import javax.faces.application.FacesMessage;
 import java.util.ArrayList;
 //import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 //import java.time.LocalDateTime;
 import java.util.TreeMap;
 import javax.faces.model.SelectItem;
@@ -129,13 +130,13 @@ public class gui_TicketUebersicht
              
         }    
         
-        String[][] Result = DBController.GetData("ticket", "id, (select name from courses where id = id_courses), title, (select name from state where id = id_state)", "");
-        ListOfTickets = Result;
-  
+        String[][] Result = DBController.GetData("ticket", "id, (select name from courses where id = id_courses), title, (select name from state where id = id_state)", "");               
+        ListOfTickets = Result;       
+          
     }
    
     public String Search()            
-        {          
+    {          
             // Variablen
             Integer ID_Cat;
             Integer ID_Cou;
@@ -229,18 +230,27 @@ public class gui_TicketUebersicht
             query += " " + MaxValues;
             
 
-            String[][] Result = DBController.GetData("ticket", "id, (select name from courses where id = id_courses), title, (select name from state where id = id_state)", query);
-            ListOfTickets = Result;
-                        
+            String[][] Result = DBController.GetData("ticket", "id, (select name from courses where id = id_courses), title, (select name from state where id = id_state)", query);            
+            if (Result.length > 0)
+                {
+                    ListOfTickets = Result;
+                }
+            else
+                {
+                    Result = DBController.GetData("ticket", "id, (select name from courses where id = id_courses), title, (select name from state where id = id_state)", "");
+                    ListOfTickets = Result;  
+                    FacesContext.getCurrentInstance().addMessage(
+                    null,new FacesMessage(FacesMessage.SEVERITY_WARN,
+			"ACHTUNG: Keine Tickets mit der Suchmaske gefunden!",
+			""));
+                }
+                                    
             FacesContext.getCurrentInstance().addMessage(null,new FacesMessage(FacesMessage.SEVERITY_WARN, 
-                        "query = SELECT id, (select name from courses where id = id_courses), title, (select name from state where id = id_state) FROM ticket " + query, ""));
-            
-            
+                        "query = SELECT id, (select name from courses where id = id_courses), title, (select name from state where id = id_state) FROM ticket " + query, ""));                        
             
             return null;
 
-
-        }
+    }
     
     public String Reset()
     {
@@ -255,9 +265,19 @@ public class gui_TicketUebersicht
         return null;
     }    
     
-    public String LinkToEdit (String id)
+    public String editTicket()
     {
-        return "Ticket_bearbeiten.xhtml?id= " + id;       
+        FacesContext fc = FacesContext.getCurrentInstance();
+        Map<String,String> params = fc.getExternalContext().getRequestParameterMap();
+
+        String TicketID  = params.get("TicketID");
+        /*
+            FacesContext.getCurrentInstance().addMessage(
+            null,new FacesMessage(FacesMessage.SEVERITY_WARN,
+			"Hier soll das Ticket  :  " + TicketID + " bearbeitet werden!",
+			""));*/
+        return "Ticket_bearbeiten.xhtml?id=" + TicketID;       
+         
     }
     
      // Getter Methoden
