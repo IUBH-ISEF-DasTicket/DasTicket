@@ -1,10 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+// Package
 package Views;
 
+// Imports
 import Database.DBController;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -19,7 +16,7 @@ import javax.annotation.PostConstruct;
 
 /*
 * gui_TicketUebersichtTutor
-* Funktionalität für Ticketsuche und Übersicht
+* Funktionalität für suche, anzeigen, bearbeiten und löschen von Tickets
 *
 * <Klassenvariablen>
     String Priority = Ticketpriorität
@@ -36,6 +33,7 @@ import javax.annotation.PostConstruct;
     List CategoryList = Kategorielist aus DB
     List PriorityList = Prioritätenliste aus DB
     List StatusList = Statusliste aus DB
+    List UserList = Liste der Benutzer aus DB
     String [][] ListOfTickets = Ergebnis der Suche
 *
 * <Sichtbarkeit>
@@ -52,7 +50,7 @@ public class gui_TicketUebersichtTutor
     String Category;
     String Course;
     String Title;
-    String Username = "Admin";
+    String Username;
     String Status;
     String CreationDate;
     String TicketID;
@@ -71,7 +69,7 @@ public class gui_TicketUebersichtTutor
     @PostConstruct
     public void Init()        
     {
-        
+        // Prioritäten
         PriorityList = new ArrayList<SelectItem>();
         PriorityList.add(new SelectItem("---", "---"));
         String[][] Priorities =  DBController.GetData("priority", "name", "");
@@ -82,6 +80,7 @@ public class gui_TicketUebersichtTutor
              
         }
         
+        // Kurse
         CourseList = new ArrayList<SelectItem>();
         CourseList.add(new SelectItem("---", "---"));
         String[][] Courses =  DBController.GetData("courses", "name", "");
@@ -92,6 +91,7 @@ public class gui_TicketUebersichtTutor
              
         }
         
+        // Kategorien
         CategoryList = new ArrayList<SelectItem>();
         CategoryList.add(new SelectItem("---", "---"));
         String[][] Categories =  DBController.GetData("category", "name", "");
@@ -102,6 +102,7 @@ public class gui_TicketUebersichtTutor
              
         }
         
+        // Status
         StatusList = new ArrayList<SelectItem>();
         StatusList.add(new SelectItem("---", "---"));
         String[][] status =  DBController.GetData("state", "name", "");
@@ -111,7 +112,8 @@ public class gui_TicketUebersichtTutor
             StatusList.add(new SelectItem(status[j][0], status[j][0]));
              
         }    
-            
+        
+        // Benutzer
         UserList = new ArrayList<SelectItem>();
         UserList.add(new SelectItem("---", "---"));
         String[][] tutor =  DBController.GetData("user", "username", "where id_usergroup not in (1,3)");
@@ -122,6 +124,7 @@ public class gui_TicketUebersichtTutor
              
         }    
         
+        // Alle Tickets anzeigen
         String[][] Result = DBController.GetData("ticket", "id, (select name from courses where id = id_courses), title, (select name from state where id = id_state)", "");
         if (Result.length > 0)
         {
@@ -215,12 +218,14 @@ public class gui_TicketUebersichtTutor
             // Suche nach Tickets
             String[][] Result = DBController.GetData("ticket", "id, (select name from courses where id = id_courses), title, (select name from state where id = id_state)", query);
             
+            // Ergebnis überprüfen
             if (Result.length > 0)
                 {
                     ListOfTickets = Result;
                 }
             else
                 {
+                    // Wenn keine Treffer, dann alle Tickets + Warnung
                     Result = DBController.GetData("ticket", "id, (select name from courses where id = id_courses), title, (select name from state where id = id_state)", "");
                     ListOfTickets = Result;  
                     FacesContext.getCurrentInstance().addMessage(
@@ -250,19 +255,15 @@ public class gui_TicketUebersichtTutor
     
 public String EditTicket ()
     {
+        // Parameterliste erzeugen
         FacesContext fc = FacesContext.getCurrentInstance();
         Map<String,String> params = fc.getExternalContext().getRequestParameterMap();
-
-        String EditTicketID  = params.get("EditTicketID");
-         //Status ausgeben
-            FacesContext.getCurrentInstance().addMessage(
-            null,new FacesMessage(FacesMessage.SEVERITY_WARN,
-			"Hier soll das Ticket:  " + EditTicketID + " bearbeitet werden!",
-			""));
-        //return "Ticket_bearbeiten.xhtml?id= " + id;
-       // HtmlDataTable table = getParentDatatable (UIComponent);
- 
-        return null;
+        
+        // Parameter abfragen
+        String TicketID  = params.get("TicketID");
+        
+        // Maske öffnen
+        return "Ticket_bearbeiten.xhtml?id= " + TicketID;
     }
 
     
@@ -273,15 +274,15 @@ public String EditTicket ()
         Map<String,String> params = fc.getExternalContext().getRequestParameterMap();
 
         // Parameter abfragen
-        String DelTicketID  = params.get("DelTicketID");
+        String TicketID  = params.get("TicketID");
         
         // Löschen des Tickets
-        DBController.DeleteData ("ticket", "WHERE ID = " + DelTicketID);
+        DBController.DeleteData ("ticket", "WHERE ID = " + TicketID);
         
         // Status ausgeben
         FacesContext.getCurrentInstance().addMessage(
             null,new FacesMessage(FacesMessage.SEVERITY_WARN,
-		"Ticket mit der ID: " + DelTicketID +  " wurde gelöscht!",
+		"Ticket mit der ID: " + TicketID +  " wurde gelöscht!",
 		""));
             
         // Suche erneut starten

@@ -135,8 +135,7 @@
 						<td colspan = "2">
 
 						</td>
-						</tr>
-                                                    
+						</tr>                                                    
 					</table>
                                         <br/>
 					<table width="100%">
@@ -181,11 +180,11 @@
 								<td>
 								<b>Status</b>
 								</td>
-								<td>
-								
+                                                            
+                                                                <!-- Leerzeilen für Symbole -->
+ 								<td>								
 								</td>
-								<td>
-								
+								<td>								
 								</td>
 							</tr>
 						</thead>
@@ -198,25 +197,22 @@
                                                                     #{column}
                                                                 </td>
                                                             </c:forEach>
-                                                           
 								<td>
                                                                     <h:commandLink  action="#{gui_TicketUebersichtTutor.DeleteTicket}">
-                                                                        <f:param name="DelTicketID" value="#{row[0]}"></f:param>
+                                                                        <f:param name="TicketID" value="#{row[0]}"></f:param>
                                                                         <img src="delete_icon.png" alt="delete"/>
                                                                     </h:commandLink>
 								</td>
 								<td>
                                                                     <h:commandLink action="#{gui_TicketUebersichtTutor.EditTicket}">
-                                                                        <f:param name="EditTicketID" value="#{row[0]}"></f:param> 
+                                                                        <f:param name="TicketID" value="#{row[0]}"></f:param> 
                                                                         <img src="edit_icon.png" alt="edit"/>
                                                                     </h:commandLink>
 								</td>
-
 							</tr>
                                                     </c:forEach>
 						</tbody>
-					</table>
-					
+					</table>					
 				</td>
 			</tr>
 		</table>   
