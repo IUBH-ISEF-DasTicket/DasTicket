@@ -146,7 +146,7 @@ public class gui_Userbearbeiten {
             null,new FacesMessage(FacesMessage.SEVERITY_WARN,
 			"ACHTUNG: Nicht eingeloggt --> Bitte neu anmelden!",
 			""));                     
-        }
+        }                
         
         if (Name.isEmpty())
         {
@@ -157,6 +157,15 @@ public class gui_Userbearbeiten {
 			""));
         }
         
+        if (Name.length() > 30)
+        {
+            Error = true;
+            FacesContext.getCurrentInstance().addMessage(
+            null,new FacesMessage(FacesMessage.SEVERITY_WARN,
+			"ACHTUNG: Username darf nicht länger als 30 Zeichen sein!",
+			""));  
+        }
+        
         if (Email.isEmpty())
         {
             Error = true;
@@ -164,6 +173,15 @@ public class gui_Userbearbeiten {
             null,new FacesMessage(FacesMessage.SEVERITY_WARN,
 			"ACHTUNG: Keine Emailadresse definiert!",
 			""));
+        }
+        
+        if (Email.length() > 50)
+        {
+            Error = true;
+            FacesContext.getCurrentInstance().addMessage(
+            null,new FacesMessage(FacesMessage.SEVERITY_WARN,
+			"ACHTUNG: Emailadresse darf nicht länger als 50 Zeichen sein!",
+			""));  
         }
         
         if (Error == true)
