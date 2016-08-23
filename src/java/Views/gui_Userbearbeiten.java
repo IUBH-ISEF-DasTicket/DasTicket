@@ -19,6 +19,8 @@ import java.util.Map;
 import javax.faces.model.SelectItem;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.RequestScoped;
+import javax.faces.event.AjaxBehaviorEvent;
+import javax.faces.event.ValueChangeEvent;
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -236,6 +238,19 @@ public class gui_Userbearbeiten {
         {            
             NotAttached.put(name, false);                    
         }                                
+    }
+        
+    public void emptyCoursesList (AjaxBehaviorEvent event)
+    {
+        System.out.println("emptyCoursesList selected Role: " + Role);        
+        String newRole = Role + "";
+                
+        if (newRole.equals("Tutor") == false)
+        {
+            System.out.println("emptyCoursesList empty Lists");
+            NotAttachedCourses = new String[0][0];
+            AttachedCourses = new String[0][0];
+        }
     }
     
     public String getName()

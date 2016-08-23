@@ -21,6 +21,8 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.RequestScoped;
 import javax.servlet.http.HttpServletRequest;
 import java.security.SecureRandom;
+import javax.faces.event.AjaxBehaviorEvent;
+import javax.faces.event.ValueChangeEvent;
 /**
  *
  * @author DIANE
@@ -95,7 +97,7 @@ public class gui_UserErfassen {
             null,new FacesMessage(FacesMessage.SEVERITY_WARN,
 			"ACHTUNG: Kein Username definiert!",
 			""));
-        }
+        }                        
         
         if (Name.length() > 30)
         {
@@ -182,15 +184,11 @@ public class gui_UserErfassen {
         return;                           
     }
     
-    public void emptyCoursesList ()
-    {
-        
-        FacesContext.getCurrentInstance().addMessage(
-            null,new FacesMessage(FacesMessage.SEVERITY_WARN,
-			"emptyCoursesList",
-			""));  
-        
-        if (Role.equals("Tutor") == false)
+    public void emptyCoursesList (AjaxBehaviorEvent event)
+    {                        
+        String newRole = Role + "";
+                
+        if (newRole.equals("Tutor") == false)
         {
             NotAttachedCourses = new String[0][0];
         }
