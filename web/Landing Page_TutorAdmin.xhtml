@@ -1,0 +1,72 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"> 
+
+    <h:head>
+        <title>Übersicht</title>
+        <link rel="stylesheet" media="screen,projection"
+        title="Standardstylesheet" href="style.css"
+        type="text/css" />
+    </h:head>
+        <f:metadata>
+        <f:viewParam name="Username" value="#{gui_LandingPage_TutorAdmin.username}" />
+    </f:metadata>
+	<script type="text/javascript" language="javascript" src="TimeFunctions.js"></script>
+	
+    <h:body onload="startTime()">
+        <h:form>
+		<table style="max-width:1000px;" id="Table_Wrap" width="100%">
+			<tr>
+				<td>				
+					<table id = "Header" width="100%">
+						<tr>
+                                                    
+                                                    <td width="15%">
+                                                        <img src="logoiubh.png" alt="IUBH" style="width:150px" align="left"/>
+                                                    </td>
+                                                    
+                                                    <td width="50%" align="center">
+                                                        <h2>Übersicht</h2>    
+                                                    </td>
+                                                    
+                                                    <td width="20%"> 
+                                                        Eingeloggt als: #{gui_LandingPage_TutorAdmin.username} <br/>
+                                                    </td>
+                                                    
+                                                    <td width="15%">
+                                                        <h:commandButton value="Ausloggen" action="#{gui_LandingPage_TutorAdmin.Logout}"></h:commandButton>
+                                                    </td>
+                                                    
+						</tr>
+					</table>
+                                        <table width="100%" id="Menue">
+                                            <tr>
+                                                <td>
+                                                <h:commandButton value="Benutzerverwaltung" action="User_Uebersicht?faces-redirect=true&amp;includeViewParams=true" class="button"></h:commandButton>
+                                                <div class="divider"/>
+                                                <h:commandButton value="Ticketübersicht" action="Ticket_Uebersicht_TutorAdmin?faces-redirect=true&amp;includeViewParams=true" class="button"></h:commandButton>
+                                                </td>                                    
+                                            </tr>
+                                        </table>
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                <h3>Willkommen im Ticketsystem der IUBH-Fernstudium</h3><br/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                Sie haben eine Frage zur Funktion dieses Ticketsystems? Bitte werfen Sie einen Blick in das mitgelieferte Nutzerhandbuch. <br/>
+                                                Sollte Ihre Frage darin nicht beantwortet wird, wenden Sie sich bitte an den IT Helpdesk der IUBH Fernstudium (it-helpdesk@iubh-fernstudium.de)
+                                            </td>
+                                        </tr>
+                                    </table>
+					  				
+				</td>
+			</tr>
+		</table>   
+            </h:form>	
+    </h:body>
+</html>

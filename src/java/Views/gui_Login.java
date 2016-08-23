@@ -36,6 +36,7 @@ public class gui_Login implements Serializable
         // Variablen
          String[][] storedUserPassword;
          String[][] storedUsername;
+         String[][] storedUserGroup;
      
         
         // Benutzerdaten aus Datenbankabfragen
@@ -63,8 +64,16 @@ public class gui_Login implements Serializable
 			"Eingabe OK",
 			""));
             
-            return "Landing Page?faces-redirect=true&includeViewParams=true";
+            storedUserGroup = DBController.GetData("user", "id_usergroup", "where username= '" + typedUsername + "'");
             
+            if (storedUserGroup[0][0].equalsIgnoreCase("2"))
+            {
+                return "Landing Page?faces-redirect=true&includeViewParams=true";
+            }
+            else
+            {
+                return "Landing Page_TutorAdmin?faces-redirect=true&includeViewParams=true";
+            }    
             
         } 
         // Falsche Kombination Benutzer & Kennwort
