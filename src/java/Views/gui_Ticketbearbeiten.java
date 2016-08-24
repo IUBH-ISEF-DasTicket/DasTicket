@@ -14,7 +14,6 @@ import java.util.Map;
 import javax.faces.model.SelectItem;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.RequestScoped;
-import javax.servlet.http.HttpServletRequest;
 
 /*
 * gui_TicketErfassen
@@ -241,12 +240,19 @@ public class gui_Ticketbearbeiten
         DBController.UpdateData("ReportedTime","ReportedTime", ReportedTime ,"where ID_ticket='" + ID + "'"); 
        
         // Worknote
-        if (NewComment.isEmpty() == false)
+        try
         {
-            Result = DBController.InsertData("Worknotes (internal,notes,creationDate,id_Ticket)", "false,'" + NewComment + "','" + LocalDateTime.now() + "'," + ID);
+            if (NewComment.isEmpty() == false)
+            {
+                Result = DBController.InsertData("Worknotes (internal,notes,creationDate,id_Ticket)", "false,'" + NewComment + "','" + LocalDateTime.now() + "'," + ID);
+            }
+
+        }
+        catch ( NullPointerException ex) 
+        {
         }
         
-        // Status ausgeben
+// Status ausgeben
         FacesContext.getCurrentInstance().addMessage(
             null,new FacesMessage(FacesMessage.SEVERITY_WARN,
 			"STATUS: " + Result,

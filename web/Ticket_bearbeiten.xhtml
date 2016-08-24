@@ -114,7 +114,7 @@
                                                 <tr> 
 							<td >Neuer Kommentar</td>
 							<td valign="top" >
-								<h:inputTextarea id="NewComment" value="#{gui_Ticketbearbeiten.newComment}" style="width:100%;height:100%;font-family:Arial; font-size: 15px;" rows="5" cols="80" label="Neues Kommentar" />                                                         
+                                                            <h:inputTextarea id="NewComment" disabled="#{gui_Ticketbearbeiten.status eq 'Closed'}" value="#{gui_Ticketbearbeiten.newComment}" style="width:100%;height:100%;font-family:Arial; font-size: 15px;" rows="5" cols="80" label="Neues Kommentar" />                                                         
 							</td>					  
 						</tr>	
 					</table> 
