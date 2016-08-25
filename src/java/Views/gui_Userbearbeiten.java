@@ -37,6 +37,7 @@ public class gui_Userbearbeiten {
     
     String Username = "Admin";
     String Name;
+    String Password;
     String Email;
     String Role;
     String Status;
@@ -48,20 +49,15 @@ public class gui_Userbearbeiten {
     private Map<String, Boolean> Attached = new HashMap<String, Boolean>();
     private Map<String, Boolean> NotAttached = new HashMap<String, Boolean>();
     
-    Integer ID = 1;
+    Integer ID = 3;
     
     @PostConstruct
     public void Init()        
     {   
                 
-        Map<String, String> params =FacesContext.getCurrentInstance().
+        Map<String, String> params = FacesContext.getCurrentInstance().
                    getExternalContext().getRequestParameterMap();
-        String ExternalUserId = params.get("UserID");
-        /*
-        FacesContext.getCurrentInstance().addMessage(
-            null,new FacesMessage(FacesMessage.SEVERITY_WARN,
-			"ExternalUserId = " + ExternalUserId,
-			"")); */
+        String ExternalUserId = params.get("UserID");                
         
         // Check if ExternalUserId is a number
         if (ExternalUserId != null)
@@ -78,8 +74,7 @@ public class gui_Userbearbeiten {
         
         // Email
         String[][] UserEmail = DBController.GetData("user", "email", "where id =" + ID);
-        Email = UserEmail[0][0];
-        
+        Email = UserEmail[0][0];        
         
         // Rolle        
         RolesList = new ArrayList<SelectItem>();
@@ -87,8 +82,7 @@ public class gui_Userbearbeiten {
         
         for (int j = 0; j < Roles.length; ++j) 
         {
-            RolesList.add(new SelectItem(Roles[j][0], Roles[j][0]));
-             
+            RolesList.add(new SelectItem(Roles[j][0], Roles[j][0]));             
         }
         
         String[][] UserRole = DBController.GetData("usergroup", "name", "where id =(select id_usergroup from user where ID=" + ID +")");
@@ -119,9 +113,60 @@ public class gui_Userbearbeiten {
     public void Save()        
     {
         Boolean Error = false;
-        String Result= "";
+        String Result= "";        
         
-        String[][] CourseID;
+        String[][] CourseID;                              
+        
+        // Username überprüfen
+        if (Username.isEmpty())
+        {
+            Error = true;
+            FacesContext.getCurrentInstance().addMessage(
+            null,new FacesMessage(FacesMessage.SEVERITY_WARN,
+			"ACHTUNG: Nicht eingeloggt --> Bitte neu anmelden!",
+			""));                     
+        }                                
+        
+        if (Name.isEmpty())
+        {
+            Error = true;
+            FacesContext.getCurrentInstance().addMessage(
+            null,new FacesMessage(FacesMessage.SEVERITY_WARN,
+			"ACHTUNG: Kein Username definiert!",
+			""));
+        }
+                
+        if (Name.length() > 30)
+        {
+            Error = true;
+            FacesContext.getCurrentInstance().addMessage(
+            null,new FacesMessage(FacesMessage.SEVERITY_WARN,
+			"ACHTUNG: Username darf nicht länger als 30 Zeichen sein!",
+			""));  
+        }
+               
+        if (Email.isEmpty())
+        {
+            Error = true;
+            FacesContext.getCurrentInstance().addMessage(
+            null,new FacesMessage(FacesMessage.SEVERITY_WARN,
+			"ACHTUNG: Keine Emailadresse definiert!",
+			""));
+        }
+               
+        if (Email.length() > 50)
+        {
+            Error = true;
+            FacesContext.getCurrentInstance().addMessage(
+            null,new FacesMessage(FacesMessage.SEVERITY_WARN,
+			"ACHTUNG: Emailadresse darf nicht länger als 50 Zeichen sein!",
+			""));  
+        }                
+        
+        if (Error == true)
+        {
+            return;
+        }
         
         for( String name: Attached.keySet() )
         {               
@@ -138,58 +183,7 @@ public class gui_Userbearbeiten {
                 CourseID = DBController.GetData ("courses", "id", "WHERE name = '" + name + "'");
                 Result = DBController.UpdateData("courses","id_user", ID+"" ,"where id='" + CourseID[0][0] + "'");
             }           
-        }                  
-        
-        // Username überprüfen
-        if (Username.isEmpty())
-        {
-            Error = true;
-            FacesContext.getCurrentInstance().addMessage(
-            null,new FacesMessage(FacesMessage.SEVERITY_WARN,
-			"ACHTUNG: Nicht eingeloggt --> Bitte neu anmelden!",
-			""));                     
-        }                
-        
-        if (Name.isEmpty())
-        {
-            Error = true;
-            FacesContext.getCurrentInstance().addMessage(
-            null,new FacesMessage(FacesMessage.SEVERITY_WARN,
-			"ACHTUNG: Kein Username definiert!",
-			""));
-        }
-        
-        if (Name.length() > 30)
-        {
-            Error = true;
-            FacesContext.getCurrentInstance().addMessage(
-            null,new FacesMessage(FacesMessage.SEVERITY_WARN,
-			"ACHTUNG: Username darf nicht länger als 30 Zeichen sein!",
-			""));  
-        }
-        
-        if (Email.isEmpty())
-        {
-            Error = true;
-            FacesContext.getCurrentInstance().addMessage(
-            null,new FacesMessage(FacesMessage.SEVERITY_WARN,
-			"ACHTUNG: Keine Emailadresse definiert!",
-			""));
-        }
-        
-        if (Email.length() > 50)
-        {
-            Error = true;
-            FacesContext.getCurrentInstance().addMessage(
-            null,new FacesMessage(FacesMessage.SEVERITY_WARN,
-			"ACHTUNG: Emailadresse darf nicht länger als 50 Zeichen sein!",
-			""));  
-        }
-        
-        if (Error == true)
-        {
-            return;
-        }
+        }  
         
         String[][] RoleID = DBController.GetData ("usergroup", "id", "WHERE name = '" + Role + "'");
         
@@ -215,7 +209,13 @@ public class gui_Userbearbeiten {
         }
         
         Result = DBController.UpdateData("User","username", Name,"where ID='" + ID + "'");
-        Result = DBController.UpdateData("User","email", Email,"where ID='" + ID + "'");
+        Result = DBController.UpdateData("User","email", Email,"where ID='" + ID + "'");                
+        
+        if (Password.length() > 0)
+        {
+            Result = DBController.UpdateData("User","password", Password,"where ID='" + ID + "'");
+        }
+        
         Result = DBController.UpdateData("User","id_usergroup", RoleID[0][0],"where ID='" + ID + "'");
         Result = DBController.UpdateData("User","state", StatusBool,"where ID='" + ID + "'");
         
@@ -267,6 +267,11 @@ public class gui_Userbearbeiten {
     {
     return Email;
     }
+    
+    public String getPassword()
+    {
+    return Password;
+    }
 	
     public String getRole()
     {
@@ -311,6 +316,11 @@ public class gui_Userbearbeiten {
     public void setName(String name) 
     {
         this.Name = name;
+    }
+    
+    public void setPassword(String password) 
+    {
+        this.Password = password;
     }
     
     public void setUsername(String username) 

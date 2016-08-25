@@ -37,6 +37,7 @@ import javax.annotation.PostConstruct;
 public class gui_UserUebersicht 
 {
     
+    String Username;
     String Name;
     String Role;
     String Status;
@@ -129,6 +130,11 @@ public class gui_UserUebersicht
         return State;
     }
     
+    public String getUsername()
+    {
+        return Username;
+    }
+    
     public void setState(String state) 
     {
         this.State = state;
@@ -183,6 +189,11 @@ public class gui_UserUebersicht
     public void setTotalResults(String totalResults) 
     {
         this.TotalResults = totalResults;
+    }
+    
+    public void setUsername(String username) 
+    {
+        this.Username = username;
     }
   
     public String Search()
@@ -303,12 +314,13 @@ public class gui_UserUebersicht
         Map<String,String> params = fc.getExternalContext().getRequestParameterMap();
 
         String UserID  = params.get("UserID");
+        String LoggedUser  = params.get("LoggedUser");
         /*
             FacesContext.getCurrentInstance().addMessage(
             null,new FacesMessage(FacesMessage.SEVERITY_WARN,
 			"Hier soll der Benutzer :  " + UserID + " bearbeitet werden!",
 			""));*/
-        return "User_bearbeiten.xhtml?id=" + UserID;       
+        return "User_bearbeiten.xhtml?id=" + UserID;             
          
     }
 }
