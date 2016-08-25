@@ -126,6 +126,29 @@ public class gui_UserErfassen {
 			""));  
         }
         
+        Integer AnzKurse = 0;        
+        for( String name: NotAttached.keySet() )
+        {            
+            if (NotAttached.get(name) == true)
+            {                   
+                AnzKurse++;                                            
+            }           
+        }  
+        
+        FacesContext.getCurrentInstance().addMessage(
+            null,new FacesMessage(FacesMessage.SEVERITY_WARN,
+                    "Kurse: " + AnzKurse + " Rolle: " + Role,
+                    "")); 
+        
+        if (AnzKurse < 1 && Role.equals("Tutor") == true)
+        {
+            Error = true;
+            FacesContext.getCurrentInstance().addMessage(
+            null,new FacesMessage(FacesMessage.SEVERITY_WARN,
+                    "ACHTUNG: Mindestens ein Kurs muss zugeordnet werden!",
+                    ""));  
+        }  
+        
         if (Error == true)
         {
             return;

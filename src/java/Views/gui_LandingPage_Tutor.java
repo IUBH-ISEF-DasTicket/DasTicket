@@ -5,7 +5,12 @@
  */
 package Views;
 
+import Database.DBController;
 import java.io.Serializable;
+import java.util.Iterator;
+import java.util.Map;
+import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
@@ -17,10 +22,10 @@ import javax.faces.context.FacesContext;
  */
 @ManagedBean
 @SessionScoped
-public class gui_LandingPage_TutorAdmin  implements Serializable
+public class gui_LandingPage_Tutor  implements Serializable
 {
     // Klassenvariablen
-    String Username;   
+    String Username;      
     
     // Logout
         public String Logout()        
@@ -36,7 +41,7 @@ public class gui_LandingPage_TutorAdmin  implements Serializable
     public String getUsername() 
     {
 	return Username;
-    }
+    }        
     
     // Setter Methoden
 
@@ -44,5 +49,6 @@ public class gui_LandingPage_TutorAdmin  implements Serializable
     {
         this.Username = Username;
     }
+            
     
 }

@@ -10,8 +10,8 @@
         title="Standardstylesheet" href="style.css"
         type="text/css" />
     </h:head>
-        <f:metadata>
-        <f:viewParam name="Username" value="#{gui_LandingPage.username}" />
+    <f:metadata>
+        <f:viewParam name="Username" value="#{gui_LandingPage_Tutor.username}" />
     </f:metadata>
 	<script type="text/javascript" language="javascript" src="TimeFunctions.js"></script>
 	
@@ -32,21 +32,20 @@
                                                     </td>
                                                     
                                                     <td width="20%"> 
-                                                        Eingeloggt als: #{gui_LandingPage.username} <br/>
+                                                        Eingeloggt als: #{gui_LandingPage_Tutor.username} <br/>
                                                     </td>
                                                     
                                                     <td width="15%">
-                                                        <h:commandButton value="Ausloggen" action="#{gui_LandingPage.Logout}"></h:commandButton>
+                                                        <h:commandButton value="Ausloggen" action="#{gui_LandingPage_Tutor.Logout}"></h:commandButton>
                                                     </td>
                                                     
 						</tr>
 					</table>
                                         <table width="100%" id="Menue">
                                             <tr>
-                                                <td>                                                
-                                                <h:commandButton value="Ticketübersicht" action="Ticket_Uebersicht_Student?faces-redirect=true&amp;includeViewParams=true"  class="button"></h:commandButton>
-                                                <div class="divider"/>
-                                                <h:commandButton value="Ticketerfassung" action="Erfassungsmaske_JSF?faces-redirect=true&amp;includeViewParams=true" class="button"></h:commandButton>                                                
+                                                <td>
+                                                    <h:commandButton value="Ticketübersicht" action="Ticket_Uebersicht_TutorAdmin?faces-redirect=true&amp;includeViewParams=true" class="button"></h:commandButton>
+                                                <div class="divider"/>                                                
                                                 </td>                                    
                                             </tr>
                                         </table>

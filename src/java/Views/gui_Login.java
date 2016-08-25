@@ -66,14 +66,19 @@ public class gui_Login implements Serializable
             
             storedUserGroup = DBController.GetData("user", "id_usergroup", "where username= '" + typedUsername + "'");
             
+            if (storedUserGroup[0][0].equalsIgnoreCase("1"))
+            {
+                return "Landing Page_Tutor?faces-redirect=true&includeViewParams=true";                
+            } 
             if (storedUserGroup[0][0].equalsIgnoreCase("2"))
             {
                 return "Landing Page?faces-redirect=true&includeViewParams=true";
             }
-            else
+              
+            if (storedUserGroup[0][0].equalsIgnoreCase("3"))
             {
-                return "Landing Page_TutorAdmin?faces-redirect=true&includeViewParams=true";
-            }    
+                return "Landing Page_Admin?faces-redirect=true&includeViewParams=true";                
+            } 
             
         } 
         // Falsche Kombination Benutzer & Kennwort
@@ -88,7 +93,7 @@ public class gui_Login implements Serializable
             return "Login Maske (JSF)";
         }
        
-        
+    return "";   
     }
     
    
