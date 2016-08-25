@@ -11,7 +11,7 @@
         type="text/css" />
     </h:head>
         <f:metadata>
-        <f:viewParam name="Username" value="#{gui_LandingPage_TutorAdmin.username}" />
+            <f:viewParam name="Username" value="#{gui_LandingPage_Admin.username}" />
     </f:metadata>
 	<script type="text/javascript" language="javascript" src="TimeFunctions.js"></script>
 	
@@ -32,11 +32,11 @@
                                                     </td>
                                                     
                                                     <td width="20%"> 
-                                                        Eingeloggt als: #{gui_LandingPage_TutorAdmin.username} <br/>
+                                                        Eingeloggt als: #{gui_LandingPage_Admin.username} <br/>
                                                     </td>
                                                     
                                                     <td width="15%">
-                                                        <h:commandButton value="Ausloggen" action="#{gui_LandingPage_TutorAdmin.Logout}"></h:commandButton>
+                                                        <h:commandButton value="Ausloggen" action="#{gui_LandingPage_Admin.Logout}"></h:commandButton>
                                                     </td>
                                                     
 						</tr>
@@ -44,9 +44,9 @@
                                         <table width="100%" id="Menue">
                                             <tr>
                                                 <td>
-                                                <h:commandButton value="Benutzerverwaltung" action="User_Uebersicht?faces-redirect=true&amp;includeViewParams=true" class="button"></h:commandButton>
-                                                <div class="divider"/>
-                                                <h:commandButton value="Ticketübersicht" action="Ticket_Uebersicht_TutorAdmin?faces-redirect=true&amp;includeViewParams=true" class="button"></h:commandButton>
+                                                    <h:commandButton value="Benutzerverwaltung" action="User_Uebersicht?faces-redirect=true&amp;includeViewParams=true" class="button"></h:commandButton>
+                                                <div class="divider"/>                                                
+                                                    <h:commandButton value="Benutzer erfassen" action="UserErfassen?faces-redirect=true&amp;includeViewParams=true" class="button"></h:commandButton>
                                                 </td>                                    
                                             </tr>
                                         </table>

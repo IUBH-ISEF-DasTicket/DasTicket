@@ -11,6 +11,9 @@
         title="Standardstylesheet" href="style.css"
         type="text/css" />
     </h:head>
+    <f:metadata>
+        <f:viewParam name="Username" value="#{gui_UserUebersicht.username}" />
+    </f:metadata>
     
 	<script type="text/javascript" language="javascript" src="TimeFunctions.js"></script>
 	
@@ -27,11 +30,11 @@
                                                     </td>
                                                     
                                                     <td width="50%" align="center">
-                                                        <h2>Ticketübersicht</h2>    
+                                                        <h2>Benutzerübersicht</h2>    
                                                     </td>
                                                     
                                                     <td width="20%"> 
-                                                         Eingeloggt als: [USER.name]  <br/>
+                                                        Eingeloggt als: #{gui_UserUebersicht.username}  <br/>
                                                     </td>
                                                     
                                                     <td width="15%">
@@ -140,10 +143,10 @@
 								<b>Status</b>
 								</td>								
 								<td>
-								
+								<b>Tickets anzeigen</b>
 								</td>
 								<td>
-								
+								<b>Daten bearbeiten</b>
 								</td>
 							</tr>
 						</thead>
@@ -157,19 +160,18 @@
                                                             </td>                                                            
                                                         </c:forEach>
                                                         <td>
-                                                            <a href="Ticket_Uebersicht_Student.xhtml"><img src="edit_icon_2.png" alt="Tickets" /></a>                                                                                                                                                                                    
+                                                            <a href="Ticket_Uebersicht_TutorAdmin.xhtml"><img src="edit_icon_2.png" alt="Tickets" /></a>                                                                                                                                                                                    
 							</td>
 							<td>                                                            
                                                             <h:commandLink  action="#{gui_UserUebersicht.editUser()}">
-                                                                <f:param name="UserID" value="#{row[0]}"></f:param>
+                                                                <f:param name="UserID" value="#{row[0]}"></f:param>                                                                
                                                                 <img src="edit_icon.png" alt="edit"/>
                                                             </h:commandLink>
 							</td> 
                                                     </tr>
                                                     </c:forEach>                                                                                                        
 						</tbody>
-					</table>
-					
+					</table>				                                                                                
 				</td>
 			</tr>
 		</table>   
