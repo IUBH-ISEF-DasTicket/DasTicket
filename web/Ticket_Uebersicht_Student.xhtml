@@ -11,7 +11,9 @@
         title="Standardstylesheet" href="style.css"
         type="text/css" />
     </h:head>
-    
+    <f:metadata>
+        <f:viewParam name="Username" value="#{gui_TicketUebersicht.username}" />          
+    </f:metadata>
 	<script type="text/javascript" language="javascript" src="TimeFunctions.js"></script>
 	
     <h:body onload="startTime()">
@@ -177,10 +179,7 @@
 								<b>Status</b>
 								</td>
 								<td>
-								
-								</td>
-								<td>
-								
+								<b>Bearbeiten</b>
 								</td>
 							</tr>
 						</thead>
@@ -192,9 +191,7 @@
                                                                 ${column}
                                                             </td>                                                            
                                                         </c:forEach>
-                                                        <td>
-                                                            <img src="delete_icon.png" alt="delete"/>
-							</td>
+
                                                         <td>                                                          
                                                             <h:commandLink  action="#{gui_TicketUebersicht.editTicket()}">
                                                                 <f:param name="TicketID" value="#{row[0]}"></f:param>

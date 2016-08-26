@@ -125,7 +125,7 @@ public class gui_TicketUebersichtTutor
         }    
         
         // Alle Tickets anzeigen
-        String[][] Result = DBController.GetData("ticket", "id, (select name from courses where id = id_courses), title, (select name from state where id = id_state)", "");
+        String[][] Result = DBController.GetData("ticket", "id, (select name from courses where id = id_courses), title, (select name from state where id = id_state),(select username from user where id=id_user)", "");
         if (Result.length > 0)
         {
             ListOfTickets = Result;   
@@ -216,7 +216,7 @@ public class gui_TicketUebersichtTutor
             query += " " + MaxValues;
             
             // Suche nach Tickets
-            String[][] Result = DBController.GetData("ticket", "id, (select name from courses where id = id_courses), title, (select name from state where id = id_state)", query);
+            String[][] Result = DBController.GetData("ticket", "id, (select name from courses where id = id_courses), title, (select name from state where id = id_state), (select username from user where user.id=ticket.id_user)", query);
             
             // Ergebnis überprüfen
             if (Result.length > 0)
@@ -226,7 +226,7 @@ public class gui_TicketUebersichtTutor
             else
                 {
                     // Wenn keine Treffer, dann alle Tickets + Warnung
-                    Result = DBController.GetData("ticket", "id, (select name from courses where id = id_courses), title, (select name from state where id = id_state)", "");
+                    Result = DBController.GetData("ticket", "id, (select name from courses where id = id_courses), title, (select name from state where id = id_state),(select username from user where id=id_user)", "");
                     ListOfTickets = Result;  
                     FacesContext.getCurrentInstance().addMessage(
                     null,new FacesMessage(FacesMessage.SEVERITY_WARN,
@@ -247,7 +247,7 @@ public class gui_TicketUebersichtTutor
         CreationDate = "";
         
         // Ergebnisse zurücksetzen
-        String[][] Result = DBController.GetData("ticket", "id, (select name from courses where id = id_courses), title, (select name from state where id = id_state)", "");
+        String[][] Result = DBController.GetData("ticket", "id, (select name from courses where id = id_courses), title, (select name from state where id = id_state),(select username from user where id=id_user)", "");
         ListOfTickets = Result;
         
         return null;

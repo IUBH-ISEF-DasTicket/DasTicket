@@ -11,11 +11,8 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.application.FacesMessage;
 import java.util.ArrayList;
-//import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-//import java.time.LocalDateTime;
-import java.util.TreeMap;
 import javax.faces.model.SelectItem;
 import javax.annotation.PostConstruct;
 
@@ -32,12 +29,15 @@ import javax.annotation.PostConstruct;
     String NewComment = Neue Notizen
     String Username = Aktueller Benutzername
     String Status = Status des Ticket
+    String Tutor = Tutor
     Date creationDate = Erstellungsdatum des Tickets
     Integer ReportedTime = Berechnete Zeit am Ticket
     List CourseList = Kursliste aus DB
     List CategoryList = Kategorielist aus DB
     List PriorityList = Prioritätenliste aus DB
     List StatusList = Statusliste aus DB
+    List TutorList = Liste der Benutzer aus DB
+    String [][] ListOfTickets = Ergebnis der Suche
 *
 * <Sichtbarkeit>
 * public
@@ -49,11 +49,12 @@ import javax.annotation.PostConstruct;
 
 public class gui_TicketUebersicht 
 {
+    // Variablen
     String Priority;
     String Category;
     String Course;
     String Title;
-    //String Username = "Admin";
+    String Username;
     String Status;
     String CreationDate;
     String TicketID;
@@ -68,18 +69,12 @@ public class gui_TicketUebersicht
     
     String [][] ListOfTickets;
     
-    String Username = "Admin";
 
     // Initialisieren und laden der Select Einträge
     @PostConstruct
     public void Init()        
     {
-            FacesContext.getCurrentInstance().addMessage(
-            null,new FacesMessage(FacesMessage.SEVERITY_WARN,
-			"DEBUG:   PostConstruct",
-			""));
-            
-            
+        // Prioritäten
         PriorityList = new ArrayList<SelectItem>();
         PriorityList.add(new SelectItem("---", "---"));
         String[][] Priorities =  DBController.GetData("priority", "name", "");
@@ -90,6 +85,7 @@ public class gui_TicketUebersicht
              
         }
         
+        // Kurse
         CourseList = new ArrayList<SelectItem>();
         CourseList.add(new SelectItem("---", "---"));
         String[][] Courses =  DBController.GetData("courses", "name", "");
@@ -100,6 +96,7 @@ public class gui_TicketUebersicht
              
         }
         
+        // Kategorien
         CategoryList = new ArrayList<SelectItem>();
         CategoryList.add(new SelectItem("---", "---"));
         String[][] Categories =  DBController.GetData("category", "name", "");
@@ -110,6 +107,7 @@ public class gui_TicketUebersicht
              
         }
         
+        // Status
         StatusList = new ArrayList<SelectItem>();
         StatusList.add(new SelectItem("---", "---"));
         String[][] status =  DBController.GetData("state", "name", "");
@@ -119,7 +117,8 @@ public class gui_TicketUebersicht
             StatusList.add(new SelectItem(status[j][0], status[j][0]));
              
         }    
-            
+        
+        // Tutor
         TutorList = new ArrayList<SelectItem>();
         TutorList.add(new SelectItem("---", "---"));
         String[][] tutor =  DBController.GetData("user", "username", "where id_usergroup in (1,3)");
@@ -138,22 +137,15 @@ public class gui_TicketUebersicht
     public String Search()            
     {          
             // Variablen
-            Integer ID_Cat;
-            Integer ID_Cou;
-            Integer ID_Pri;
-            String ID_User = "1";
-            Integer ID_Admin;
-            Integer ID_Sta;
-            
-            Integer Max;
-            
-            Integer Counter = 1;
-            
+            String ID_User;
+
             String[][] user = DBController.GetData ("USER", "id", "WHERE username = '" + Username + "'");
             ID_User = user[0][0];
             
+            // Aufbauen der Bedingungen
             String query = "WHERE id_user = '" + ID_User + "'";            
             
+            // ID
             if (TicketID.isEmpty() == false )
             {
                 query += " AND id = " + TicketID;
@@ -195,6 +187,7 @@ public class gui_TicketUebersicht
                 query += " AND id_user2 = (select id from user where username = '" + Tutor + "')";                
             }                                                
             
+            // Suchreihenfolge
             switch (SortOrder) 
             {
                 case "ID":          SortOrder = "id";
@@ -216,8 +209,8 @@ public class gui_TicketUebersicht
                 query = query + " ORDER BY " + SortOrder;
             }
                 
-
             
+            // Anzahl der Ergebnisse
             String MaxValues;           
             if (TotalResults.equalsIgnoreCase("Alle"))
             {
@@ -229,7 +222,7 @@ public class gui_TicketUebersicht
             }
             query += " " + MaxValues;
             
-
+            // Ergebnis prüfen
             String[][] Result = DBController.GetData("ticket", "id, (select name from courses where id = id_courses), title, (select name from state where id = id_state)", query);            
             if (Result.length > 0)
                 {
@@ -245,9 +238,6 @@ public class gui_TicketUebersicht
 			""));
                 }
                                     
-            FacesContext.getCurrentInstance().addMessage(null,new FacesMessage(FacesMessage.SEVERITY_WARN, 
-                        "query = SELECT id, (select name from courses where id = id_courses), title, (select name from state where id = id_state) FROM ticket " + query, ""));                        
-            
             return null;
 
     }
@@ -267,15 +257,12 @@ public class gui_TicketUebersicht
     
     public String editTicket()
     {
+        // Parameter lesen
         FacesContext fc = FacesContext.getCurrentInstance();
         Map<String,String> params = fc.getExternalContext().getRequestParameterMap();
 
+        // Zu Ticket springen
         String TicketID  = params.get("TicketID");
-        /*
-            FacesContext.getCurrentInstance().addMessage(
-            null,new FacesMessage(FacesMessage.SEVERITY_WARN,
-			"Hier soll das Ticket  :  " + TicketID + " bearbeitet werden!",
-			""));*/
         return "Ticket_bearbeiten.xhtml?id=" + TicketID;       
          
     }
