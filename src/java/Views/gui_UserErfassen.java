@@ -35,7 +35,7 @@ import javax.faces.event.ValueChangeEvent;
 
 public class gui_UserErfassen {
     
-    String Username = "Admin";
+    String Username;
     String Name;
     String Email;
     String Role;
@@ -215,6 +215,16 @@ public class gui_UserErfassen {
         {
             NotAttachedCourses = new String[0][0];
         }
+    }
+    
+        // Logout
+        public String Logout()        
+    {
+        String Result;
+        // Session beenden, damit User neu übergeben werden kann
+        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+        Result = "Login Maske (JSF)?faces-redirect=true&includeViewParams=true";
+        return Result;      
     }
     
     public String getName()
