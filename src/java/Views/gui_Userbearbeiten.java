@@ -35,7 +35,7 @@ import javax.servlet.http.HttpServletRequest;
 
 public class gui_Userbearbeiten {
     
-    String Username = "Admin";
+    String Username;
     String Name;
     String Password;
     String Email;
