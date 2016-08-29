@@ -46,11 +46,9 @@
                                         <table width="100%" id="Menue">
                                             <tr>
                                                 <td>
-                                                <h:commandButton value="Übersicht" action="Landing Page.xhtml" class="button"></h:commandButton>
-                                                <div class="divider"/>
-                                                <h:commandButton value="Ticketübersicht" class="button"></h:commandButton>
-                                                <div class="divider"/>
-                                                <h:commandButton value="Ticketerfassung" action="Erfassungsmaske_JSF?faces-redirect=true&amp;includeViewParams=true" class="button"></h:commandButton>                                                
+                                                    <h:commandButton value="Übersicht" action="Landing Page_Admin?faces-redirect=true&amp;includeViewParams=true" class="button"></h:commandButton>
+                                                <div class="divider"/>                                                
+                                                    <h:commandButton value="Benutzer erfassen" action="UserErfassen?faces-redirect=true&amp;includeViewParams=true" class="button"></h:commandButton>
                                                 </td>                                    
                                             </tr>
                                         </table>
@@ -143,9 +141,6 @@
 								<b>Status</b>
 								</td>								
 								<td>
-								<b>Tickets anzeigen</b>
-								</td>
-								<td>
 								<b>Daten bearbeiten</b>
 								</td>
 							</tr>
@@ -159,9 +154,6 @@
                                                                 ${column}
                                                             </td>                                                            
                                                         </c:forEach>
-                                                        <td>
-                                                            <a href="Ticket_Uebersicht_TutorAdmin.xhtml"><img src="edit_icon_2.png" alt="Tickets" /></a>                                                                                                                                                                                    
-							</td>
 							<td>                                                            
                                                             <h:commandLink  action="#{gui_UserUebersicht.editUser()}">
                                                                 <f:param name="UserID" value="#{row[0]}"></f:param>                                                                

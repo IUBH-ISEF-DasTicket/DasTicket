@@ -35,11 +35,12 @@ import javax.faces.event.ValueChangeEvent;
 
 public class gui_UserErfassen {
     
-    String Username = "Admin";
+    String Username;
     String Name;
     String Email;
     String Role;
     String Status;
+    String Password;
     List<SelectItem> RolesList;
     List<SelectItem> StatusList;
     String[][] NotAttachedCourses;    
@@ -178,7 +179,7 @@ public class gui_UserErfassen {
         String Passwort = pass.toString();
         
         Result = DBController.InsertData("user (username, password, email, id_usergroup, state)", 
-                                         "'" + Name + "','" + Passwort + "','" + Email + "','" + RoleID[0][0] + "','" + StatusBool + "'");
+                                         "'" + Name + "','" + Password + "','" + Email + "','" + RoleID[0][0] + "','" + StatusBool + "'");
         
         FacesContext.getCurrentInstance().addMessage(
             null,new FacesMessage(FacesMessage.SEVERITY_WARN,
@@ -217,6 +218,16 @@ public class gui_UserErfassen {
         }
     }
     
+        // Logout
+        public String Logout()        
+    {
+        String Result;
+        // Session beenden, damit User neu übergeben werden kann
+        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+        Result = "Login Maske (JSF)?faces-redirect=true&includeViewParams=true";
+        return Result;      
+    }
+    
     public String getName()
     {
     return Name;
@@ -242,6 +253,12 @@ public class gui_UserErfassen {
     return Status;
     }
     
+    public String getPassword()
+    {
+    return Password;
+    }
+	
+	
     public List<SelectItem> getRolesList()
     {
     return RolesList;
@@ -281,7 +298,12 @@ public class gui_UserErfassen {
     {
         this.Role = role;
     }
-	
+    
+    public void setPassword(String password) 
+    {
+        this.Password = password;
+    }
+   	
     public void setStatus(String status) 
     {
         this.Status = status;

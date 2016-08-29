@@ -44,15 +44,11 @@
                                         <table width="100%" id="Menue">
                                             <tr>
                                                 <td>
-                                                <h:commandButton value="Übersicht" action="Landing Page.xhtml" class="button"></h:commandButton>
-                                                <div class="divider"/>
-                                                <h:commandButton value="Benutzerverwaltung" class="button"></h:commandButton>
-                                                <div class="divider"/>
-                                                <h:commandButton value="Ticketübersicht" class="button"></h:commandButton>
-                                                <div class="divider"/>
-                                                <h:commandButton value="Ticketerfassung" action="Erfassungsmaske_JSF?faces-redirect=true&amp;includeViewParams=true" class="button"></h:commandButton>                                                
+                                                    <h:commandButton value="Übersicht" action="Landing Page_Admin?faces-redirect=true&amp;includeViewParams=true" class="button"></h:commandButton>
+                                                <div class="divider"/>                                                
+                                                    <h:commandButton value="Benutzerverwaltung" action="User_Uebersicht?faces-redirect=true&amp;includeViewParams=true" class="button"></h:commandButton>
                                                 </td>                                    
-                                            </tr>
+                                            </tr>                                  
                                         </table>
  					<br/> <br/>					
 
@@ -69,7 +65,13 @@
 							<td>                                                             
                                                             <h:inputText style="width:100%;height:100%" value="#{gui_UserErfassen.email}" size="80" label="Email"></h:inputText>                                                      	 
 							</td>
-						</tr>								  
+						</tr>	
+						<tr>
+							<td width="15%" >Passwort</td> 
+							<td>                                                             
+                                                            <h:inputText style="width:100%;height:100%" value="#{gui_UserErfassen.password}" size="80" label="Email"></h:inputText>                                                      	 
+							</td>
+						</tr>	                                            
 						<tr>
 							<td>Rolle</td>   
 							<td>                                                                                                                        
