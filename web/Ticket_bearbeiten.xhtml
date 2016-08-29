@@ -37,7 +37,10 @@
                                                     </td>
                                                     
                                                     <td width="15%">
-                                                        <h:commandButton value="Ausloggen" action="#{gui_TicketErfassen.Logout}"></h:commandButton>
+                                                        <h:commandButton value="Ausloggen" action="#{gui_TicketErfassen.Logout}">
+                                                            <f:param name="TicketID" value="#{gui_Ticketbearbeiten.ID}"></f:param>
+                                                             <f:param name="UsernameTemp" value="#{gui_Ticketbearbeiten.username}"></f:param>
+                                                        </h:commandButton>
                                                     </td>
                                                     
 						</tr>
@@ -46,13 +49,25 @@
                                         <table width="100%" id="Menue">
                                             <tr>
                                                 <td>
-                                                <h:commandButton value="Übersicht" action="Landing Page.xhtml" class="button"></h:commandButton>
+                                                    <h:commandButton value="Übersicht" action="Landing Page.xhtml" class="button">
+                                                        <f:param name="TicketID" value="#{gui_Ticketbearbeiten.ID}"></f:param>
+                                                       <f:param name="UsernameTemp" value="#{gui_Ticketbearbeiten.username}"></f:param>
+                                                    </h:commandButton>
                                                 <div class="divider"/>
-                                                <h:commandButton value="Benutzerverwaltung" class="button"></h:commandButton>
+                                                <h:commandButton value="Benutzerverwaltung" class="button">
+                                                    <f:param name="TicketID" value="#{gui_Ticketbearbeiten.ID}"></f:param>
+                                                       <f:param name="UsernameTemp" value="#{gui_Ticketbearbeiten.username}"></f:param>
+                                                </h:commandButton>
                                                 <div class="divider"/>
-                                                <h:commandButton value="Ticketübersicht" class="button"></h:commandButton>
+                                                <h:commandButton value="Ticketübersicht" class="button">
+                                                    <f:param name="TicketID" value="#{gui_Ticketbearbeiten.ID}"></f:param>
+                                                       <f:param name="UsernameTemp" value="#{gui_Ticketbearbeiten.username}"></f:param>
+                                                </h:commandButton>
                                                 <div class="divider"/>
-                                                <h:commandButton value="Ticketerfassung" action="Erfassungsmaske_JSF.xhtml" class="button"></h:commandButton>
+                                                <h:commandButton value="Ticketerfassung" action="Erfassungsmaske_JSF.xhtml" class="button">
+                                                    <f:param name="TicketID" value="#{gui_Ticketbearbeiten.ID}"></f:param>
+                                                       <f:param name="UsernameTemp" value="#{gui_Ticketbearbeiten.username}"></f:param>
+                                                </h:commandButton>
                                                 </td>
                                                                                       
                                             </tr>
@@ -76,8 +91,7 @@
 						<tr>
 							<td>Status</td>   
 							<td> 
-                                                               <h:selectOneMenu id="Status"  value="#{gui_Ticketbearbeiten.status}" style="width:150px">
-
+                                                            <h:selectOneMenu id="Status" disabled="#{gui_Ticketbearbeiten.usergroup eq '2'}" value="#{gui_Ticketbearbeiten.status}" style="width:150px">
                                                                     <f:selectItems value= "#{gui_Ticketbearbeiten.statusList}" />
                                                                </h:selectOneMenu>	
 							</td>             
@@ -144,12 +158,18 @@
                                         <table id="Buttons" >
 						<tr>
 						   <td> 
-                                                       <h:commandButton value="Speichern" action="#{gui_Ticketbearbeiten.Save}"></h:commandButton>
+                                                       <h:commandButton value="Speichern" action="#{gui_Ticketbearbeiten.Save}">
+                                                       <f:param name="TicketID" value="#{gui_Ticketbearbeiten.ID}"></f:param>
+                                                       <f:param name="UsernameTemp" value="#{gui_Ticketbearbeiten.username}"></f:param>
+                                                       </h:commandButton>
 							</td>           
 						</tr> 
 						<tr>
 							<td> 
-                                                                <h:commandButton value="Abbrechen" action="Ticket_Uebersicht_Student.xhtml"></h:commandButton>
+                                                            <h:commandButton value="Abbrechen" action="Ticket_Uebersicht_Student.xhtml">
+                                                                <f:param name="TicketID" value="#{gui_Ticketbearbeiten.ID}"></f:param>
+                                                                <f:param name="UsernameTemp" value="#{gui_Ticketbearbeiten.username}"></f:param>
+                                                            </h:commandButton>
 							</td>           
 						</tr> 
                                                                                             <tr>

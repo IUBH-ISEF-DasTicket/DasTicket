@@ -195,6 +195,7 @@
                                                         <td>                                                          
                                                             <h:commandLink  action="#{gui_TicketUebersicht.editTicket()}">
                                                                 <f:param name="TicketID" value="#{row[0]}"></f:param>
+                                                                <f:param name="UsernameTemp" value="#{gui_TicketUebersicht.username}"></f:param>
                                                                 <img src="edit_icon.png" alt="edit"/>
                                                             </h:commandLink>
                                                         </td>

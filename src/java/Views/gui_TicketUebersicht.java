@@ -263,7 +263,7 @@ public class gui_TicketUebersicht
 
         // Zu Ticket springen
         String TicketID  = params.get("TicketID");
-        return "Ticket_bearbeiten.xhtml?id=" + TicketID;       
+        return "Ticket_bearbeiten.xhtml?id=" + TicketID ;       
          
     }
     

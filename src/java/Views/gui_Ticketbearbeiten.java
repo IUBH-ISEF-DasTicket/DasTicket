@@ -53,9 +53,11 @@ public class gui_Ticketbearbeiten
     String Title;
     String Comment;
     String NewComment;
-    //String Username = "Admin";
+    String Username;
     String Status;
     String ReportedTime;
+    String Usergroup;
+    Integer ID;
     List<SelectItem> CourseList;
     List<SelectItem> CategoryList;
     List<SelectItem> PriorityList;
@@ -63,23 +65,22 @@ public class gui_Ticketbearbeiten
     Collection WorknoteDateList;
     /*Collection*/ String [][] WorknoteNoteList;
     
-    // Test!!!
-    Integer ID = 1;
-    String Username = "Admin";
     
      // Initialisieren und laden der Select Einträge
     @PostConstruct
     public void Init()        
     {
-        
+        // Parameter laden
         Map<String, String> params =FacesContext.getCurrentInstance().
                    getExternalContext().getRequestParameterMap();
+        
         String ExternalTicketId = params.get("TicketID");
-        /*
-        FacesContext.getCurrentInstance().addMessage(
-            null,new FacesMessage(FacesMessage.SEVERITY_WARN,
-			"ExternalUserId = " + ExternalUserId,
-			"")); */
+        String UsernameTemp = params.get("UsernameTemp");
+        
+        if (UsernameTemp != null)
+        {
+                Username = UsernameTemp;
+        }
         
         // Check if ExternalUserId is a number
         if (ExternalTicketId != null)
@@ -90,6 +91,7 @@ public class gui_Ticketbearbeiten
             }
         }
         
+        // Prioritäten
         PriorityList = new ArrayList<SelectItem>();
         //PriorityList.add(new SelectItem("", ""));
         String[][] Priorities =  DBController.GetData("priority", "name", "");
@@ -100,6 +102,7 @@ public class gui_Ticketbearbeiten
              
         }
         
+        // Kurse
         CourseList = new ArrayList<SelectItem>();
         //CourseList.add(new SelectItem("", ""));
         String[][] Courses =  DBController.GetData("courses", "name", "");
@@ -110,6 +113,7 @@ public class gui_Ticketbearbeiten
              
         }
         
+        // Kategorien
         CategoryList = new ArrayList<SelectItem>();
         //CategoryList.add(new SelectItem("", ""));
         String[][] Categories =  DBController.GetData("category", "name", "");
@@ -120,6 +124,7 @@ public class gui_Ticketbearbeiten
              
         }
         
+        // Status
         StatusList = new ArrayList<SelectItem>();
         //StatusList.add(new SelectItem("", ""));
         String[][] status =  DBController.GetData("state", "name", "");
@@ -130,6 +135,7 @@ public class gui_Ticketbearbeiten
              
         }
         
+        // Worknote
         String[][] worknote =  DBController.GetData("worknotes", "creationDate, notes", "where id_ticket = " + ID);
         WorknoteNoteList = worknote;                                       
         
@@ -158,7 +164,11 @@ public class gui_Ticketbearbeiten
         {
             ReportedTime = TicketReportedTime[0][0];
         }
-                
+        
+        // Rolle auslesen
+        String[][] UsergroupTemp = DBController.GetData("user", "id_usergroup", "where username ='" + Username + "'");
+        Usergroup = UsergroupTemp[0][0];
+
     }
     
         // Speichern
@@ -251,8 +261,7 @@ public class gui_Ticketbearbeiten
         catch ( NullPointerException ex) 
         {
         }
-        
-// Status ausgeben
+        // Status ausgeben
         FacesContext.getCurrentInstance().addMessage(
             null,new FacesMessage(FacesMessage.SEVERITY_WARN,
 			"STATUS: " + Result,
@@ -330,7 +339,14 @@ public class gui_Ticketbearbeiten
     {
 	return ReportedTime;
     }
-
+        public Integer getID() 
+    {
+	return ID;
+    }
+    public String getUsergroup() 
+    {
+	return Usergroup;
+    }    
     // Setter Methoden
     public void setPriority(String Priority) 
     {
@@ -368,5 +384,12 @@ public class gui_Ticketbearbeiten
     {
         this.ReportedTime = ReportedTime;
     }
-
+    public void setID(Integer ID) 
+    {
+        this.ID = ID;
+    }
+    public void setUsergroup(String Usergroup) 
+    {
+        this.Usergroup = Usergroup;
+    }
 }
