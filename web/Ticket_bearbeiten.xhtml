@@ -91,7 +91,7 @@
 						<tr>
 							<td>Status</td>   
 							<td> 
-                                                            <h:selectOneMenu id="Status" disabled="#{gui_Ticketbearbeiten.usergroup eq '2'}" value="#{gui_Ticketbearbeiten.status}" style="width:150px">
+                                                            <h:selectOneMenu id="Status" disabled="#{gui_Ticketbearbeiten.usergroup eq '2' and gui_Ticketbearbeiten.status != 'Pending Close'}" value="#{gui_Ticketbearbeiten.status}" style="width:150px">
                                                                     <f:selectItems value= "#{gui_Ticketbearbeiten.statusList}" />
                                                                </h:selectOneMenu>	
 							</td>             
@@ -106,7 +106,7 @@
 							<td> </td>   
 							<td> </td>
 							<td>gebuchte Zeit</td>
-							<td> <h:inputText id="ReportedTime" value="#{gui_Ticketbearbeiten.reportedTime}" label="Gebuchte Zeit" style="width:150px"></h:inputText>
+							<td> <h:inputText id="ReportedTime" disabled="#{gui_Ticketbearbeiten.usergroup eq '2'}" value="#{gui_Ticketbearbeiten.reportedTime}" label="Gebuchte Zeit" style="width:150px"></h:inputText>
                                                         </td>
 						</tr>
 					</table>					

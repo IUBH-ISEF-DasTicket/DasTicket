@@ -206,6 +206,7 @@ public class gui_TicketErfassen
         // Reported Time setzen
         DBController.InsertData("ReportedTime (ReportedTime,id_Ticket)", "0," + ID_Tic[0][0]);
         
+        Reset();
         return null;    
     }
     
