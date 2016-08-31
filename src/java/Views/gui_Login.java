@@ -37,11 +37,13 @@ public class gui_Login implements Serializable
          String[][] storedUserPassword;
          String[][] storedUsername;
          String[][] storedUserGroup;
+         String[][] storedUserState;
      
         
         // Benutzerdaten aus Datenbankabfragen
         storedUsername = DBController.GetData("user", "username", "where username= '" + typedUsername + "'");
         storedUserPassword = DBController.GetData("user", "Password", "where username= '" + typedUsername + "'");
+        storedUserState = DBController.GetData("user", "state", "where username= '" + typedUsername + "'");
         
 
         // Daten prüfen
@@ -56,6 +58,19 @@ public class gui_Login implements Serializable
             return "Login Maske (JSF)";
         }
         
+        // User inaktiv
+        boolean boolstate = Boolean.parseBoolean(storedUserState[0][0]);
+        
+        if (boolstate == false)
+        {
+            FacesContext.getCurrentInstance().addMessage(
+            null,new FacesMessage(FacesMessage.SEVERITY_WARN,
+			"Ihr Nutzername wurde deaktiviert",
+			""));
+            
+            return "Login Maske (JSF)";
+        }
+                
         // Eingabe korrekt
         if (storedUsername[0][0].equalsIgnoreCase(typedUsername) && storedUserPassword[0][0].equals(typedUserPassword) )
         {
