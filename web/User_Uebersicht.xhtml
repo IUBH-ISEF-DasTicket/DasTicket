@@ -11,8 +11,8 @@
         title="Standardstylesheet" href="style.css"
         type="text/css" />
     </h:head>
-    <f:metadata>
-        <f:viewParam name="Username" value="#{gui_UserUebersicht.username}" />
+    <f:metadata>         
+        <f:viewParam name="Username" value="#{gui_UserUebersicht.username}" />         
     </f:metadata>
     
 	<script type="text/javascript" language="javascript" src="TimeFunctions.js"></script>
@@ -156,7 +156,8 @@
                                                         </c:forEach>
 							<td>                                                            
                                                             <h:commandLink  action="#{gui_UserUebersicht.editUser()}">
-                                                                <f:param name="UserID" value="#{row[0]}"></f:param>                                                                
+                                                                <f:param name="UserID" value="#{row[0]}"></f:param>  
+                                                                <f:param name="Username" value="#{gui_UserUebersicht.username}"></f:param>
                                                                 <img src="edit_icon.png" alt="edit"/>
                                                             </h:commandLink>
 							</td> 
