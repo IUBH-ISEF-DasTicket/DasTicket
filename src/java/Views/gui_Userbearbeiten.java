@@ -18,6 +18,7 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.faces.model.SelectItem;
 import javax.annotation.PostConstruct;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.event.ValueChangeEvent;
@@ -37,6 +38,7 @@ public class gui_Userbearbeiten {
     
     String Username;
     String Name;
+    String OldPassword;
     String Password;
     String Email;
     String Role;
@@ -49,25 +51,20 @@ public class gui_Userbearbeiten {
     private Map<String, Boolean> Attached = new HashMap<String, Boolean>();
     private Map<String, Boolean> NotAttached = new HashMap<String, Boolean>();
     
-    Integer ID = 3;
+    Integer ID = 1;
+    
+    @ManagedProperty(value="#{gui_LoggedUser.loggedUser}")
+    private String loggedUser;
+    
+    @ManagedProperty(value="#{gui_LoggedUser.userID}")
+    private String userID;
     
     @PostConstruct
     public void Init()        
-    {   
-                
-        Map<String, String> params = FacesContext.getCurrentInstance().
-                   getExternalContext().getRequestParameterMap();
-        String ExternalUserId = params.get("UserID");                
+    {           
+        ID = Integer.parseInt(userID);
+        Username = loggedUser;                            
         
-        // Check if ExternalUserId is a number
-        if (ExternalUserId != null)
-        {
-            if (ExternalUserId.matches("\\d+") == true)
-            {
-                ID = Integer.parseInt(ExternalUserId);
-            }
-        }
-                
         // Username
         String[][] UserUsername = DBController.GetData("user", "username", "where id =" + ID);
         Name = UserUsername[0][0];
@@ -75,6 +72,10 @@ public class gui_Userbearbeiten {
         // Email
         String[][] UserEmail = DBController.GetData("user", "email", "where id =" + ID);
         Email = UserEmail[0][0];        
+        
+        // Passwort
+        String[][] UserPW = DBController.GetData("user", "password", "where id =" + ID);
+        OldPassword = UserPW[0][0];         
         
         // Rolle        
         RolesList = new ArrayList<SelectItem>();
@@ -95,19 +96,31 @@ public class gui_Userbearbeiten {
         
         String[][] TicketStatus = DBController.GetData("user", "case state when 1 then 'aktiv' else 'inaktiv' end", "where id =" + ID);
         Status = TicketStatus[0][0];
-        
-        AttachedCourses = DBController.GetData("courses", "name", "where id_user = " + ID);        
-        NotAttachedCourses = DBController.GetData("courses", "name", "where (id_user != " + ID + " OR id_user is null)");
-        
-        // clear HashMaps when there is no data
-        if (AttachedCourses.length == 0)
-        {
-            Attached.clear();
+               
+        if (Role.equals("Tutor") == true)
+        {                       
+            
+            AttachedCourses = DBController.GetData("courses", "name", "where id_user = " + ID);        
+            NotAttachedCourses = DBController.GetData("courses", "name", "where (id_user != " + ID + " OR id_user is null)");
+
+            // clear HashMaps when there is no data
+            if (AttachedCourses.length == 0)
+            {
+                Attached.clear();
+            }
+            if (NotAttachedCourses.length == 0)
+            {
+                NotAttached.clear();
+            }  
         }
-        if (NotAttachedCourses.length == 0)
-        {
+        else
+        {                           
+            NotAttachedCourses = new String[0][0];
+            AttachedCourses = new String[0][0];
+            Attached.clear();
             NotAttached.clear();
-        }                        
+        }                
+                
     }
     
     public void Save()        
@@ -115,8 +128,8 @@ public class gui_Userbearbeiten {
         Boolean Error = false;
         String Result= "";        
         
-        String[][] CourseID;                              
-        
+        String[][] CourseID;                                              
+                
         // Username überprüfen
         if (Username.isEmpty())
         {
@@ -144,7 +157,22 @@ public class gui_Userbearbeiten {
 			"ACHTUNG: Username darf nicht länger als 30 Zeichen sein!",
 			""));  
         }
-               
+        
+        // auf Dupletten checken        
+        String[][] UserUsername = DBController.GetData("user", "username", "where id =" + ID);                                
+        if (Name.equals(UserUsername[0][0]) == false)
+        {
+            String[][] Usernames = DBController.GetData ("user", "username", "WHERE username = '" + Name + "'");
+            if (Usernames.length > 0)
+            {
+                Error = true;
+                FacesContext.getCurrentInstance().addMessage(
+                null,new FacesMessage(FacesMessage.SEVERITY_WARN,
+                            "ACHTUNG: Es existiert bereits ein User mit den Usernamen ' " + Name + "!",
+                            ""));  
+            }
+        }
+                                
         if (Email.isEmpty())
         {
             Error = true;
@@ -197,6 +225,12 @@ public class gui_Userbearbeiten {
 			""));
         }
         
+        // alte Kurszuordnungen löschen
+        if (Role.equals("Tutor") == false)
+        {
+            Result = DBController.UpdateDataWithInt("courses","id_user", "null" ,"where id_user='" + ID + "'");
+        }
+        
         String StatusBool;
         
         if (Status.equals("aktiv"))
@@ -241,13 +275,11 @@ public class gui_Userbearbeiten {
     }
         
     public void emptyCoursesList (AjaxBehaviorEvent event)
-    {
-        System.out.println("emptyCoursesList selected Role: " + Role);        
+    {                
         String newRole = Role + "";
                 
         if (newRole.equals("Tutor") == false)
-        {
-            System.out.println("emptyCoursesList empty Lists");
+        {            
             NotAttachedCourses = new String[0][0];
             AttachedCourses = new String[0][0];
         }
@@ -266,6 +298,11 @@ public class gui_Userbearbeiten {
     public String getEmail()
     {
     return Email;
+    }
+    
+    public String getOldPassword()
+    {
+    return OldPassword;
     }
     
     public String getPassword()
@@ -313,9 +350,24 @@ public class gui_Userbearbeiten {
     return NotAttached;
     }  
     
+    public String getLoggedUser ()
+    {
+        return this.loggedUser;
+    }
+    
+    public String getUserID ()
+    {
+        return this.userID;
+    }
+    
     public void setName(String name) 
     {
         this.Name = name;
+    }
+    
+    public void setOldPassword(String oldpassword) 
+    {
+        this.OldPassword = oldpassword;
     }
     
     public void setPassword(String password) 
@@ -351,5 +403,15 @@ public class gui_Userbearbeiten {
     public void setAttachedCourses(String[][] attachedCourses) 
     {
         this.AttachedCourses = attachedCourses;
+    }
+    
+    public void setLoggedUser(String loggedUser) 
+    {
+	this.loggedUser = loggedUser;
+    }
+    
+    public void setUserID(String userid) 
+    {
+	this.userID = userid;
     }
 }
