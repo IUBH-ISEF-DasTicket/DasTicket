@@ -58,18 +58,18 @@ public class gui_Login implements Serializable
             return "Login Maske (JSF)";
         }
         
-        // User inaktiv
-        boolean boolstate = Boolean.parseBoolean(storedUserState[0][0]);
+        // User inaktiv (funktioniert nicht....)
+        // boolean boolstate = Boolean.parseBoolean(storedUserState[0][0]);
         
-        if (boolstate == false)
-        {
-            FacesContext.getCurrentInstance().addMessage(
-            null,new FacesMessage(FacesMessage.SEVERITY_WARN,
-			"Ihr Nutzername wurde deaktiviert",
-			""));
-            
-            return "Login Maske (JSF)";
-        }
+        // if (boolstate == false)
+        // {
+        //     FacesContext.getCurrentInstance().addMessage(
+        //     null,new FacesMessage(FacesMessage.SEVERITY_WARN,
+	// 		"Ihr Nutzername wurde deaktiviert",
+	// 		""));
+        //     
+        //     return "Login Maske (JSF)";
+        // }
                 
         // Eingabe korrekt
         if (storedUsername[0][0].equalsIgnoreCase(typedUsername) && storedUserPassword[0][0].equals(typedUserPassword) )
