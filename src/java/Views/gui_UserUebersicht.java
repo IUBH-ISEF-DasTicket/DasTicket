@@ -18,6 +18,7 @@ import java.util.Map;
 import java.util.TreeMap;
 import javax.faces.model.SelectItem;
 import javax.annotation.PostConstruct;
+import javax.faces.bean.ApplicationScoped;
 
 /*
 * gui_TicketUebersicht
@@ -250,7 +251,11 @@ public class gui_UserUebersicht
         {
             query = query.substring(0, query.length() - 4);
         }
-
+        
+        FacesContext.getCurrentInstance().addMessage(null,new FacesMessage(FacesMessage.SEVERITY_WARN, 
+                        "SortOrder = " + SortOrder
+                        , ""));
+        
         switch (SortOrder) 
         {
             case "ID":          SortOrder = "id";
@@ -269,40 +274,13 @@ public class gui_UserUebersicht
         {
             query = "WHERE " + query + " ORDER BY " + SortOrder;         
         }
-            /*
-            String MaxValues;           
-            if (TotalResults.equalsIgnoreCase("Alle"))
-            {
-               MaxValues = "";
-            }
-            else
-            {
-               MaxValues = "LIMIT " + TotalResults;
-            }
-            query += " " + MaxValues;
-            */
+        else
+        {
+            query = " ORDER BY " + SortOrder; 
+        }            
                
-            String[][] Result = DBController.GetData("user", "id, username, (select name from usergroup where id = id_usergroup), case state when 1 then 'aktiv' else 'inaktiv' end", query);
-            ListOfUsers = Result;
-            
-            FacesContext.getCurrentInstance().addMessage(null,new FacesMessage(FacesMessage.SEVERITY_WARN, 
-                        "query = SELECT id, username, (select name from usergroup where id = id_usergroup), case state when 1 then 'aktiv' else 'inaktiv' end FROM user " + query, ""));
-            
-            /*
-            String test = "";
-            for (int i=0; i<Result.length; ++i) 
-            {
-                for (int j=0; j<Result[i].length; ++j) 
-                {
-                    test += Result[i][j] + ", ";
-                }
-
-            test += "/";
-            } */               
-
-            
-            
-        
+        String[][] Result = DBController.GetData("user", "id, username, (select name from usergroup where id = id_usergroup), case state when 1 then 'aktiv' else 'inaktiv' end", query);
+        ListOfUsers = Result;
         
     return null;
 
@@ -313,13 +291,7 @@ public class gui_UserUebersicht
         FacesContext fc = FacesContext.getCurrentInstance();
         Map<String,String> params = fc.getExternalContext().getRequestParameterMap();
 
-        String UserID  = params.get("UserID");
-        String LoggedUser  = params.get("LoggedUser");
-        /*
-            FacesContext.getCurrentInstance().addMessage(
-            null,new FacesMessage(FacesMessage.SEVERITY_WARN,
-			"Hier soll der Benutzer :  " + UserID + " bearbeitet werden!",
-			""));*/
+        String UserID  = params.get("UserID");        
         return "User_bearbeiten.xhtml?id=" + UserID;             
          
     }

@@ -21,6 +21,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.RequestScoped;
 import javax.servlet.http.HttpServletRequest;
 import java.security.SecureRandom;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.event.ValueChangeEvent;
 /**
@@ -30,7 +31,7 @@ import javax.faces.event.ValueChangeEvent;
 
 // Managed Bean 
 @ManagedBean
-//@SessionScoped
+// @SessionScoped
 @RequestScoped
 
 public class gui_UserErfassen {
@@ -43,22 +44,32 @@ public class gui_UserErfassen {
     String Password;
     List<SelectItem> RolesList;
     List<SelectItem> StatusList;
-    String[][] NotAttachedCourses;    
+    String[][] NotAttachedCourses; 
  
     private Map<String, Boolean> NotAttached = new HashMap<String, Boolean>();      
+       
+    @ManagedProperty(value="#{gui_LoggedUser.loggedUser}")
+    private String loggedUser;
     
     @PostConstruct
     public void Init()        
     {                                           
-                
+        /*
+        Map<String, String> params = FacesContext.getCurrentInstance().
+                   getExternalContext().getRequestParameterMap();
+        
+        Username = params.get("Username");
+        */
+        
+        Username = loggedUser;
+        
         // Rolle        
         RolesList = new ArrayList<SelectItem>();
         String[][] Roles =  DBController.GetData("usergroup", "name", "");
         
         for (int j = 0; j < Roles.length; ++j) 
         {
-            RolesList.add(new SelectItem(Roles[j][0], Roles[j][0]));
-             
+            RolesList.add(new SelectItem(Roles[j][0], Roles[j][0]));             
         }                                            
         
         // Status              
@@ -72,15 +83,15 @@ public class gui_UserErfassen {
         if (NotAttachedCourses.length == 0)
         {
             NotAttached.clear();
-        } 
+        }                                  
     }
     
     public void Save()        
     {
         Boolean Error = false;
         String Result= "";        
-        String[][] CourseID;                                                                  
-        
+        String[][] CourseID;                                                                                                                                
+                
         // Username überprüfen
         if (Username.isEmpty())
         {
@@ -109,6 +120,17 @@ public class gui_UserErfassen {
 			""));  
         }
         
+        // auf Dupletten checken
+        String[][] Usernames = DBController.GetData ("user", "username", "WHERE username = '" + Name + "'");
+        if (Usernames.length > 0)
+        {
+            Error = true;
+            FacesContext.getCurrentInstance().addMessage(
+            null,new FacesMessage(FacesMessage.SEVERITY_WARN,
+			"ACHTUNG: Es existiert bereits ein User mit den Usernamen '" + Name + "'!",
+			""));  
+        }        
+        
         if (Email.isEmpty())
         {
             Error = true;
@@ -134,12 +156,7 @@ public class gui_UserErfassen {
             {                   
                 AnzKurse++;                                            
             }           
-        }  
-        
-        FacesContext.getCurrentInstance().addMessage(
-            null,new FacesMessage(FacesMessage.SEVERITY_WARN,
-                    "Kurse: " + AnzKurse + " Rolle: " + Role,
-                    "")); 
+        }                 
         
         if (AnzKurse < 1 && Role.equals("Tutor") == true)
         {
@@ -151,7 +168,7 @@ public class gui_UserErfassen {
         }  
         
         if (Error == true)
-        {
+        {           
             return;
         }
         
@@ -166,7 +183,7 @@ public class gui_UserErfassen {
         {
             StatusBool = "0";
         }
-        
+        /*
         // Zufälliges 10-stelliges Passwort erzeugen
         final String allowedChars = "0123456789abcdefghijklmnopqrstuvwABCDEFGHIJKLMNOP!§$%&?*+#";
         SecureRandom random = new SecureRandom();
@@ -177,6 +194,7 @@ public class gui_UserErfassen {
         }
         
         String Passwort = pass.toString();
+        */
         
         Result = DBController.InsertData("user (username, password, email, id_usergroup, state)", 
                                          "'" + Name + "','" + Password + "','" + Email + "','" + RoleID[0][0] + "','" + StatusBool + "'");
@@ -204,6 +222,8 @@ public class gui_UserErfassen {
         Name = "";
         Email = "";
         NotAttached.clear();
+        Role = "Tutor";
+        Password = "";
         
         return;                           
     }
@@ -257,8 +277,7 @@ public class gui_UserErfassen {
     {
     return Password;
     }
-	
-	
+		
     public List<SelectItem> getRolesList()
     {
     return RolesList;
@@ -278,6 +297,11 @@ public class gui_UserErfassen {
     {
     return NotAttached;
     }  
+    
+    public String getLoggedUser ()
+    {
+        return this.loggedUser;
+    }
     
     public void setName(String name) 
     {
@@ -312,6 +336,11 @@ public class gui_UserErfassen {
     public void setNotAttachedCourses(String[][] notAttachedCourses) 
     {
         this.NotAttachedCourses = notAttachedCourses;
-    }    	   
+    }   
+    
+    public void setLoggedUser(String loggedUser) 
+    {
+	this.loggedUser = loggedUser;
+    }
     
 }
