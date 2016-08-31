@@ -118,7 +118,7 @@ CREATE TABLE USER
 );
 
 -- Default User
-insert into USER values (1,'#Allgemein','#Allgemein2016#','Allgemein@iubh.de',3, true);
+insert into USER values (1,'#Allgemein','#Allgemein2016#','Allgemein@iubh.de',1, true);
 
 -- Courses Tabelle
 CREATE TABLE COURSES

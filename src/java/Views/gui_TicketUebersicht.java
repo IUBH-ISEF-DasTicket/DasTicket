@@ -129,7 +129,7 @@ public class gui_TicketUebersicht
              
         }    
         
-        String[][] Result = DBController.GetData("ticket", "id, (select name from courses where id = id_courses), title, (select name from state where id = id_state)", "where id_user=(select id from user wehere username ='" + Username + "')");               
+        String[][] Result = DBController.GetData("ticket", "id, (select name from courses where id = id_courses), title, (select name from state where id = id_state)", "where id_user=(select id from user where username ='" + Username + "')");               
         ListOfTickets = Result;       
           
     }

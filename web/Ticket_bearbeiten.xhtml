@@ -54,7 +54,7 @@
                                                        <f:param name="UsernameTemp" value="#{gui_Ticketbearbeiten.username}"></f:param>
                                                     </h:commandButton>
                                                 <div class="divider"/>
-                                                <h:commandButton value="Benutzerverwaltung" class="button">
+                                                <h:commandButton rendered="#{gui_Ticketbearbeiten.usergroup != '2'}" value="Benutzerverwaltung" class="button">
                                                     <f:param name="TicketID" value="#{gui_Ticketbearbeiten.ID}"></f:param>
                                                        <f:param name="UsernameTemp" value="#{gui_Ticketbearbeiten.username}"></f:param>
                                                 </h:commandButton>
@@ -103,8 +103,12 @@
 							</td>
 						</tr>									
 						<tr>
-							<td> </td>   
-							<td> </td>
+							<td>Tutor</td>   
+							<td>
+                                                            <h:selectOneMenu id="Tutor" disabled="#{gui_Ticketbearbeiten.usergroup eq '2'}" value="#{gui_Ticketbearbeiten.tutor}" style="width:150px">
+                                                                   <f:selectItems value= "#{gui_Ticketbearbeiten.tutorList}" />
+                                                            </h:selectOneMenu> 
+                                                        </td>
 							<td>gebuchte Zeit</td>
 							<td> <h:inputText id="ReportedTime" disabled="#{gui_Ticketbearbeiten.usergroup eq '2'}" value="#{gui_Ticketbearbeiten.reportedTime}" label="Gebuchte Zeit" style="width:150px"></h:inputText>
                                                         </td>

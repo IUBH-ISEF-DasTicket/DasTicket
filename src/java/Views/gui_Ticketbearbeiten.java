@@ -57,11 +57,13 @@ public class gui_Ticketbearbeiten
     String Status;
     String ReportedTime;
     String Usergroup;
+    String Tutor;
     Integer ID;
     List<SelectItem> CourseList;
     List<SelectItem> CategoryList;
     List<SelectItem> PriorityList;
     List<SelectItem> StatusList;
+    List<SelectItem> TutorList;
     Collection WorknoteDateList;
     /*Collection*/ String [][] WorknoteNoteList;
     
@@ -135,6 +137,17 @@ public class gui_Ticketbearbeiten
              
         }
         
+        // Tutor
+        TutorList = new ArrayList<SelectItem>();
+        //TutorList.add(new SelectItem("", ""));
+        String[][] Tutors =  DBController.GetData("user", "username", "where id_usergroup = 1");
+        
+        for (int j = 0; j < Tutors.length; ++j) 
+        {
+            TutorList.add(new SelectItem(Tutors[j][0], Tutors[j][0]));
+             
+        }
+        
         // Worknote
         String[][] worknote =  DBController.GetData("worknotes", "creationDate, notes", "where id_ticket = " + ID);
         WorknoteNoteList = worknote;                                       
@@ -164,6 +177,9 @@ public class gui_Ticketbearbeiten
         {
             ReportedTime = TicketReportedTime[0][0];
         }
+        // Tutor setzen
+        String[][] TutorName = DBController.GetData("user", "username", "where id =(select id_user2 from ticket where id =" + ID + ")");
+        Title = TutorName[0][0];
         
         // Rolle auslesen
         String[][] UsergroupTemp = DBController.GetData("user", "id_usergroup", "where username ='" + Username + "'");
@@ -303,6 +319,10 @@ public class gui_Ticketbearbeiten
     {
     return WorknoteNoteList;
     }
+    public List<SelectItem> getTutorList()
+    {
+    return TutorList;
+    }
      public String getPriority() 
     {
 	return Priority;
@@ -347,6 +367,11 @@ public class gui_Ticketbearbeiten
     {
 	return Usergroup;
     }    
+    public String getTutor() 
+    {
+	return Tutor;
+    }
+    
     // Setter Methoden
     public void setPriority(String Priority) 
     {
@@ -391,5 +416,9 @@ public class gui_Ticketbearbeiten
     public void setUsergroup(String Usergroup) 
     {
         this.Usergroup = Usergroup;
+    }
+        public void setTutor(String Tutor) 
+    {
+        this.Tutor = Tutor;
     }
 }
