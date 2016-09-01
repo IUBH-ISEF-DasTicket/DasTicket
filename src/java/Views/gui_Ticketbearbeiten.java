@@ -55,7 +55,7 @@ public class gui_Ticketbearbeiten
     String NewComment;
     String Username;
     String Status;
-    String ReportedTime;
+    Integer ReportedTime;
     String Usergroup;
     String Tutor;
     Integer ID;
@@ -175,7 +175,7 @@ public class gui_Ticketbearbeiten
         String[][] TicketReportedTime = DBController.GetData("ReportedTime", "ReportedTime", "where id_ticket =" + ID);
         if (TicketReportedTime.length > 0)
         {
-            ReportedTime = TicketReportedTime[0][0];
+            ReportedTime = Integer.parseInt(TicketReportedTime[0][0]);
         }
         // Tutor setzen
         String[][] TutorName = DBController.GetData("user", "username", "where id =(select id_user2 from ticket where id =" + ID + ")");
@@ -216,6 +216,14 @@ public class gui_Ticketbearbeiten
 			"ACHTUNG: Kein Titel definiert!",
 			""));
         }
+        if (Title.length() > 50)
+        {
+            Error = true;
+            FacesContext.getCurrentInstance().addMessage(
+            null,new FacesMessage(FacesMessage.SEVERITY_WARN,
+			"ACHTUNG: Titel zu lang!",
+			""));
+        }
         
         // Beschreibung überprüfen
         if (Comment.isEmpty())
@@ -225,7 +233,26 @@ public class gui_Ticketbearbeiten
             null,new FacesMessage(FacesMessage.SEVERITY_WARN,
 			"ACHTUNG: Keine Beschreibung definiert!",
 			""));
-        }        
+        }
+        if (Comment.length() > 1000)
+        {
+            Error = true;
+            FacesContext.getCurrentInstance().addMessage(
+            null,new FacesMessage(FacesMessage.SEVERITY_WARN,
+			"ACHTUNG: Beschreibung zu lang!",
+			""));
+        }
+        
+        // Reported Time
+        if (ReportedTime == null)
+        {
+            Error = true;
+            FacesContext.getCurrentInstance().addMessage(
+            null,new FacesMessage(FacesMessage.SEVERITY_WARN,
+			"ACHTUNG: Gebuchte Zeit wurde wiederhergestellt",
+			""));
+        }
+                
         // Im Fehlerfall Meldungen anzeigen und Seite aktualisieren
         if (Error)
         {
@@ -263,7 +290,7 @@ public class gui_Ticketbearbeiten
         // Kommentar 
         DBController.UpdateData("Ticket","description", Comment ,"where ID='" + ID + "'");
        // ReportedTime
-        DBController.UpdateData("ReportedTime","ReportedTime", ReportedTime ,"where ID_ticket='" + ID + "'"); 
+        DBController.UpdateData("ReportedTime","ReportedTime", String.valueOf(ReportedTime) ,"where ID_ticket='" + ID + "'"); 
        
         // Worknote
         try
@@ -355,7 +382,7 @@ public class gui_Ticketbearbeiten
     {
 	return Status;
     }
-    public String getReportedTime() 
+    public int getReportedTime() 
     {
 	return ReportedTime;
     }
@@ -405,7 +432,7 @@ public class gui_Ticketbearbeiten
     {
         this.Status = Status;
     }
-    public void setReportedTime(String ReportedTime) 
+    public void setReportedTime(int ReportedTime) 
     {
         this.ReportedTime = ReportedTime;
     }
