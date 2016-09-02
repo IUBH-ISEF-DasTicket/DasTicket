@@ -54,7 +54,7 @@
                                                        <f:param name="UsernameTemp" value="#{gui_Ticketbearbeiten.username}"></f:param>
                                                     </h:commandButton>
                                                 <div class="divider"/>
-                                                <h:commandButton rendered="#{gui_Ticketbearbeiten.usergroup != '2'}" value="Benutzerverwaltung" class="button">
+                                                <h:commandButton rendered="#{gui_Ticketbearbeiten.usergroup = '3' }" value="Benutzerverwaltung" class="button">
                                                     <f:param name="TicketID" value="#{gui_Ticketbearbeiten.ID}"></f:param>
                                                        <f:param name="UsernameTemp" value="#{gui_Ticketbearbeiten.username}"></f:param>
                                                 </h:commandButton>
