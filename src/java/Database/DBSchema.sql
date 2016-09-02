@@ -81,7 +81,7 @@ CREATE TABLE STATE
 -- State füllen
 INSERT INTO State (name) VALUES
 	('New'),
-    ('In Progess'),
+    ('In Progress'),
     ('Pending Close'),
 	('Closed');
     

@@ -93,6 +93,7 @@ public class gui_Ticketbearbeiten
             }
         }
         
+
         // Prioritäten
         PriorityList = new ArrayList<SelectItem>();
         //PriorityList.add(new SelectItem("", ""));
@@ -179,11 +180,12 @@ public class gui_Ticketbearbeiten
         }
         // Tutor setzen
         String[][] TutorName = DBController.GetData("user", "username", "where id =(select id_user2 from ticket where id =" + ID + ")");
-        Title = TutorName[0][0];
+        Tutor = TutorName[0][0];
         
         // Rolle auslesen
         String[][] UsergroupTemp = DBController.GetData("user", "id_usergroup", "where username ='" + Username + "'");
         Usergroup = UsergroupTemp[0][0];
+
 
     }
     
@@ -252,7 +254,45 @@ public class gui_Ticketbearbeiten
 			"ACHTUNG: Gebuchte Zeit wurde wiederhergestellt",
 			""));
         }
-                
+        
+        // Unerlaubter Statuswechsel 
+        String[][] StatusTemp = DBController.GetData("state", "name", "where id =(select id_state from ticket where ID=" + ID +")");
+        
+        if (Status.equalsIgnoreCase("closed") && StatusTemp[0][0].equalsIgnoreCase("new"))
+        {
+            FacesContext.getCurrentInstance().addMessage(
+            null,new FacesMessage(FacesMessage.SEVERITY_WARN,
+			"ACHTUNG: Unerlaubter Statuswechsel erkannt",
+			""));
+            Status = StatusTemp[0][0];
+        }
+        
+        if (Status.equalsIgnoreCase("closed") && StatusTemp[0][0].equalsIgnoreCase("In Progress"))
+        {
+                        FacesContext.getCurrentInstance().addMessage(
+            null,new FacesMessage(FacesMessage.SEVERITY_WARN,
+			"ACHTUNG: Unerlaubter Statuswechsel erkannt",
+			""));
+            Status = StatusTemp[0][0];
+        }
+        
+        if (Status.equalsIgnoreCase("new") && StatusTemp[0][0].equalsIgnoreCase("In Progress"))
+        {
+                        FacesContext.getCurrentInstance().addMessage(
+            null,new FacesMessage(FacesMessage.SEVERITY_WARN,
+			"ACHTUNG: Unerlaubter Statuswechsel erkannt",
+			""));
+            Status = StatusTemp[0][0];
+        }
+        if (Status.equalsIgnoreCase("New") && StatusTemp[0][0].equalsIgnoreCase("Pending Close"))
+        {
+                        FacesContext.getCurrentInstance().addMessage(
+            null,new FacesMessage(FacesMessage.SEVERITY_WARN,
+			"ACHTUNG: Unerlaubter Statuswechsel erkannt",
+			""));
+            Status = StatusTemp[0][0];
+        }
+        
         // Im Fehlerfall Meldungen anzeigen und Seite aktualisieren
         if (Error)
         {
