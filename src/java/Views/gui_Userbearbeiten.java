@@ -51,7 +51,7 @@ public class gui_Userbearbeiten {
     private Map<String, Boolean> Attached = new HashMap<String, Boolean>();
     private Map<String, Boolean> NotAttached = new HashMap<String, Boolean>();
     
-    Integer ID = 1;
+    Integer ID;
     
     @ManagedProperty(value="#{gui_LoggedUser.loggedUser}")
     private String loggedUser;

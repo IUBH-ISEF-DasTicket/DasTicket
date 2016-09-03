@@ -55,7 +55,7 @@ public class gui_Ticketbearbeiten
     String NewComment;
     String Username;
     String Status;
-    Integer ReportedTime;
+    Integer ReportedTime = 0;
     String Usergroup;
     String Tutor;
     Integer ID;
@@ -81,7 +81,7 @@ public class gui_Ticketbearbeiten
         
         if (UsernameTemp != null)
         {
-                Username = UsernameTemp;
+            Username = UsernameTemp;
         }
         
         // Check if ExternalUserId is a number
@@ -91,9 +91,8 @@ public class gui_Ticketbearbeiten
             {
                 ID = Integer.parseInt(ExternalTicketId);
             }
-        }
+        }                
         
-
         // Prioritäten
         PriorityList = new ArrayList<SelectItem>();
         //PriorityList.add(new SelectItem("", ""));
@@ -150,7 +149,7 @@ public class gui_Ticketbearbeiten
         }
         
         // Worknote
-        String[][] worknote =  DBController.GetData("worknotes", "creationDate, notes", "where id_ticket = " + ID);
+        String[][] worknote =  DBController.GetData("worknotes", "creationDate, (select username from user where id = id_creator), notes", "where id_ticket = " + ID);
         WorknoteNoteList = worknote;                                       
         
         // Werte setzen
@@ -337,7 +336,8 @@ public class gui_Ticketbearbeiten
         {
             if (NewComment.isEmpty() == false)
             {
-                Result = DBController.InsertData("Worknotes (internal,notes,creationDate,id_Ticket)", "false,'" + NewComment + "','" + LocalDateTime.now() + "'," + ID);
+                String[][] ID_User = DBController.GetData ("user", "id", "WHERE username='" + Username + "'");
+                Result = DBController.InsertData("Worknotes (internal,notes,creationDate,id_creator, id_Ticket)", "false,'" + NewComment + "','" + LocalDateTime.now() + "'," + ID_User[0][0] + "," + ID);
             }
 
         }
@@ -351,7 +351,7 @@ public class gui_Ticketbearbeiten
 			""));
         
         // Worknotes neu laden
-        String[][] worknote =  DBController.GetData("worknotes", "creationDate, notes", "where id_ticket = " + ID);
+        String[][] worknote =  DBController.GetData("worknotes", "creationDate, (select username from user where id = id_creator), notes", "where id_ticket = " + ID);
         WorknoteNoteList = worknote;
         // Kommentar leeren
         NewComment = "";

@@ -47,21 +47,14 @@ public class gui_UserErfassen {
     String[][] NotAttachedCourses; 
  
     private Map<String, Boolean> NotAttached = new HashMap<String, Boolean>();      
-       
+    
     @ManagedProperty(value="#{gui_LoggedUser.loggedUser}")
     private String loggedUser;
     
     @PostConstruct
     public void Init()        
-    {                                           
-        /*
-        Map<String, String> params = FacesContext.getCurrentInstance().
-                   getExternalContext().getRequestParameterMap();
-        
-        Username = params.get("Username");
-        */
-        
-        Username = loggedUser;
+    {                                                   
+        Username = loggedUser;                
         
         // Rolle        
         RolesList = new ArrayList<SelectItem>();

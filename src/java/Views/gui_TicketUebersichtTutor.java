@@ -116,7 +116,7 @@ public class gui_TicketUebersichtTutor
         // Benutzer
         UserList = new ArrayList<SelectItem>();
         UserList.add(new SelectItem("---", "---"));
-        String[][] tutor =  DBController.GetData("user", "username", "where id_usergroup not in (1,3)");
+        String[][] tutor =  DBController.GetData("user", "username", "where id_usergroup = 1");
         
         for (int j = 0; j < tutor.length; ++j) 
         {
@@ -125,7 +125,7 @@ public class gui_TicketUebersichtTutor
         }    
         
         // Alle Tickets anzeigen
-        String[][] Result = DBController.GetData("ticket", "id, (select name from courses where id = id_courses), title, (select name from state where id = id_state),(select username from user where id=id_user)", "");
+        String[][] Result = DBController.GetData("ticket", "id, (select name from courses where id = id_courses), title, (select name from state where id = id_state),(select username from user where id=id_user), (select username from user where id=id_user2)", "");
         if (Result.length > 0)
         {
             ListOfTickets = Result;   
@@ -214,9 +214,9 @@ public class gui_TicketUebersichtTutor
             }
             
             query += " " + MaxValues;
-            
+                        
             // Suche nach Tickets
-            String[][] Result = DBController.GetData("ticket", "id, (select name from courses where id = id_courses), title, (select name from state where id = id_state), (select username from user where user.id=ticket.id_user)", query);
+            String[][] Result = DBController.GetData("ticket", "id, (select name from courses where id = id_courses), title, (select name from state where id = id_state),(select username from user where id=id_user), (select username from user where id=id_user2)", query);
             
             // Ergebnis überprüfen
             if (Result.length > 0)
@@ -226,7 +226,7 @@ public class gui_TicketUebersichtTutor
             else
                 {
                     // Wenn keine Treffer, dann alle Tickets + Warnung
-                    Result = DBController.GetData("ticket", "id, (select name from courses where id = id_courses), title, (select name from state where id = id_state),(select username from user where id=id_user)", "");
+                    Result = DBController.GetData("ticket", "id, (select name from courses where id = id_courses), title, (select name from state where id = id_state),(select username from user where id=id_user), (select username from user where id=id_user2)", "");
                     ListOfTickets = Result;  
                     FacesContext.getCurrentInstance().addMessage(
                     null,new FacesMessage(FacesMessage.SEVERITY_WARN,

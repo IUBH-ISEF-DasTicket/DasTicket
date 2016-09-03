@@ -265,6 +265,10 @@ CREATE TABLE WORKNOTES
     internal bool,
     notes text not null,
     creationDate date,
+    id_creator INT(32) UNSIGNED,
+    FOREIGN KEY (id_creator) 
+        REFERENCES USER(id)
+	ON DELETE CASCADE,
     id_ticket INT(32) UNSIGNED,
 	FOREIGN KEY (id_ticket) 
 		REFERENCES TICKET(id)

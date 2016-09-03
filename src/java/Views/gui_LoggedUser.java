@@ -42,14 +42,12 @@ String userID;
 
 @PostConstruct
     public void Init()        
-    {                                           
-        
+    {                                                   
         Map<String, String> params = FacesContext.getCurrentInstance().
                    getExternalContext().getRequestParameterMap();
                         
         loggedUser = params.get("Username");
-        userID = params.get("UserID");                          
-        
+        userID = params.get("UserID");                         
     }
     
     public String getLoggedUser ()
