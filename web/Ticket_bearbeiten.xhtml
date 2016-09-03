@@ -49,7 +49,7 @@
                                         <table width="100%" id="Menue">
                                             <tr>
                                                 <td>
-                                                    <h:commandButton value="Übersicht" action="Landing Page.xhtml" class="button">
+                                                    <h:commandButton value="Übersicht" action="Landing Page_Tutor.xhtml" class="button">
                                                         <f:param name="TicketID" value="#{gui_Ticketbearbeiten.ID}"></f:param>
                                                        <f:param name="UsernameTemp" value="#{gui_Ticketbearbeiten.username}"></f:param>
                                                     </h:commandButton>
@@ -119,7 +119,7 @@
                                                         </td>
 						</tr>
 					</table>					
-					<br/>
+					 <!--<br/>-->
 					<table id = "Title"  width="100%" >   				
 						<tr>
 							<td width="15%">Titel</td>
@@ -141,14 +141,14 @@
 							</td>					  
 						</tr>	
 					</table> 
-                                   
-                                   
+                                                                      
 					<table id = "Rahmen_Tabelle"  width="100%" >
                                             <tr>
                                                 <td colspan="2"> <h3>Kommentar-Historie</h3> </td>					 
                                             </tr>	
                                             <tr>
                                                 <td width="15%"><b>Datum</b></td>
+                                                <td width="15%"><b>Ersteller</b></td>
                                                 <td><b>Kommentar</b></td>
                                             </tr>                                             	                                            
                                             <c:forEach var="row" items="${gui_Ticketbearbeiten.worknoteNoteList}">
