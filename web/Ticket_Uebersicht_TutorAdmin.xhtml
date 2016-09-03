@@ -15,7 +15,8 @@
             <f:viewParam name="Username" value="#{gui_TicketUebersichtTutor.username}" />          
             </f:metadata>
 	<script type="text/javascript" language="javascript" src="TimeFunctions.js"></script>
-	
+        
+        
     <h:body onload="startTime()">
         <h:form>
 		<table style="max-width:1000px;" id="Table_Wrap" width="100%">
@@ -201,7 +202,7 @@
                                                                 </td>
                                                             </c:forEach>
 								<td>
-                                                                    <h:commandLink  action="#{gui_TicketUebersichtTutor.DeleteTicket}">
+                                                                    <h:commandLink onclick="if(!confirm('Element wirklich löschen?')){return false;}" action="#{gui_TicketUebersichtTutor.DeleteTicket}">
                                                                         <f:param name="TicketID" value="#{row[0]}"></f:param>
                                                                         <img src="delete_icon.png" alt="delete"/>
                                                                     </h:commandLink>

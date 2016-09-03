@@ -115,7 +115,9 @@
                                                         </td>
 							<td>gebuchte Zeit</td>
 							<td> 
-                                                            <h:inputText id="ReportedTime" disabled="#{gui_Ticketbearbeiten.usergroup eq '2'}" value="#{gui_Ticketbearbeiten.reportedTime}" label="Gebuchte Zeit" style="width:150px"></h:inputText>
+                                                            <h:inputText id="ReportedTime" disabled="#{gui_Ticketbearbeiten.usergroup eq '2'}" value="#{gui_Ticketbearbeiten.reportedTime}" label="Gebuchte Zeit" style="width:150px">
+                                                            <f:validateLongRange minimum="0" maximum="2147483646" />
+                                                            </h:inputText>
                                                         </td>
 						</tr>
 					</table>					
