@@ -220,7 +220,7 @@ public class gui_TicketUebersicht
             {
                MaxValues = "LIMIT " + TotalResults;
             }
-            query += " " + MaxValues;
+            query += " " + MaxValues;                        
             
             // Ergebnis prüfen
             String[][] Result = DBController.GetData("ticket", "id, (select name from courses where id = id_courses), title, (select name from state where id = id_state)", query);            
@@ -230,7 +230,13 @@ public class gui_TicketUebersicht
                 }
             else
                 {
+<<<<<<< .mine
+                    Result = DBController.GetData("ticket", "id, (select name from courses where id = id_courses), title, (select name from state where id = id_state)", "WHERE id_user = '" + ID_User + "'");
+||||||| .r233
+                    Result = DBController.GetData("ticket", "id, (select name from courses where id = id_courses), title, (select name from state where id = id_state)", "");
+=======
                     Result = DBController.GetData("ticket", "id, (select name from courses where id = id_courses), title, (select name from state where id = id_state)", "where id_user=(select id from user where username ='" + Username + "')");               
+>>>>>>> .r238
                     ListOfTickets = Result;  
                     FacesContext.getCurrentInstance().addMessage(
                     null,new FacesMessage(FacesMessage.SEVERITY_WARN,
