@@ -85,7 +85,7 @@
 							<td>                                                                                                                        
                                                             <h:selectOneMenu id="Rolle" value="#{gui_Userbearbeiten.role}" >                                                                              
                                                                 <f:selectItems value= "#{gui_Userbearbeiten.rolesList}" />
-                                                                <f:ajax render="NotAttachedCourses AttachedCourses" listener="#{gui_Userbearbeiten.emptyCoursesList}"/>
+                                                                <f:ajax render="Courses" listener="#{gui_Userbearbeiten.emptyCoursesList}"/>
                                                             </h:selectOneMenu>
                                                             
 							</td> 
@@ -100,7 +100,8 @@
 						</tr>									
 						
 					</table>															                                       
-				
+                                    <h:panelGroup layout="block" id="Courses">  
+                                    <h:panelGroup layout="block" rendered="#{gui_Userbearbeiten.showCourses}"> 
                                     <table>
                                         <tr>
                                             <td colspan="2">
@@ -137,7 +138,8 @@
                                             </td>
                                         </tr>                                        
                                     </table>
-                                    
+                                    </h:panelGroup>
+                                    </h:panelGroup>
 					<table id="Buttons" >
 						<tr>
                                                     <td> 
