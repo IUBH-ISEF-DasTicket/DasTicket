@@ -45,6 +45,7 @@ public class gui_UserErfassen {
     List<SelectItem> RolesList;
     List<SelectItem> StatusList;
     String[][] NotAttachedCourses; 
+    Boolean ShowCourses = true;
  
     private Map<String, Boolean> NotAttached = new HashMap<String, Boolean>();      
     
@@ -76,7 +77,7 @@ public class gui_UserErfassen {
         if (NotAttachedCourses.length == 0)
         {
             NotAttached.clear();
-        }                                  
+        }              
     }
     
     public void Save()        
@@ -228,7 +229,13 @@ public class gui_UserErfassen {
         if (newRole.equals("Tutor") == false)
         {
             NotAttachedCourses = new String[0][0];
+            ShowCourses = false;
         }
+        else
+        {
+            ShowCourses = true;
+        }      
+       
     }
     
         // Logout
@@ -296,6 +303,11 @@ public class gui_UserErfassen {
         return this.loggedUser;
     }
     
+    public Boolean getShowCourses()
+    {
+        return this.ShowCourses;
+    }
+    
     public void setName(String name) 
     {
         this.Name = name;
@@ -334,6 +346,11 @@ public class gui_UserErfassen {
     public void setLoggedUser(String loggedUser) 
     {
 	this.loggedUser = loggedUser;
+    }
+    
+    public void setShowCourses (Boolean showCourses)
+    {
+        this.ShowCourses = showCourses;
     }
     
 }

@@ -47,11 +47,11 @@ public class gui_Userbearbeiten {
     List<SelectItem> StatusList;
     String[][] NotAttachedCourses;
     String[][] AttachedCourses;
+    Integer ID;
+    Boolean ShowCourses = true;
     
     private Map<String, Boolean> Attached = new HashMap<String, Boolean>();
-    private Map<String, Boolean> NotAttached = new HashMap<String, Boolean>();
-    
-    Integer ID;
+    private Map<String, Boolean> NotAttached = new HashMap<String, Boolean>();        
     
     @ManagedProperty(value="#{gui_LoggedUser.loggedUser}")
     private String loggedUser;
@@ -98,8 +98,7 @@ public class gui_Userbearbeiten {
         Status = TicketStatus[0][0];
                
         if (Role.equals("Tutor") == true)
-        {                       
-            
+        {                                   
             AttachedCourses = DBController.GetData("courses", "name", "where id_user = " + ID);        
             NotAttachedCourses = DBController.GetData("courses", "name", "where (id_user != " + ID + " OR id_user is null)");
 
@@ -111,7 +110,9 @@ public class gui_Userbearbeiten {
             if (NotAttachedCourses.length == 0)
             {
                 NotAttached.clear();
-            }  
+            } 
+            
+            ShowCourses = true;
         }
         else
         {                           
@@ -119,8 +120,8 @@ public class gui_Userbearbeiten {
             AttachedCourses = new String[0][0];
             Attached.clear();
             NotAttached.clear();
-        }                
-                
+            ShowCourses = false;
+        }                    
     }
     
     public void Save()        
@@ -277,12 +278,29 @@ public class gui_Userbearbeiten {
     public void emptyCoursesList (AjaxBehaviorEvent event)
     {                
         String newRole = Role + "";
-                
+           
         if (newRole.equals("Tutor") == false)
         {            
             NotAttachedCourses = new String[0][0];
             AttachedCourses = new String[0][0];
+            ShowCourses = false;
         }
+        else
+        {
+            AttachedCourses = DBController.GetData("courses", "name", "where id_user = " + ID);        
+            NotAttachedCourses = DBController.GetData("courses", "name", "where (id_user != " + ID + " OR id_user is null)");
+
+            // clear HashMaps when there is no data
+            if (AttachedCourses.length == 0)
+            {
+                Attached.clear();
+            }
+            if (NotAttachedCourses.length == 0)
+            {
+                NotAttached.clear();
+            } 
+            ShowCourses = true;
+        }    
     }
     
     public String getName()
@@ -360,6 +378,11 @@ public class gui_Userbearbeiten {
         return this.userID;
     }
     
+    public Boolean getShowCourses ()
+    {
+        return this.ShowCourses;
+    }
+    
     public void setName(String name) 
     {
         this.Name = name;
@@ -413,5 +436,10 @@ public class gui_Userbearbeiten {
     public void setUserID(String userid) 
     {
 	this.userID = userid;
+    }
+    
+    public void setShowCourses (Boolean showCourses)
+    {
+        this.ShowCourses = showCourses;
     }
 }

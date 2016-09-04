@@ -199,13 +199,7 @@ public class gui_UserUebersicht
   
     public String Search()
             
-    {          
-        FacesContext.getCurrentInstance().addMessage(
-        null,new FacesMessage(FacesMessage.SEVERITY_WARN,
-                    "DEBUG:   Search",
-                    ""));
-        
-        
+    {                                  
         String query = "";
         
         if (Name.isEmpty() == false)
@@ -250,11 +244,7 @@ public class gui_UserUebersicht
         if (query.isEmpty() == false)
         {
             query = query.substring(0, query.length() - 4);
-        }
-        
-        FacesContext.getCurrentInstance().addMessage(null,new FacesMessage(FacesMessage.SEVERITY_WARN, 
-                        "SortOrder = " + SortOrder
-                        , ""));
+        }              
         
         switch (SortOrder) 
         {
