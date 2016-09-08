@@ -48,7 +48,7 @@ public class gui_Login implements Serializable
 
         // Daten prüfen
         // Falscher Benutzername
-        if (storedUsername[0][0] == null)
+        if (storedUsername.length == 0)
         {
             FacesContext.getCurrentInstance().addMessage(
             null,new FacesMessage(FacesMessage.SEVERITY_WARN,
@@ -60,7 +60,7 @@ public class gui_Login implements Serializable
         
         // User inaktiv (funktioniert nicht....)
         
-         if (storedUserState[0][0].equalsIgnoreCase("0"))
+        if (storedUserState[0][0].equalsIgnoreCase("0"))
         {
              FacesContext.getCurrentInstance().addMessage(
              null,new FacesMessage(FacesMessage.SEVERITY_WARN,

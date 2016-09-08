@@ -317,19 +317,29 @@ public class gui_Ticketbearbeiten
         
         // Speichern der Werte
         // Kategorie
-        DBController.UpdateData("Ticket","ID_Category", String.valueOf(ID_Cat[0][0]),"where ID='" + ID + "'");
+        Result = DBController.UpdateData("Ticket","ID_Category", String.valueOf(ID_Cat[0][0]),"where ID='" + ID + "'");
         // Priorität
-        DBController.UpdateData("Ticket","ID_Priority", String.valueOf(ID_Pri[0][0]),"where ID='" + ID + "'");
+        Result = DBController.UpdateData("Ticket","ID_Priority", String.valueOf(ID_Pri[0][0]),"where ID='" + ID + "'");
          // Kurs
-        DBController.UpdateData("Ticket","ID_Courses", String.valueOf(ID_Cou[0][0]),"where ID='" + ID + "'");
+        Result = DBController.UpdateData("Ticket","ID_Courses", String.valueOf(ID_Cou[0][0]),"where ID='" + ID + "'");
          // Status
-        DBController.UpdateData("Ticket","ID_State", String.valueOf(ID_Sta[0][0]),"where ID='" + ID + "'");
+        Result = DBController.UpdateData("Ticket","ID_State", String.valueOf(ID_Sta[0][0]),"where ID='" + ID + "'");
         // Titel
-        DBController.UpdateData("Ticket","Title", Title,"where ID='" + ID + "'");
+        Result = DBController.UpdateData("Ticket","Title", Title,"where ID='" + ID + "'");
         // Kommentar 
-        DBController.UpdateData("Ticket","description", Comment ,"where ID='" + ID + "'");
+        Result = DBController.UpdateData("Ticket","description", Comment ,"where ID='" + ID + "'");
        // ReportedTime
-        DBController.UpdateData("ReportedTime","ReportedTime", String.valueOf(ReportedTime) ,"where ID_ticket='" + ID + "'"); 
+       // Check if Database entry for reportedtime is already there
+       String[][] reportedTimeEntry = DBController.GetData("ReportedTime", "id", "WHERE id_ticket = " + ID);
+       
+       if (reportedTimeEntry.length > 0)
+       {
+           Result =  DBController.UpdateDataWithInt("ReportedTime","ReportedTime", String.valueOf(ReportedTime) ,"where ID_ticket='" + ID + "'"); 
+       }
+       else
+       {
+           Result =  DBController.InsertData("reportedtime(reportedtime, id_ticket)",String.valueOf(ReportedTime) + "," + ID); 
+       }
        
         // Worknote
         try
